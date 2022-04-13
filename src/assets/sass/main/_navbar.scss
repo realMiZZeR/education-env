@@ -1,0 +1,121 @@
+$navbar-item-color: #FFFFFF;
+
+.navbar {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    padding: 20px 0 20px 15px;
+    width: 300px;
+    height: 100%;
+    background-color: $main-color;
+    z-index: 999;
+
+    &-user {
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin-bottom: 50px;
+
+        &__image {
+            position: relative;
+            width: 75px;
+            height: 75px;
+            border-radius: 100%;
+            border: 3px solid #FFFFFF;
+            overflow: hidden;
+
+            img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        &__info {
+            margin-left: 10px;
+        }
+
+        &__name,
+        &__attr {
+            font-family: $roboto-font;
+            color: $w-font-color;
+        }
+
+        &__name {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        &__attr {
+            font-size: 14px;
+            color: #CCD0FF;
+        }
+    }
+
+    &-nav {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.nav-list {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: inherit;
+    height: inherit;
+
+    &__item {
+        min-height: 60px;
+        border-radius: 25px 0 0 25px;
+        // padding: 15px 25px;
+        margin-bottom: 5px;
+    }
+
+    &__item:hover {
+        background-color: $block-color;
+    }
+
+    &__item:hover .nav-list__title {
+        color: $main-color;
+    }
+
+    &__item:last-child {
+        margin-top: auto;
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+    }
+
+    &__image {
+        position: relative;
+        width: 35px;
+        height: 35px;
+        margin-left: 25px;
+        overflow: hidden;
+
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+
+    &__title {
+        font-family: $roboto-font;
+        font-size: 18px;
+        font-weight: 500;
+        color: $w-font-color;
+        margin-left: 30px;
+    }
+}

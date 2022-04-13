@@ -1,0 +1,101 @@
+.timetable {
+    position: relative;
+    height: auto;
+
+    // main styles for timetable
+    &__heading {
+        margin-bottom: 50px;
+    }
+    &__title {
+        font-family: $montserrat-font;
+        font-size: 36px;
+        font-weight: 700;
+    }
+    &-info {
+        position: relative;
+        background-color: $block-color;
+        border-radius: 10px;
+        padding: 50px 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        
+        &__heading {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: $purple-color;
+            border-radius: 10px;
+            color: $w-font-color;
+            padding: 15px 20px;
+        }
+        &__dayweek {
+            font-family: $roboto-font;
+            font-weight: 500;
+            font-size: 18px;
+        }
+    }
+    &__footer {
+        position: absolute;
+        margin-top: 10px;
+    }
+    &__update {
+        font-family: $roboto-font;
+        font-weight: 500;
+        font-size: 14px;
+        color: transparentize($half-font-color , 0.15);
+    }
+
+    // styles for Timetable component
+    &-dates {
+
+        &-list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+    
+            &__item {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                background-color: transparent;
+                max-width: 125px;
+                max-height: 125px;
+                border-radius: calc($block-brd-radius + 15px);
+                padding: 20px;
+                cursor: pointer;
+                overflow: hidden;
+            }
+            &__item:not(:last-child) {
+                margin-right: 50px;
+            }
+            &__item:hover {
+                background-color: $hover-color;
+            }
+            &__image {
+                margin-bottom: 15px;
+            }
+            &__date,
+            &__dayofweek {
+                font-family: $roboto-font;
+                font-weight: 500;
+            }
+            &__date {
+                color: $font-color;
+                font-size: 20px;
+                margin-bottom: 5px;
+            }
+            &__dayofweek {
+                color: $half-font-color;
+                font-size: 16px;
+            }
+            &__item_current &__date {
+                color: $main-color;
+            }
+            &__item_current &__dayofweek {
+                color: transparentize($main-color, 0.5);
+            }
+        }
+    } 
+    
+}

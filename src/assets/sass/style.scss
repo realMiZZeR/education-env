@@ -1,0 +1,16 @@
+// fonts
+@import './base/fonts.scss';
+
+// base styles
+@import './base/general';
+@import './base/reset';
+@import './base/slick-slider';
+
+// main styles
+@import './main/navbar';
+@import './main/content';
+@import './main/home-tasks';
+@import './main/timetable';
+@import './main/lessons';
+@import './main/messages';
+@import './main/search';
