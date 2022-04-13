@@ -17,15 +17,15 @@ export default function Home(props) {
         document.title = props.title;
     }, [props.title]);
 
-    // fetching messages
-    useEffect( async() => {
+    // // fetching messages
+    // useEffect( async() => {
 
-    }, []);
+    // }, []);
 
-    // fetching timetable
-    useEffect( async() => {
+    // // fetching timetable
+    // useEffect( async() => {
 
-    }, []);
+    // }, []);
 
     let tasksList = [
         {

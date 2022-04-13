@@ -55,9 +55,8 @@ function getDayOfWeek(date) {
 }
 
 
-
 function TimetableDatesList({ datesList }) {
-    const timetableDatesItems = datesList.map(item => {
+    const datesItems = datesList.map(item => {
         return (
             <li className='timetable-dates-list__item'>
                 <div className='timetable-dates-list__image'>
@@ -70,7 +69,7 @@ function TimetableDatesList({ datesList }) {
     });
 
     return (
-        <ul className='timetable-dates-list'>{ datesList }</ul>
+        <ul className='timetable-dates-list'>{ datesItems }</ul>
     );
 }
 

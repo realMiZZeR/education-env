@@ -74,9 +74,9 @@ const lessonsList = [
 ];
 
 function Lesson(props) {
-    const { id, lessonNumber } = props;
+    const { lessonNumber } = props;
     return (
-        <li className='lesson' key={ id }>
+        <li className='lesson'>
             <h3 className='lesson__number'>{ lessonNumber }</h3>
             { props.children }
         </li>
@@ -119,7 +119,7 @@ function TimetableLessons({ lessonsList }) {
     const lessonsItems = lessonsList.map(item => {
         if(!item.length > 0) {
             return (
-                <Lesson id={item.id} lessonNumber={item.lessonNumber}>
+                <Lesson key={item.id} lessonNumber={item.lessonNumber}>
                     <div className='lesson-info'>
                         <h4 className='lesson-info__title'>{ item.title }</h4>
                         <div className='lesson-info__place'>
@@ -144,8 +144,9 @@ function TimetableLessons({ lessonsList }) {
                 </Lesson>
             );
         }
+        console.log(item[0].id)
         return (
-            <Lesson id={item[0].id} lessonNumber={item[0].lessonNumber}>
+            <Lesson key={item[0].id} lessonNumber={item[0].lessonNumber}>
                 <Sublist lessonSublist={ item } />   
             </Lesson>
         );
