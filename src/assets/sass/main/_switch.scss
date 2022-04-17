@@ -1,0 +1,47 @@
+.switch {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+
+    &__title {
+        font-family: $roboto-font;
+        font-weight: 500;
+        font-size: 16px;
+        color: $font-color;
+    }
+    &-button {
+        $size: 20px;
+        position: relative;
+        width: calc($size * 2);
+        height: $size;
+        background-color: transparent;
+        border: 1px solid $switch-color;
+        border-radius: 25px;
+        cursor: pointer;
+
+        &_active {
+            border-color: $main-color;
+            transform: translateX(0);
+            transition: .3s transform ease-in-out;
+        }
+        &_active &__toggle {
+            background-color: $main-color;
+            transform: translateX($size);
+            transition: .3s transform ease-in-out;
+        }
+
+        &__toggle {
+            position: absolute;
+            top: -1px; left: -1px;
+            width: $size;
+            height: $size;
+            background-color: $switch-color;
+            border-radius: 100%;
+            z-index: 1;
+            transition: .3s transform ease-in-out;
+        }
+    }
+}

@@ -1,0 +1,30 @@
+$loading-cell: red;
+
+.loading {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+
+    &-cells {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 10px;
+
+        span {
+            display: block;
+            $size: 20px;
+            width: $size;
+            height: $size;
+            background-color: $loading-cell;
+        }
+    }
+    &__text {
+        font-family: $roboto-font;
+        font-weight: 600;
+        font-size: 24px;
+    }
+}

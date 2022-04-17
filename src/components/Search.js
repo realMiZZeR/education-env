@@ -2,6 +2,8 @@ import React from 'react';
 import searchIcon from '../assets/images/icons/search.svg';
 
 export default function Search(props) {
+
+    // avaiable class names: search, search_sm
     const { className } = props;
 
     return (
@@ -12,4 +14,5 @@ export default function Search(props) {
             <input placeholder='Поиск' className='search__input input' />
         </div>
     );
+
 }

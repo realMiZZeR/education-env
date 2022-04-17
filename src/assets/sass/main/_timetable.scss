@@ -1,6 +1,8 @@
 .timetable {
+    display: flex;
+    flex-direction: column;
     position: relative;
-    height: auto;
+    height: 100%;
 
     // main styles for timetable
     &__heading {
@@ -13,6 +15,7 @@
     }
     &-info {
         position: relative;
+        height: 100%;
         background-color: $block-color;
         border-radius: 10px;
         padding: 50px 20px;
@@ -47,6 +50,7 @@
 
     // styles for Timetable component
     &-dates {
+        margin-bottom: 50px;
 
         &-list {
             display: flex;
@@ -96,6 +100,16 @@
                 color: transparentize($main-color, 0.5);
             }
         }
+    }
+    &-sort {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        max-height: 750px;
+        background-color: $block-color;
+        border-radius: $block-brd-radius;
+        box-shadow: $block-shadow;
+        padding: 20px;
     } 
     
 }

@@ -1,43 +1,14 @@
+import { useEffect, useState, createContext, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import DevidedByTwo from '../layouts/DevidedByTwo';
 
 // images
 import calendarIcon from '../assets/images/icons/calendar.svg';
 import calendarActiveIcon from '../assets/images/icons/calendar_active.svg';
-import { useEffect } from 'react';
+import DevidedByTwo from '../layouts/DevidedByTwo';
+import TimetableComponent from '../components/TimetableComponent';
+import TimetableSort from '../components/TimetableSort';
 
-let datesList = [
-    {
-        id: 114,
-        date: '11.04.2022'
-    },
-    {
-        id: 115,
-        date: '12.04.2022'
-    },
-    {
-        id: 116,
-        date: '13.04.2022'
-    },
-    {
-        id: 117,
-        date: '14.04.2022'
-    },
-    {
-        id: 118,
-        date: '15.04.2022'
-    },
-    {
-        id: 119,
-        date: '16.04.2022'
-    },
-    {
-        id: 120,
-        date: '17.04.2022'
-    },
-];
-
-let daysOfWeek = [
+const daysOfWeek = [
     'Воскресенье',
     'Понедельник',
     'Вторник',
@@ -47,6 +18,8 @@ let daysOfWeek = [
     'Суббота'
 ];
 
+const TimetableContext = createContext(null);
+
 function getDayOfWeek(date) {
     const [day, month, year] = date.split('.');
     const dateParse = new Date(year, Number(month)-1, day);
@@ -54,16 +27,22 @@ function getDayOfWeek(date) {
     return daysOfWeek[dateParse.getDay()];
 }
 
-
 function TimetableDatesList({ datesList }) {
-    const datesItems = datesList.map(item => {
+    
+    const [ dateItemIndex, setDateItemIndex ] = useState(0);
+    let isCurrent = false;
+
+    const datesItems = datesList.map((item, index) => {
+        isCurrent = (item === new Date().toLocaleDateString('ru-RU'))
         return (
-            <li className='timetable-dates-list__item'>
+            <li 
+            key={index}
+            className={`timetable-dates-list__item ${isCurrent ? 'timetable-dates-list__item_current' : ''}`}>
                 <div className='timetable-dates-list__image'>
-                    <img src={calendarIcon} alt='Дата' />
+                    <img src={isCurrent ? calendarActiveIcon : calendarIcon} alt='Дата' />
                 </div>
-                <date className='timetable-dates-list__date'>{ item.date }</date>
-                <small className='timetable-dates-list__dayofweek'>{ getDayOfWeek(item.date) }</small>
+                <p className='timetable-dates-list__date'>{ item }</p>
+                <small className='timetable-dates-list__dayofweek'>{ getDayOfWeek(item) }</small>
             </li>
         );
     });
@@ -73,17 +52,66 @@ function TimetableDatesList({ datesList }) {
     );
 }
 
-export default function Timetable() {
-    
+export default function Timetable(props) {
+
+    const [ datesList, updateDateList ] = useState([]);
+    const [ value, setValue ] = useState(null);
+
+    // getting all dates in custom range
+    function getDays(currentDate, interval) {
+        let [ day, month, year ] = currentDate.split('.');
+        day = Number(day);
+
+        if(interval >= 0) {
+            for(let i = 0; i <= interval; i++) {
+                updateDateList( arr => [
+                    ...arr,
+                    `${(day + i)}.${month}.${year}`
+                ]);
+            } 
+        }
+        else {
+            for(let i = interval; i < 0; i++) {
+                updateDateList( arr => [
+                    ...arr,
+                    `${(day + i)}.${month}.${year}`
+                ]);
+            }
+        }
+
+        updateDateList( arr => arr.sort() );
+    }
+
+    // load title from Route in MainContent
+    useEffect(() => {
+        document.title = props.title;
+    }, [props.title]);
+
+    useEffect(() => {
+        // clear dates list after updating
+        updateDateList([]);
+
+        // getting date like 01.01.1970 as string
+        const options = {day: 'numeric', month: 'numeric', year: 'numeric'};
+        const currentDate = new Date().toLocaleDateString('ru-RU', options);
+
+        // getting three days ago and next three days
+        getDays(currentDate, -3);
+        getDays(currentDate, 3);
+
+    }, []);
 
     return (
         <>
             <article className='timetable-dates'>
                 <TimetableDatesList datesList={ datesList } />
             </article>
-            <DevidedByTwo>
-                
-            </DevidedByTwo>
+            <TimetableContext.Provider value={value}>
+                <DevidedByTwo>
+                    <TimetableComponent />
+                    <TimetableSort />
+                </DevidedByTwo>
+            </TimetableContext.Provider>
         </>
     );
 }

@@ -27,21 +27,21 @@ function MessagesList({ messagesList }) {
     const messagesItems = messagesList.map(item => {
         return(
             <li 
-            className={`messages-list__item ${(item.notification > 0) ? 'messages-list__item_active' : ''}`} 
+            className={`messages-list__item ${(item?.notification > 0) ? 'messages-list__item_active' : ''}`} 
             key={item.id}>
                 <div className='messages-list__image'>
                     <img src={item.avatar} alt='Аватарка' />
-                    {item.isOnline &&
+                    {item?.isOnline &&
                     <span className='online' />
                     }
                 </div>
                 <div className='messages-list__user'>
-                    <h3 className='messages-list__name'>{ item.name }</h3>
-                    <p className='messages-list__lastmsg'>{ item.lastMessage }</p>
+                    <h3 className='messages-list__name'>{ item?.name }</h3>
+                    <p className='messages-list__lastmsg'>{ item?.lastMessage }</p>
                 </div>
-                {item.notification > 0 &&
+                {item?.notification > 0 &&
                     <div className='messages-list__notification'>
-                        <span>{ item.notification }</span>
+                        <span>{ item?.notification }</span>
                     </div>
                 }
             </li>

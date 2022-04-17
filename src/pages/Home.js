@@ -81,9 +81,9 @@ export default function Home(props) {
         }
     }
 
-    function TaskSlide({ id, discipline, title, deadline, disciplineType }) {
+    function TaskSlide({ discipline, title, deadline, disciplineType }) {
         return (
-            <li className='home-tasks-list__item' key={id}>
+            <li className='home-tasks-list__item'>
                 <div className='home-tasks-list__image'>
                     { getDisciplineImage(disciplineType) }
                 </div>
@@ -109,7 +109,7 @@ export default function Home(props) {
         const slideList = tasksList.map(task => {
             return (
                 <TaskSlide
-                    id={task.id}
+                    key={task.id}
                     discipline={task.discipline}
                     title={task.title}
                     deadline={task.deadline}

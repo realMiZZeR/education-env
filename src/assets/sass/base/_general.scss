@@ -5,8 +5,10 @@ $block-color: #FFFFFF;
 $block-brd-radius: 10px;
 $block-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 $lesson-color: #F4F4F4;
+$group-color: #F4F4F4;
 $hover-color: #F2F3F4;
 $input-color: #F2F2F2;
+$switch-color: #8A8A8A;
 $w-font-color: #FFFFFF;
 $font-color: #000000;
 $half-font-color: rgba(0, 0, 0, 0.5);
@@ -74,6 +76,7 @@ body {
 .content-main__grid_two {
     display: grid;
     grid-template-columns: 1fr 550px;
+    // grid-template-rows: 750px;
     gap: 30px;
     width: 100%;
     height: auto;
