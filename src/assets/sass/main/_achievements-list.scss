@@ -1,0 +1,76 @@
+.achievements-list {
+    position: relative;
+    background-color: $block-color;
+    border-radius: $block-brd-radius;
+    box-shadow: $block-shadow;
+    padding: 20px 15px;
+    height: 100%;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: transparent;
+        border-radius: $block-brd-radius;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    &__image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 65px;
+        height: 65px;
+        background-color: $locked-color;
+        border-radius: 100%;
+        margin-right: 10px;
+        overflow: hidden;
+
+        img {
+            width: 35px;
+            height: 35px;
+        }
+        &_epic {
+            background: $epic-color!important;
+        }
+        &_leg {
+            background: $legendary-color!important;
+        }
+        &_myth {
+            background: $mythical-color!important;
+        }
+    }
+    &-info {
+        display: flex;
+        flex-direction: column;
+
+        &__title,
+        &__descr,
+        &__stats {
+            font-family: $roboto-font;
+            font-weight: 500;
+            margin-bottom: 7px;
+        }
+        &__title {
+            font-weight: 600;
+            font-size: 18px;
+        }
+        &__descr {
+            font-size: 14px;
+        }
+        &__stats {
+            font-size: 12px;
+            opacity: 0.35;
+            margin-top: auto;
+        }
+    }
+}

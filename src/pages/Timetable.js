@@ -7,6 +7,7 @@ import calendarActiveIcon from '../assets/images/icons/calendar_active.svg';
 import DevidedByTwo from '../layouts/DevidedByTwo';
 import TimetableComponent from '../components/TimetableComponent';
 import TimetableSort from '../components/TimetableSort';
+import updateTitle from '../assets/js/updateTitle';
 
 const daysOfWeek = [
     'Воскресенье',
@@ -54,6 +55,10 @@ function TimetableDatesList({ datesList }) {
 
 export default function Timetable(props) {
 
+    useEffect(() => {
+        updateTitle(props.title);
+    }, [props.title]);
+
     const [ datesList, updateDateList ] = useState([]);
     const [ value, setValue ] = useState(null);
 
@@ -83,9 +88,7 @@ export default function Timetable(props) {
     }
 
     // load title from Route in MainContent
-    useEffect(() => {
-        document.title = props.title;
-    }, [props.title]);
+    
 
     useEffect(() => {
         // clear dates list after updating

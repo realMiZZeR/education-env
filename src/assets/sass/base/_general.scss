@@ -15,6 +15,14 @@ $half-font-color: rgba(0, 0, 0, 0.5);
 
 $purple-color: #8E3BE3;
 $green-color: #21E929;
+$orange-color: #F9AA4D;
+
+// achievements
+$standard-color: linear-gradient(135deg, #4D69F9 0%, #9D6CDC 100%);
+$epic-color: linear-gradient(135deg, #CC4DF9 0%, #F94DD3 100%);
+$legendary-color: linear-gradient(135deg, #F6F94D 0%, #F9D34D 100%);
+$mythical-color: linear-gradient(135deg, #F94D4D 0%, #DC6C87 100%);
+$locked-color: #25262E;
 
 // fonts
 $roboto-font: 'Roboto', sans-serif;
@@ -31,9 +39,13 @@ $montserrat-font: 'Montserrat';
     box-sizing: border-box;
 }
 
-body {
+#root {
     display: flex;
+    width: 100%;
     height: 100%;
+}
+
+body {
     background-color: $background-color;
 }
 

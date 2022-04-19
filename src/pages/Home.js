@@ -9,12 +9,13 @@ import NextArrow from '../components/NextArrow';
 import DevidedByTwo from '../layouts/DevidedByTwo';
 import TimetableComponent from '../components/TimetableComponent';
 import Messages from '../components/Messages';
+import updateTitle from '../assets/js/updateTitle';
 
 export default function Home(props) {
 
     // load title from Route in MainContent
     useEffect(() => {
-        document.title = props.title;
+        updateTitle(props.title);
     }, [props.title]);
 
     // // fetching messages
