@@ -103,11 +103,16 @@
     &-achievements__heading,
     &-settings__heading {
         font-family: $montserrat-font;
-        font-weight: 700;
+        font-weight: 800;
         font-size: 36px;
         margin-bottom: 50px;
     }
     &-achievements {
+        display: flex;
+        flex-direction: column;
+    }
+    &-settings {
+        position: relative;
         display: flex;
         flex-direction: column;
     }

@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
-import updateTitle from '../assets/js/updateTitle';
+import React, { useEffect, useState } from 'react';
+import UserInfo from '../components/UserInfo';
+import UserAchievements from '../components/UserAchievements';
+import UserSettings from '../components/UserSettings';
 
 // stats icons
 import AvgIcon from '../assets/images/icons/profile/avg_mark.svg';
@@ -18,8 +20,7 @@ import PrizeIcon from '../assets/images/icons/achievements/prize.svg';
 import UserImage from '../assets/images/user_image.jfif';
 
 // functions
-import getTypeOfContact from '../assets/js/checkContacts';
-import getRarityOfAchievement from '../assets/js/checkAchievements';
+import updateTitle from '../assets/js/updateTitle';
 
 function Stats({ statsList }) {
 
@@ -28,7 +29,7 @@ function Stats({ statsList }) {
                 <div key={item.id} className='stats__item'>
                     <div className='stats-counter'>
                         <h2 className='stats-counter__number'>
-                        <span>{ item.number }</span>
+                        <span>{ item?.number }</span>
                         </h2>
                         <p className='stats-counter__descr'>{ item.descr }</p>
                     </div>
@@ -43,99 +44,6 @@ function Stats({ statsList }) {
     return (
         <div className='stats'> { statsItems } </div>
     )
-}
-
-function ContactsList({ contactsList }) {
-
-    const contactsItems = contactsList.map(item => {
-        return (
-            <li key={item.id} className='contacts-list__item'>
-                <div className='contacts-list__image'>
-                    <img src={item.img} alt='' />
-                </div>
-                <p className='contacts-list__contact'>{ getTypeOfContact(item.link, item.type)  }</p>
-            </li>
-        );
-    });
-
-    return(
-        <ul className='contacts-list'>{ contactsItems }</ul>
-    );
-}
-
-function UserInfo({ userInfo }) {
-    const { userImage, initials, course, group, phrase, contacts } = userInfo;
-
-    return (
-        <article className='user-info'>
-            <h2 className='user-info__heading'>Информация</h2>
-            <div className='user-content'>
-                <div className='user-content-main'>
-                    <div className='user-content-main__image'>
-                        <img src={userImage} alt='Аватарка' />
-                    </div>
-                    <div className='user-content-main__block'>
-                        <h4 className='user-content-main__name'>{ initials }</h4>
-                        <p className='user-content-main__student'>студент группы {group}, {course} курс</p>
-                        <blockquote className='user-content-main__phrase'>
-                            <span>{ phrase }</span>
-                        </blockquote>
-                    </div>
-                </div>
-                <div className='user-content-contacts'>
-                    <h3 className='user-content-contacts__heading'>Контактные данные</h3>
-                    <ContactsList contactsList={contacts} />
-                </div>
-            </div>
-        </article>
-    );
-}
-
-function UserAchievements({ achievementsList }) {
-
-    function AchievementsList() {
-        const achievementsItems = achievementsList.map(item => {
-            return (
-                <li key={item.id} className='achievements-list__item'>
-                    <div className={`achievements-list__image ${getRarityOfAchievement(item.rarity, 'achievements-list__image')}`}>
-                        <img src={item.img} alt='' />
-                    </div>
-                    <div className='achievements-list-info'>
-                        <h4 className='achievements-list-info__title'>{ item.title }</h4>
-                        <p className='achievements-list-info__descr'>{ item.descr }</p>
-                        <small className='achievements-list-info__stats'>Есть у { item.avg }% студентов</small>
-                    </div>
-                </li>
-            );
-        });
-
-        return (
-            <ul className='achievements-list'>{ achievementsItems }</ul>
-        );
-    }
-
-    return (
-        <article className='user-achievements'>
-            <h2 className='user-achievements__heading'>Достижения</h2>
-            <AchievementsList />
-        </article>
-
-    );
-}
-
-function UserSettings(props) {
-
-    const { idUser, visible, notification, email, changedPasswordAgo } = props.userSettings
-
-    return (
-        <article className='user-settings'>
-            <h2 className='user-settings__heading'>Настройки</h2>
-            <div className='settings'>
-                
-            </div>
-        </article>
-    );
-
 }
 
 export default function Profile(props) {
@@ -193,7 +101,7 @@ export default function Profile(props) {
         ],
         settings: {
             idUser: 'nastenka',
-            visible: 'teacher',
+            visible: false,
             notification: true,
             email: 'example@gmail.com',
             changedPasswordAgo: 4

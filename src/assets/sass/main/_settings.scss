@@ -1,0 +1,46 @@
+.settings {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: $block-color;
+    border-radius: $block-brd-radius;
+    box-shadow: $block-shadow;
+    height: 100%;
+    padding: 20px;
+
+    &-section {
+        position: relative;
+        margin-bottom: 32px;
+
+        &__title {
+            font-family: $montserrat-font;
+            font-weight: 800;
+            font-size: 24px;
+            margin-bottom: 14px;
+        }
+        &__item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        &__name {
+            font-family: $roboto-font;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        &__value {
+            display: flex;
+            align-items: center;
+
+            span {
+                font-family: $roboto-font;
+                font-weight: 500;
+                font-size: 14px;
+            }
+            img {
+                margin-left: 15px;
+            }
+        }
+    }
+}

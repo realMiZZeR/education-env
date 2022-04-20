@@ -5,7 +5,10 @@ import Search from './Search';
 
 // images
 import hamburgerIcon from '../assets/images/icons/hamburger.svg';
+import AuthController from '../hoc/AuthController';
+import { AuthProvider } from '../hoc/AuthProvider';
 
+const Auth = React.lazy(() => import('../pages/Auth'));
 const Home = React.lazy(() => import('../pages/Home'));
 const Messanger = React.lazy(() => import('../pages/Messanger'));
 const Timetable = React.lazy(() => import('../pages/Timetable'));
@@ -29,16 +32,23 @@ export default function MainContent() {
                 </header>
                 <div className='content-main'>
                     <Suspense fallback={<LoadingPage />}>
-                        <Routes>
-                            <Route path='*' element={<PageNotFound />} />
-                            <Route path='/' element={<Home title="Главная" />} />
-                            <Route path='/timetable' element={<Timetable title="Расписание" />} />
-                            <Route path='/messanger' element={<Messanger title="Сообщения" />} />
-                            <Route path='/profile' element={<Profile title="Личный кабинет" />} />
-                            <Route path='/users' element={<Users title="Все пользователи" />} />
-                            <Route path='/tasks' element={<Tasks title="Задания" />} />
-                            <Route path='/journal' element={<Journal title="Журнал оценок" />} />
-                        </Routes>
+                        <AuthProvider>
+                            <Routes>
+                                <Route path='/' element={<Auth title='Авторизация' />} />
+                                <Route path='/home' element={
+                                    <AuthController>
+                                        <Home title="Главная" />
+                                    </AuthController>
+                                } />
+                                <Route path='/timetable' element={<Timetable title="Расписание" />} />
+                                <Route path='/messanger' element={<Messanger title="Сообщения" />} />
+                                <Route path='/profile' element={<Profile title="Личный кабинет" />} />
+                                <Route path='/users' element={<Users title="Все пользователи" />} />
+                                <Route path='/tasks' element={<Tasks title="Задания" />} />
+                                <Route path='/journal' element={<Journal title="Журнал оценок" />} />
+                                <Route path='*' element={<PageNotFound />} />
+                            </Routes>
+                        </AuthProvider>
                     </Suspense>
                 </div>
             </div>

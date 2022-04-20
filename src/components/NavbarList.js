@@ -1,9 +1,6 @@
-import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-
-// 
-// надо в NavList hover эффект адекватным сделать как-нибудь :|
-// 
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 import homeIcon from '../assets/images/icons/home.svg';
 import timetableIcon from '../assets/images/icons/timetable.svg';
@@ -23,83 +20,116 @@ import profileIconActive from '../assets/images/icons/profile_active.svg';
 import usersIconActive from '../assets/images/icons/users_active.svg';
 import logoutIconActive from '../assets/images/icons/logout_active.svg';
 
-const navListItems = [
-    {
-        key: 1,
-        img: homeIcon,
-        imgActive: homeIconActive,
-        name: 'Главная',
-        link: '/',
-        alt: 'Главная'
-    },
-    {
-        key: 2,
-        img: timetableIcon,
-        imgActive: timetableIconActive,
-        name: 'Расписание',
-        link: '/timetable',
-        alt: 'Расписание'
-    },
-    {
-        key: 3,
-        img: tasksIcon,
-        imgActive: tasksIconActive,
-        name: 'Задания',
-        link: '/tasks',
-        alt: 'Задания'
-    },
-    {
-        key: 4,
-        img: journalIcon,
-        imgActive: journalIconActive,
-        name: 'Журнал оценок',
-        link: '/journal',
-        alt: 'Журнал'
-    },
-    {
-        key: 5,
-        img: messsagesIcon,
-        imgActive: messsagesIconActive,
-        name: 'Сообщения',
-        link: '/messanges',
-        alt: 'Сообщения'
-    },
-    {
-        key: 6,
-        img: profileIcon,
-        imgActive: profileIconActive,
-        name: 'Личный кабинет',
-        link: '/profile',
-        alt: 'Профиль'
-    },
-    {
-        key: 7,
-        img: usersIcon,
-        imgActive: usersIconActive,
-        name: 'Все пользователи',
-        link: '/users',
-        alt: 'Пользователи'
-    },
-    {
-        key: 8,
-        img: logoutIcon,
-        imgActive: logoutIconActive,
-        name: 'Выход',
-        link: '/logout',
-        alt: 'Выход'
-    },
-];
+const navListItems = {
+    guest: [
+        {
+            key: 1,
+            img: homeIcon,
+            imgActive: homeIconActive,
+            name: 'Главная',
+            link: '/',
+            alt: 'Главная'
+        },
+        {
+            key: 2,
+            img: timetableIcon,
+            imgActive: timetableIconActive,
+            name: 'Расписание',
+            link: '/timetable',
+            alt: 'Расписание'
+        },
+    ],
+    auth: [
+        {
+            key: 1,
+            img: homeIcon,
+            imgActive: homeIconActive,
+            name: 'Главная',
+            link: '/home',
+            alt: 'Главная'
+        },
+        {
+            key: 2,
+            img: timetableIcon,
+            imgActive: timetableIconActive,
+            name: 'Расписание',
+            link: '/timetable',
+            alt: 'Расписание'
+        },
+        {
+            key: 3,
+            img: tasksIcon,
+            imgActive: tasksIconActive,
+            name: 'Задания',
+            link: '/tasks',
+            alt: 'Задания'
+        },
+        {
+            key: 4,
+            img: journalIcon,
+            imgActive: journalIconActive,
+            name: 'Журнал оценок',
+            link: '/journal',
+            alt: 'Журнал'
+        },
+        {
+            key: 5,
+            img: messsagesIcon,
+            imgActive: messsagesIconActive,
+            name: 'Сообщения',
+            link: '/messanges',
+            alt: 'Сообщения'
+        },
+        {
+            key: 6,
+            img: profileIcon,
+            imgActive: profileIconActive,
+            name: 'Личный кабинет',
+            link: '/profile',
+            alt: 'Профиль'
+        },
+        {
+            key: 7,
+            img: usersIcon,
+            imgActive: usersIconActive,
+            name: 'Все пользователи',
+            link: '/users',
+            alt: 'Пользователи'
+        },
+        {
+            key: 8,
+            img: logoutIcon,
+            imgActive: logoutIconActive,
+            name: 'Выход',
+            link: '/',
+            alt: 'Выход'
+        },
+    ],
+    admin: [
+        
+    ]
+}
 
 function NavList({ navListItems }) {
 
-    const listItems = navListItems.map(item => {
+    const { user, signOut } = useAuth() || {};
+    const navigate = useNavigate();
+
+    let currentNavbar = navListItems.guest;
+    if(user) currentNavbar = navListItems.auth;
+    if(user?.login === 'admin') currentNavbar = navListItems.admin;
+    
+    console.log(user)
+
+    const listItems = currentNavbar.map(item => {
         return (
         <li 
         className='nav-list__item' 
         key={item.key}
+        onClick={item.name === 'Выход' ? () => signOut(() => navigate(item.link, {replace: true})) : undefined}
         onMouseEnter={ e => { e.currentTarget.children[0].children[0].children[0].src = item.imgActive } }
         onMouseLeave={  e => { e.currentTarget.children[0].children[0].children[0].src = item.img } }>
-            <Link to={item?.link} className='nav-list__link link'>
+            <Link to={item.link} className='nav-list__link link'>
                 <div className='nav-list__image'>
                     <img src={item.img} alt={item?.alt} />
                 </div>
