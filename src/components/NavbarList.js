@@ -118,8 +118,6 @@ function NavList({ navListItems }) {
     let currentNavbar = navListItems.guest;
     if(user) currentNavbar = navListItems.auth;
     if(user?.login === 'admin') currentNavbar = navListItems.admin;
-    
-    console.log(user)
 
     const listItems = currentNavbar.map(item => {
         return (

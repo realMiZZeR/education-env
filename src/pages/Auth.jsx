@@ -22,6 +22,8 @@ function Auth(props) {
     const location = useLocation();
     const { signIn } = useAuth();
 
+    const [ login, setLogin ] = useState(null);
+    const [ password, setPassword ] = useState(null);
     const [ rememberPassword, setRememberPassword ] = useState(false);
     const [ errorMessages, setErrorMessages ] = useState({});
 
@@ -30,6 +32,8 @@ function Auth(props) {
         setErrorMessages({});
 
         const form = e.target;
+
+        // сделать валидацию
 
         if(Object.keys(errorMessages).length > 0) return;
 
@@ -41,7 +45,7 @@ function Auth(props) {
         signIn(user, () => navigate('/home', {replace: true}));
 
     }
-    function rememberPasswordHandler() {
+    const rememberPasswordHandler = () => {
         setRememberPassword(!rememberPassword);
     }
 
@@ -52,13 +56,25 @@ function Auth(props) {
             className='auth-form'>
                 <h2 className='auth-form__heading'>Вход в систему</h2>
                 <div className='auth-form__field'>
-                    <input type='text' name='login' className='auth-form__input input' placeholder='Логин' />
+                    <input 
+                    type='text' 
+                    name='login' 
+                    className='auth-form__input input' 
+                    placeholder='Логин'
+                    onChange={e => setLogin(e.target.value)}
+                    />
                     {errorMessages.login && 
                         <span className='auth-form__error'>{errorMessages.login}</span>
                     }
                 </div>
                 <div className='auth-form__field'>
-                    <input type='password' name='password' className='auth-form__input input' placeholder='Пароль' />
+                    <input 
+                    type='password' 
+                    name='password' 
+                    className='auth-form__input input' 
+                    placeholder='Пароль'
+                    onChange={e => setPassword(e.target.value)} 
+                    />
                     {errorMessages.password && 
                         <span className='auth-form__error'>{errorMessages.password}</span>
                     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import NavbarList from './NavbarList';
 import userImage from '../assets/images/user_image.jfif'
-// import { Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from '../hoc/AuthProvider'; 
 
 export default function MainNavbar() {
     return (

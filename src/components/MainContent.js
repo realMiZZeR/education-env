@@ -32,7 +32,6 @@ export default function MainContent() {
                 </header>
                 <div className='content-main'>
                     <Suspense fallback={<LoadingPage />}>
-                        <AuthProvider>
                             <Routes>
                                 <Route path='/' element={<Auth title='Авторизация' />} />
                                 <Route path='/home' element={
@@ -48,7 +47,6 @@ export default function MainContent() {
                                 <Route path='/journal' element={<Journal title="Журнал оценок" />} />
                                 <Route path='*' element={<PageNotFound />} />
                             </Routes>
-                        </AuthProvider>
                     </Suspense>
                 </div>
             </div>
