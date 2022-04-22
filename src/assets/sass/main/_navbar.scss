@@ -20,6 +20,7 @@ $navbar-item-color: #FFFFFF;
             position: relative;
             width: 75px;
             height: 75px;
+            background-color: #EDEDED;
             border-radius: 100%;
             border: 3px solid #FFFFFF;
             overflow: hidden;
@@ -31,6 +32,17 @@ $navbar-item-color: #FFFFFF;
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+            }
+
+            &_default {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img {
+                    position: static;
+                    width: 60px;
+                    height: 60px;
+                }
             }
         }
 
@@ -52,6 +64,11 @@ $navbar-item-color: #FFFFFF;
         &__attr {
             font-size: 14px;
             color: #CCD0FF;
+        }
+
+        &__link {
+            color: #CCD0FF;
+            text-decoration: underline;
         }
     }
 
@@ -83,7 +100,7 @@ $navbar-item-color: #FFFFFF;
         color: $main-color;
     }
 
-    &__item:last-child {
+    &__item_exit {
         margin-top: auto;
     }
 

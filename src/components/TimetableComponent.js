@@ -158,7 +158,7 @@ function TimetableLessons({ lessonsList }) {
 
 export default function TimetableComponent() {
     const location = useLocation();
-    let isHome = (location.pathname === '/');
+    let isHome = (location.pathname === '/home');
 
     let timetableDate = '10.04.2022';
     let timetableUpdateDate = '10.04.2022';

@@ -20,109 +20,162 @@ import profileIconActive from '../assets/images/icons/profile_active.svg';
 import usersIconActive from '../assets/images/icons/users_active.svg';
 import logoutIconActive from '../assets/images/icons/logout_active.svg';
 
-const navListItems = {
-    guest: [
-        {
-            key: 1,
-            img: homeIcon,
-            imgActive: homeIconActive,
-            name: 'Главная',
-            link: '/',
-            alt: 'Главная'
-        },
-        {
-            key: 2,
-            img: timetableIcon,
-            imgActive: timetableIconActive,
-            name: 'Расписание',
-            link: '/timetable',
-            alt: 'Расписание'
-        },
-    ],
-    auth: [
-        {
-            key: 1,
-            img: homeIcon,
-            imgActive: homeIconActive,
-            name: 'Главная',
-            link: '/home',
-            alt: 'Главная'
-        },
-        {
-            key: 2,
-            img: timetableIcon,
-            imgActive: timetableIconActive,
-            name: 'Расписание',
-            link: '/timetable',
-            alt: 'Расписание'
-        },
-        {
-            key: 3,
-            img: tasksIcon,
-            imgActive: tasksIconActive,
-            name: 'Задания',
-            link: '/tasks',
-            alt: 'Задания'
-        },
-        {
-            key: 4,
-            img: journalIcon,
-            imgActive: journalIconActive,
-            name: 'Журнал оценок',
-            link: '/journal',
-            alt: 'Журнал'
-        },
-        {
-            key: 5,
-            img: messsagesIcon,
-            imgActive: messsagesIconActive,
-            name: 'Сообщения',
-            link: '/messanges',
-            alt: 'Сообщения'
-        },
-        {
-            key: 6,
-            img: profileIcon,
-            imgActive: profileIconActive,
-            name: 'Личный кабинет',
-            link: '/profile',
-            alt: 'Профиль'
-        },
-        {
-            key: 7,
-            img: usersIcon,
-            imgActive: usersIconActive,
-            name: 'Все пользователи',
-            link: '/users',
-            alt: 'Пользователи'
-        },
-        {
-            key: 8,
-            img: logoutIcon,
-            imgActive: logoutIconActive,
-            name: 'Выход',
-            link: '/',
-            alt: 'Выход'
-        },
-    ],
-    admin: [
-        
-    ]
-}
+function NavList() {
 
-function NavList({ navListItems }) {
-
-    const { user, signOut } = useAuth() || {};
+    const { user, signOut, isAdmin } = useAuth() || {};
     const navigate = useNavigate();
 
+    const navListItems = {
+        guest: [
+            {
+                key: 1,
+                img: homeIcon,
+                imgActive: homeIconActive,
+                name: 'Главная',
+                link: '/',
+                alt: 'Главная'
+            },
+            {
+                key: 2,
+                img: timetableIcon,
+                imgActive: timetableIconActive,
+                name: 'Расписание',
+                link: '/timetable',
+                alt: 'Расписание'
+            },
+        ],
+        auth: [
+            {
+                key: 1,
+                img: homeIcon,
+                imgActive: homeIconActive,
+                name: 'Главная',
+                link: '/home',
+                alt: 'Главная'
+            },
+            {
+                key: 2,
+                img: timetableIcon,
+                imgActive: timetableIconActive,
+                name: 'Расписание',
+                link: '/timetable',
+                alt: 'Расписание'
+            },
+            {
+                key: 3,
+                img: tasksIcon,
+                imgActive: tasksIconActive,
+                name: 'Задания',
+                link: '/tasks',
+                alt: 'Задания'
+            },
+            {
+                key: 4,
+                img: journalIcon,
+                imgActive: journalIconActive,
+                name: 'Журнал оценок',
+                link: '/journal',
+                alt: 'Журнал'
+            },
+            {
+                key: 5,
+                img: messsagesIcon,
+                imgActive: messsagesIconActive,
+                name: 'Сообщения',
+                link: '/messages',
+                alt: 'Сообщения'
+            },
+            {
+                key: 6,
+                img: profileIcon,
+                imgActive: profileIconActive,
+                name: 'Личный кабинет',
+                link: `/profile/${user?.login}`,
+                alt: 'Профиль'
+            },
+            {
+                key: 7,
+                img: usersIcon,
+                imgActive: usersIconActive,
+                name: 'Все пользователи',
+                link: '/users',
+                alt: 'Пользователи'
+            },
+            {
+                key: 8,
+                img: logoutIcon,
+                imgActive: logoutIconActive,
+                name: 'Выход',
+                link: '/',
+                alt: 'Выход'
+            },
+        ],
+        admin: [
+            {
+                key: 1,
+                img: homeIcon,
+                imgActive: homeIconActive,
+                name: 'Главная',
+                link: '/home',
+                alt: 'Главная'
+            },
+            {
+                key: 2,
+                img: timetableIcon,
+                imgActive: timetableIconActive,
+                name: 'Расписание',
+                link: '/timetable',
+                alt: 'Расписание'
+            },
+            {
+                key: 5,
+                img: messsagesIcon,
+                imgActive: messsagesIconActive,
+                name: 'Сообщения',
+                link: '/messages',
+                alt: 'Сообщения'
+            },
+            {
+                key: 6,
+                img: profileIcon,
+                imgActive: profileIconActive,
+                name: 'Личный кабинет',
+                link: '/profile',
+                alt: 'Профиль'
+            },
+            {
+                key: 7,
+                img: usersIcon,
+                imgActive: usersIconActive,
+                name: 'Все пользователи',
+                link: '/users',
+                alt: 'Пользователи'
+            },
+            {
+                key: 8,
+                img: logoutIcon,
+                imgActive: logoutIconActive,
+                name: 'Выход',
+                link: '/',
+                alt: 'Выход'
+            },
+        ]
+    }
+
     let currentNavbar = navListItems.guest;
-    if(user) currentNavbar = navListItems.auth;
-    if(user?.login === 'admin') currentNavbar = navListItems.admin;
+
+    if(user) { 
+        currentNavbar = navListItems.auth;
+    }
+
+    if(isAdmin) {
+        currentNavbar = navListItems.admin;
+    }
 
     const listItems = currentNavbar.map(item => {
         return (
         <li 
-        className='nav-list__item' 
+        className={`nav-list__item ${item.name === 'Выход' ? 'nav-list__item_exit' : ''}`} 
         key={item.key}
         onClick={item.name === 'Выход' ? () => signOut(() => navigate(item.link, {replace: true})) : undefined}
         onMouseEnter={ e => { e.currentTarget.children[0].children[0].children[0].src = item.imgActive } }
@@ -145,7 +198,7 @@ function NavList({ navListItems }) {
 export default function NavbarList(props) {
     return (
         <nav className='navbar-nav nav'>
-            <NavList navListItems={navListItems} />
+            <NavList />
         </nav>
     );
 }

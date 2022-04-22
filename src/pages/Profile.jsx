@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import UserInfo from '../components/UserInfo';
 import UserAchievements from '../components/UserAchievements';
 import UserSettings from '../components/UserSettings';
@@ -47,6 +48,8 @@ function Stats({ statsList }) {
 }
 
 export default function Profile(props) {
+
+    const { id } = useParams();
 
     useEffect(() => {
         updateTitle(props.title);

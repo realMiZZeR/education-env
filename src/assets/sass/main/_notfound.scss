@@ -1,0 +1,47 @@
+.notfound {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+    &__image {
+        position: relative;
+        width: 125px;
+        height: 125px;
+        opacity: 0.9;
+        margin-bottom: 20px;
+
+        img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+
+    &__title {
+        font-family: $montserrat-font;
+        font-weight: 800;
+        font-size: 36px;
+        margin-bottom: 5px;
+    }
+
+    &__descr,
+    &__link {
+        font-family: $roboto-font;
+        font-weight: 500;
+        font-size: 18px;
+    }
+
+    &__descr {
+        color: $half-font-color;
+        margin-bottom: 20px;
+    }
+
+    &__link {
+        color: $main-color;
+    }
+}

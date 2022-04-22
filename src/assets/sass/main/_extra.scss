@@ -1,0 +1,40 @@
+.extra {
+    display: flex;
+    flex-direction: column;
+    background-color: $background-color;
+    border-radius: $block-brd-radius;
+    box-shadow: $block-shadow;
+    padding: 30px;
+
+    &__grouping {
+        display: flex;
+        align-items: center;
+        margin-bottom: 40px;
+    }
+    &__label {
+        display: inline-block;
+        font-family: $roboto-font;
+        font-weight: 600;
+        font-size: 18px;
+        min-width: 170px;
+        margin-right: 20px;
+    }
+    &__field {
+        position: relative;
+        width: 100%;
+
+        span {
+            position: absolute;
+            left: 0; top: calc(100% + 5px);
+            font-family: $roboto-font;
+            font-weight: 500;
+            font-size: 12px;
+            color: transparentize($half-font-color, 0.15);
+        }
+    }
+    &__input {
+        width: 100%;
+        height: 50px;
+        padding: 0 15px;
+    }
+}

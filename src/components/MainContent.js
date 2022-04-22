@@ -7,6 +7,8 @@ import Search from './Search';
 import hamburgerIcon from '../assets/images/icons/hamburger.svg';
 import AuthController from '../hoc/AuthController';
 import { AuthProvider } from '../hoc/AuthProvider';
+import AdminController from '../hoc/AdminController';
+import CreateUserPage from '../pages/CreateUserPage';
 
 const Auth = React.lazy(() => import('../pages/Auth'));
 const Home = React.lazy(() => import('../pages/Home'));
@@ -33,19 +35,48 @@ export default function MainContent() {
                 <div className='content-main'>
                     <Suspense fallback={<LoadingPage />}>
                             <Routes>
-                                <Route path='/' element={<Auth title='Авторизация' />} />
+                                <Route path='/load' element={<LoadingPage />} />
+                                <Route path='/' element={<Auth title='Добро пожаловать!' />} />
                                 <Route path='/home' element={
                                     <AuthController>
                                         <Home title="Главная" />
                                     </AuthController>
                                 } />
                                 <Route path='/timetable' element={<Timetable title="Расписание" />} />
-                                <Route path='/messanger' element={<Messanger title="Сообщения" />} />
-                                <Route path='/profile' element={<Profile title="Личный кабинет" />} />
-                                <Route path='/users' element={<Users title="Все пользователи" />} />
-                                <Route path='/tasks' element={<Tasks title="Задания" />} />
-                                <Route path='/journal' element={<Journal title="Журнал оценок" />} />
+                                <Route path='/messanger' element={
+                                    <AuthController>
+                                        <Messanger title="Сообщения" />
+                                    </AuthController>
+                                }/>
+                                <Route path='/profile/:login' element={
+                                    <AuthController>
+                                        <Profile title="Личный кабинет" />
+                                    </AuthController>
+                                } />
+                                <Route path='/users' element={
+                                    <AuthController>
+                                        <Users title="Все пользователи" />
+                                    </AuthController>
+                                } />
+                                <Route path='/tasks' element={
+                                    <AuthController>
+                                        <Tasks title="Задания" />
+                                    </AuthController>
+                                } />
+                                <Route path='/journal' element={
+                                    <AuthController>
+                                        <Journal title="Журнал оценок" />
+                                    </AuthController>
+                                } />
                                 <Route path='*' element={<PageNotFound />} />
+
+                                {/* admin pages */}
+
+                                <Route path='/create-user' element={
+                                    <AdminController>
+                                        <CreateUserPage title="Создание пользователя" />
+                                    </AdminController>
+                                } />
                             </Routes>
                     </Suspense>
                 </div>

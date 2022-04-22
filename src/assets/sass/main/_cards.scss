@@ -1,0 +1,44 @@
+.cards {
+    display: flex;
+    justify-content: space-between;
+
+    &__item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-width: 350px;
+        min-height: 250px;
+        background-color: $block-color;
+        border-radius: $block-brd-radius;
+        box-shadow: $block-shadow;
+        text-decoration: none;
+        padding: 20px;
+    }
+
+    &__item:not(:last-child) {
+        margin-right: 15px;
+    }
+
+    &__title {
+        width: 100px;
+        font-family: $montserrat-font;
+        font-weight: 800;
+        font-size: 24px;
+        color: $font-color;
+    }
+    
+    &__image {
+        position: relative;
+        min-width: 100px;
+        min-height: 100px;
+        opacity: 0.35;
+
+        img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+}

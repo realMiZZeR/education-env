@@ -55,7 +55,7 @@ function MessagesList({ messagesList }) {
 
 export default function Messages() {
     const location = useLocation();
-    let isHome = (location.pathname === '/');
+    let isHome = (location.pathname === '/home');
 
     return (
         <article className='messages'>

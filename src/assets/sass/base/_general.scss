@@ -4,6 +4,7 @@ $background-color: #FCFCFC;
 $block-color: #FFFFFF;
 $block-brd-radius: 10px;
 $block-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+$block-shadow_highlight: 0 4px 10px transparentize($main-color, 0.5);
 $lesson-color: #F4F4F4;
 $group-color: #F4F4F4;
 $hover-color: #F2F3F4;
@@ -13,6 +14,7 @@ $w-font-color: #FFFFFF;
 $font-color: #000000;
 $half-font-color: rgba(0, 0, 0, 0.5);
 $error-block: rgba(207, 47, 47, 0.808);
+$loading-cell: rgba(0, 0, 0, 0.2);
 
 $purple-color: #8E3BE3;
 $green-color: #21E929;
@@ -51,6 +53,8 @@ body {
 }
 
 .container {
+    display: flex;
+    flex-direction: column;
     max-width: 1600px;
     width: 100%;
     margin: 0 auto;
@@ -72,6 +76,11 @@ body {
     outline: none;
     border-radius: 10px;
     background-color: $input-color;
+    color: $half-font-color;
+}
+
+.input:focus {
+    color: $font-color;
 }
 
 .hamburger {
@@ -88,8 +97,8 @@ body {
 // styles for layouts
 .content-main__grid_two {
     display: grid;
+    margin-top: 50px;
     grid-template-columns: 1fr 550px;
-    // grid-template-rows: 750px;
     gap: 30px;
     width: 100%;
     height: auto;

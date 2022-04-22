@@ -1,0 +1,61 @@
+.aside-users {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    &-list {
+
+        &__item {
+            display: flex;
+            align-items: center;
+        }
+        &__image {
+            $size: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: $size;
+            min-height: $size;
+            background-color: #EDEDED;
+            border-radius: 100%;
+            overflow: hidden;
+            margin-right: 20px;
+            
+            img {
+                width: calc($size / 2);
+                height: calc($size / 2);
+            }
+        }
+        &__login {
+            font-family: $roboto-font;
+            font-size: 18px;
+            font-weight: 500;
+        }
+    }
+    &__button {
+        position: relative;
+        background-color: $hover-color;
+        border-radius: $block-brd-radius;
+        width: calc(100% - 40px);
+        height: 60px;
+        padding: 20px;
+        margin: auto auto 0;
+        cursor: pointer;
+
+        span {
+            font-family: $montserrat-font;
+            font-weight: 500;
+            font-size: 18px;
+        }
+    }
+    &__button::before {
+        content: '';
+        position: absolute;
+        left: 20px;
+        width: 20px;
+        height: 20px;
+        background-image: url('../../images/icons/plus.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+}

@@ -5,9 +5,11 @@ export const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
 
     const [ user, setUser ] = useState(null);
+    const [ isAdmin, setIsAdmin ] = useState(null);
 
     const signIn = (newUser, callback) => {
         setUser(newUser);
+        (newUser.login === 'admin') ? setIsAdmin(true) : setIsAdmin(false);
         callback();
     }
     const signOut = (callback) => {
@@ -15,8 +17,7 @@ export const AuthProvider = ({ children }) => {
         callback();
     }
 
-    const value = {user, signIn, signOut}
-
+    const value = {user, signIn, signOut, isAdmin}
 
     return <AuthContext.Provider value={value}>
         { children }
