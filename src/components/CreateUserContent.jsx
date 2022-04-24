@@ -1,5 +1,5 @@
 import { useSavedUsers } from '../hooks/useSavedUsers';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Search from './Search';
 
 // icons
@@ -10,18 +10,18 @@ import emptyGroupIcon from '../assets/images/icons/empty_group.svg';
 const GroupsList = () => {
 
     const list = [
-        {id: 1, title: 'ПР-18'},
-        {id: 2, title: 'ПР-19'},
-        {id: 3, title: 'ПР-19'},
-        {id: 4, title: 'ПР-19'},
-        {id: 5, title: 'ПР-19'},
-        {id: 6, title: 'ПР-19'},
-        {id: 7, title: 'ПР-19'},
-        {id: 8, title: 'ПР-19'},
-        {id: 9, title: 'ПР-19'},
-        {id: 10, title: 'ПР-19'},
-        {id: 11, title: 'ПР-19'},
-        {id: 12, title: 'ПР-19'},
+        {id: 1, img: null, title: 'ПР-18'},
+        {id: 2, img: null, title: 'ПР-19'},
+        {id: 3, img: null, title: 'ПР-19'},
+        {id: 4, img: null, title: 'ПР-19'},
+        {id: 5, img: null, title: 'ПР-19'},
+        {id: 6, img: null, title: 'ПР-19'},
+        {id: 7, img: null, title: 'ПР-19'},
+        {id: 8, img: null, title: 'ПР-19'},
+        {id: 9, img: null, title: 'ПР-19'},
+        {id: 10, img: null, title: 'ПР-19'},
+        {id: 11, img: null, title: 'ПР-19'},
+        {id: 12, img: null, title: 'ПР-19'},
     ];
 
     const items = list.map(item => {
@@ -46,11 +46,12 @@ const GroupsList = () => {
 const CreateUserContent = () => {
 
     const groupSelectionBlock = useRef(null);
+
     const [ isTeacher, setIsTeacher ] = useState(false);
 
-    const { createdUsers, saveUser } = useSavedUsers() || {}
+    const { formValues, setFormValues } = useSavedUsers() || {}
 
-    function groupClickHandler() {
+    function groupHighlightHandler() {
         const elem = groupSelectionBlock.current;
         const classNames = elem.className;
         elem.className = `${classNames} ${elem.className}_highlight`;
@@ -58,7 +59,20 @@ const CreateUserContent = () => {
         setTimeout(() => {
             elem.className = classNames;
         }, 3000);
+    } 
+
+    function formInputChangeHandler(e) {
+        const { name, value } = e.target;
+
+        setFormValues({
+            ...formValues,
+            [name]: value,
+        });
     }
+
+    useEffect(() => {
+        setFormValues(formValues);
+    }, [formValues]);
 
     return (
         <form className='create'>
@@ -71,26 +85,46 @@ const CreateUserContent = () => {
                    <div className='create-user-info'>
                         <div className='create-user-info__grouping'>
                             <label htmlFor='login' className='create-user-info__label'>
-                                <input name='login' type='text' className='create-user-info__input input' placeholder='&nbsp;' />
+                                <input 
+                                name='login'
+                                value={formValues.login} 
+                                onChange={formInputChangeHandler}
+                                type='text' 
+                                className='create-user-info__input input' 
+                                placeholder='&nbsp;' />
                                 <span>Логин</span>
                             </label>
                             <label htmlFor='password' className='create-user-info__label'>
-                                <input name='password' type='text' className='create-user-info__input input' placeholder='&nbsp;' />
+                                <input 
+                                name='password'
+                                value={formValues.password} 
+                                onChange={formInputChangeHandler}
+                                type='text' 
+                                className='create-user-info__input input' 
+                                placeholder='&nbsp;' />
                                 <span>Пароль</span>
                             </label>
                         </div>
                         <label htmlFor='fullname' className='create-user-info__label'>
-                            <input name='fullname' type='text' className='create-user-info__input input' placeholder='&nbsp;' />
+                            <input 
+                            name='fullname'
+                            value={formValues.fullname} 
+                            onChange={formInputChangeHandler}
+                            type='text' 
+                            className='create-user-info__input input' 
+                            placeholder='&nbsp;' />
                             <span>ФИО</span>
                         </label>
                    </div>
                    <div className='create-user__roles'>
                         <input 
+                        name='role'
                         type='button' 
                         className={`create-user__button ${(!isTeacher) ? 'create-user__button_active' : ''} button`} 
                         value='Студент'
                         onClick={ () => {setIsTeacher(false)} } />
                         <input 
+                        name='role'
                         type='button' 
                         className={`create-user__button ${(isTeacher) ? 'create-user__button_active' : ''} button`} 
                         value='Преподаватель'
@@ -113,7 +147,7 @@ const CreateUserContent = () => {
                             <img src={emptyGroupIcon} alt='Пустой' />
                         </div>
                         <p className='groups-info__descr'>
-                            Выберите <span onClick={groupClickHandler}>группу</span>, чтобы увидеть её данные
+                            Выберите <span onClick={groupHighlightHandler}>группу</span>, чтобы увидеть её данные
                         </p>
                     </div>
                 </div>
@@ -124,14 +158,24 @@ const CreateUserContent = () => {
                    <div className='extra__grouping'>
                        <label htmlFor='userId' className='extra__label'>ID Пользователя</label>
                        <div className='extra__field'>
-                            <input type='text' className='extra__input input' />
+                            <input 
+                            type='text' 
+                            name='idUser'
+                            value={formValues.idUser} 
+                            onChange={formInputChangeHandler}
+                            className='extra__input input' />
                             <span>Заполняется автоматически при создании</span>
                        </div>
                    </div>
                    <div className='extra__grouping'>
                        <label htmlFor='userId' className='extra__label'>Электронная почта</label>
                        <div className='extra__field'>
-                            <input type='text' className='extra__input input' />
+                            <input 
+                            type='text'
+                            name='email' 
+                            value={formValues.email} 
+                            onChange={formInputChangeHandler}
+                            className='extra__input input' />
                             <span>Для получения писем о&nbsp;восстановлении пароля, опубликации новых заданий и&nbsp;т.п.</span>
                        </div>
                    </div>
