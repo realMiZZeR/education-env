@@ -9,7 +9,7 @@ import defaultUserIcon from '../assets/images/icons/profile/user.svg';
 
 export default function MainNavbar() {
 
-    const { user } = useAuth() || {};
+    const { user } = useAuth();
 
     return (
         <div className='navbar'>

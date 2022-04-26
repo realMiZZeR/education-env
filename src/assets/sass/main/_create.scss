@@ -137,20 +137,43 @@
         &__roles {
             display: flex;
             grid-area: roles;
+            gap: 20px;
+        }
+        &__label {
+            position: relative;
+            width: 100%;
+            cursor: pointer;
+
+            input {
+                position: absolute;
+                top: 0; left: 0;
+                z-index: 1;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                cursor: pointer;
+            }
         }
         &__button {
+            text-align: center;
             width: 100%;
             border-radius: $block-brd-radius;
             padding-top: 15px;
             padding-bottom: 14px;
-            cursor: pointer;
-        }
-        &__button + &__button {
-            margin-left: 20px;
+            background-color: $role-block;
+
+            span {
+                font-family: $roboto-font;
+                font-weight: 500;
+                font-size: 16px;
+                color: transparentize($font-color, 0.25);
+            }
         }
         &__button_active {
             background-color: $main-color;
-            color: $w-font-color;
+            span {
+                color: $w-font-color;
+            }
         }
     }
 }

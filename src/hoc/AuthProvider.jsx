@@ -10,10 +10,15 @@ export const AuthProvider = ({ children }) => {
     const signIn = (newUser, callback) => {
         setUser(newUser);
         (newUser.login === 'admin') ? setIsAdmin(true) : setIsAdmin(false);
+        if(newUser.rememberPassword) {
+            localStorage.setItem('login', newUser.login);
+            console.log(localStorage.getItem('login'));
+        }
         callback();
     }
     const signOut = (callback) => {
         setUser(null);
+        setIsAdmin(null);
         callback();
     }
 

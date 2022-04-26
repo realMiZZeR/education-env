@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
@@ -162,22 +162,28 @@ function NavList() {
         ]
     }
 
-    let currentNavbar = navListItems.guest;
+    const [ currentNavbar, setCurrentNavbar ] = useState(navListItems.guest);
 
-    if(user) { 
-        currentNavbar = navListItems.auth;
-    }
+    useEffect(() => {
+        if(!user) {
+            setCurrentNavbar(navListItems.guest);
+        }
+        if(user) {
+            setCurrentNavbar(navListItems.auth)
+        }
+        if(isAdmin) {
+            setCurrentNavbar(navListItems.admin);
+        }
 
-    if(isAdmin) {
-        currentNavbar = navListItems.admin;
-    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user?.login]);
 
     const listItems = currentNavbar.map(item => {
         return (
         <li 
         className={`nav-list__item ${item.name === 'Выход' ? 'nav-list__item_exit' : ''}`} 
         key={item.key}
-        onClick={item.name === 'Выход' ? () => signOut(() => navigate(item.link, {replace: true})) : undefined}
+        onClick={item.name === 'Выход' ? () => signOut(() => navigate(item.link, {replace: true})) : null}
         onMouseEnter={ e => { e.currentTarget.children[0].children[0].children[0].src = item.imgActive } }
         onMouseLeave={  e => { e.currentTarget.children[0].children[0].children[0].src = item.img } }>
             <Link to={item.link} className='nav-list__link link'>

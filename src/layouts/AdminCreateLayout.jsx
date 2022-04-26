@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect } from 'react';
 import { createContext, useState } from 'react';
 
@@ -52,20 +53,41 @@ export const AdminCreateLayout = ({ children }) => {
         ]);
     }
 
+    const deleteUser = (user) => {
+
+    }
+
+    function saveUsersData() {
+        const fetchData = async () => {
+            const result = await axios.post(
+                'http://server.selestia.ru/api/admin/createUser', 
+                savedUsers
+            );
+            
+            console.log(result);
+        }
+
+        fetchData();
+    }
+
     const value = { 
         addUser,
         savedUsers, 
         saveUser, 
+        deleteUser,
         currentUser, 
         setCurrentUser, 
         formValues,
         setFormValues,
-        incrementId 
+        incrementId,
+        saveUsersData 
     }
 
     // loading first user on render
     useEffect(() => {
-        addUser(formFields);
+        return () => {
+            addUser(formFields);
+        }
     }, []);
 
     return (

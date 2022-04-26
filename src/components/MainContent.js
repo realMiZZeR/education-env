@@ -34,50 +34,50 @@ export default function MainContent() {
                 </header>
                 <div className='content-main'>
                     <Suspense fallback={<LoadingPage />}>
-                            <Routes>
-                                <Route path='/load' element={<LoadingPage />} />
-                                <Route path='/' element={<Auth title='Добро пожаловать!' />} />
-                                <Route path='/home' element={
-                                    <AuthController>
-                                        <Home title="Главная" />
-                                    </AuthController>
-                                } />
-                                <Route path='/timetable' element={<Timetable title="Расписание" />} />
-                                <Route path='/messanger' element={
-                                    <AuthController>
-                                        <Messanger title="Сообщения" />
-                                    </AuthController>
-                                }/>
-                                <Route path='/profile/:login' element={
-                                    <AuthController>
-                                        <Profile title="Личный кабинет" />
-                                    </AuthController>
-                                } />
-                                <Route path='/users' element={
-                                    <AuthController>
-                                        <Users title="Все пользователи" />
-                                    </AuthController>
-                                } />
-                                <Route path='/tasks' element={
-                                    <AuthController>
-                                        <Tasks title="Задания" />
-                                    </AuthController>
-                                } />
-                                <Route path='/journal' element={
-                                    <AuthController>
-                                        <Journal title="Журнал оценок" />
-                                    </AuthController>
-                                } />
-                                <Route path='*' element={<PageNotFound />} />
+                        <Routes>
+                            <Route path='/load' element={<LoadingPage />} />
+                            <Route path='/' element={<Auth title='Добро пожаловать!' />} />
+                            <Route path='/home' element={
+                                <AuthController>
+                                    <Home title="Главная" />
+                                </AuthController>
+                            } />
+                            <Route path='/timetable' element={<Timetable title="Расписание" />} />
+                            <Route path='/messanger' element={
+                                <AuthController>
+                                    <Messanger title="Сообщения" />
+                                </AuthController>
+                            }/>
+                            <Route path='/profile/:login' element={
+                                <AuthController>
+                                    <Profile title="Личный кабинет" />
+                                </AuthController>
+                            } />
+                            <Route path='/users' element={
+                                <AuthController>
+                                    <Users title="Все пользователи" />
+                                </AuthController>
+                            } />
+                            <Route path='/tasks' element={
+                                <AuthController>
+                                    <Tasks title="Задания" />
+                                </AuthController>
+                            } />
+                            <Route path='/journal' element={
+                                <AuthController>
+                                    <Journal title="Журнал оценок" />
+                                </AuthController>
+                            } />
+                            <Route path='*' element={<PageNotFound />} />
 
-                                {/* admin pages */}
+                            {/* admin pages */}
 
-                                <Route path='/create-user' element={
-                                    <AdminController>
-                                        <CreateUserPage title="Создание пользователя" />
-                                    </AdminController>
-                                } />
-                            </Routes>
+                            <Route path='/create-user' element={
+                                <AdminController>
+                                    <CreateUserPage title="Создание пользователя" />
+                                </AdminController>
+                            } />
+                        </Routes>
                     </Suspense>
                 </div>
             </div>

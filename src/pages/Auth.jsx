@@ -38,9 +38,11 @@ function Auth(props) {
         if(Object.keys(errorMessages).length > 0) return;
 
         const user = {
-            login: form.login.value,
-            password: form.password.value
+            login: login,
+            password: password,
         };
+
+        
 
         signIn(user, () => navigate('/home', {replace: true}));
 
@@ -59,9 +61,9 @@ function Auth(props) {
                     <input 
                     type='text' 
                     name='login' 
+                    onChange={e => setLogin(e.target.value)}
                     className='auth-form__input input' 
                     placeholder='Логин'
-                    onChange={e => setLogin(e.target.value)}
                     />
                     {errorMessages.login && 
                         <span className='auth-form__error'>{errorMessages.login}</span>
@@ -71,9 +73,9 @@ function Auth(props) {
                     <input 
                     type='password' 
                     name='password' 
+                    onChange={e => setPassword(e.target.value)} 
                     className='auth-form__input input' 
                     placeholder='Пароль'
-                    onChange={e => setPassword(e.target.value)} 
                     />
                     {errorMessages.password && 
                         <span className='auth-form__error'>{errorMessages.password}</span>
@@ -104,7 +106,7 @@ function Auth(props) {
                 <AuthAsideParagraph>
                     Для получения полного функционала данного ресурса 
                     рекомендуется использовать уже созданный аккаунт 
-                    в&nbsp;системе или обратитьсяза&nbsp;его созданием в&nbsp;тех. поддержку.
+                    в&nbsp;системе или обратиться за&nbsp;его созданием в&nbsp;тех. поддержку.
                 </AuthAsideParagraph>
                 <div className='auth-aside__links'>
                     <a className='auth-aside__link link' href='mailto:support@spt.ru'>support@spt.ru</a>

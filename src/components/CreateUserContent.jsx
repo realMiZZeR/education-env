@@ -1,65 +1,13 @@
 import { useSavedUsers } from '../hooks/useSavedUsers';
-import { useEffect, useRef, useState } from 'react';
-import Search from './Search';
+import { useEffect } from 'react';
 
 // icons
 import defaultUserIcon from '../assets/images/icons/profile/user.svg';
-import defaultGroupIcon from '../assets/images/icons/default_group.png';
-import emptyGroupIcon from '../assets/images/icons/empty_group.svg';
-
-const GroupsList = () => {
-
-    const list = [
-        {id: 1, img: null, title: 'ПР-18'},
-        {id: 2, img: null, title: 'ПР-19'},
-        {id: 3, img: null, title: 'ПР-19'},
-        {id: 4, img: null, title: 'ПР-19'},
-        {id: 5, img: null, title: 'ПР-19'},
-        {id: 6, img: null, title: 'ПР-19'},
-        {id: 7, img: null, title: 'ПР-19'},
-        {id: 8, img: null, title: 'ПР-19'},
-        {id: 9, img: null, title: 'ПР-19'},
-        {id: 10, img: null, title: 'ПР-19'},
-        {id: 11, img: null, title: 'ПР-19'},
-        {id: 12, img: null, title: 'ПР-19'},
-    ];
-
-    const items = list.map(item => {
-        return (
-            <li 
-            key={item.id} 
-            className='groups-selection-list__item'>
-                <div className='groups-selection-list__image'>
-                    <img src={defaultGroupIcon} alt='Аватар группы' />
-                </div>
-                <h4 className='groups-selection-list__title'>{ item.title }</h4>
-            </li>
-        );
-    });
-
-
-    return (
-        <ul className='groups-selection-list'>{ items }</ul>
-    );
-}
+import GroupSelection from './GroupSelection';
 
 const CreateUserContent = () => {
 
-    const groupSelectionBlock = useRef(null);
-
-    const [ isTeacher, setIsTeacher ] = useState(false);
-
     const { formValues, setFormValues } = useSavedUsers() || {}
-
-    function groupHighlightHandler() {
-        const elem = groupSelectionBlock.current;
-        const classNames = elem.className;
-        elem.className = `${classNames} ${elem.className}_highlight`;
-
-        setTimeout(() => {
-            elem.className = classNames;
-        }, 3000);
-    } 
 
     function formInputChangeHandler(e) {
         const { name, value } = e.target;
@@ -70,6 +18,15 @@ const CreateUserContent = () => {
         });
     }
 
+    function formRadioHandler(e) {
+        const { name, value } = e.target;
+
+        setFormValues({
+            ...formValues,
+            [name]: JSON.parse(value),
+        });
+    }
+
     useEffect(() => {
         setFormValues(formValues);
     }, [formValues]);
@@ -77,7 +34,7 @@ const CreateUserContent = () => {
     return (
         <form className='create'>
            <div className='create-section'>
-               <h2 className='create-section__heading'>Информация о {(isTeacher) ? 'преподавателе' : 'студенте'}</h2>
+               <h2 className='create-section__heading'>Информация о {(formValues.isTeacher) ? 'преподавателе' : 'студенте'}</h2>
                <div className='create-user'>
                    <div className='create-user__image'>
                        <img src={defaultUserIcon} alt='Аватарка' />
@@ -117,41 +74,34 @@ const CreateUserContent = () => {
                         </label>
                    </div>
                    <div className='create-user__roles'>
-                        <input 
-                        name='role'
-                        type='button' 
-                        className={`create-user__button ${(!isTeacher) ? 'create-user__button_active' : ''} button`} 
-                        value='Студент'
-                        onClick={ () => {setIsTeacher(false)} } />
-                        <input 
-                        name='role'
-                        type='button' 
-                        className={`create-user__button ${(isTeacher) ? 'create-user__button_active' : ''} button`} 
-                        value='Преподаватель'
-                        onClick={ () => {setIsTeacher(true)} } />
+                        <label htmlFor='isTeacher' className='create-user__label'>
+                            <div className={`create-user__button ${(!formValues.isTeacher) ? 'create-user__button_active' : ''} button`}>
+                                <span>Студент</span>
+                            </div> 
+                            <input 
+                            name='isTeacher' 
+                            type='radio' 
+                            value='false' 
+                            defaultChecked={!formValues.isTeacher}
+                            onClick={formRadioHandler} />
+                        </label>
+                        <label htmlFor='isTeacher' className='create-user__label'>
+                            <div className={`create-user__button ${(formValues.isTeacher) ? 'create-user__button_active' : ''} button`}>
+                                <span>Преподаватель</span>
+                            </div> 
+                            <input 
+                            name='isTeacher' 
+                            type='radio' 
+                            value='true' 
+                            defaultChecked={formValues.isTeacher}
+                            onClick={formRadioHandler} />
+                        </label>
                     </div>
                </div>
            </div>
-           {!isTeacher && <div className='create-section'>
-               <h2 className='create-section__heading'>
-                   <span>Группа</span>
-                   <span>Выбрано: ПР-18</span>
-                </h2>
-                <div className='groups_a'>
-                    <div ref={groupSelectionBlock} className='groups-selection'>
-                        <Search className={`groups-selection__search search`} />
-                        <GroupsList />
-                    </div>
-                    <div className={`groups-info groups-info_empty`}>
-                        <div className='groups-info__image'>
-                            <img src={emptyGroupIcon} alt='Пустой' />
-                        </div>
-                        <p className='groups-info__descr'>
-                            Выберите <span onClick={groupHighlightHandler}>группу</span>, чтобы увидеть её данные
-                        </p>
-                    </div>
-                </div>
-           </div>}
+
+           <GroupSelection />
+
            <div className='create-section'>
                <h2 className='create-section__heading'>Дополнительно</h2>
                <div className='extra'>
