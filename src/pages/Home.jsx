@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 
+import HomePageUser from '../components/HomePageUser';
 import HomeController from '../hoc/HomeController';
 
-// scripts
+// functions
 import updateTitle from '../assets/js/updateTitle';
-import HomePageUser from '../components/HomePageUser';
 
 export default function Home(props) {
 

@@ -7,6 +7,7 @@
         display: grid;
         grid-template-columns: 1fr 530px;
         gap: 50px;
+        height: 100%;
     }
     &-aside {
         display: flex;
@@ -15,7 +16,6 @@
         border-radius: $block-brd-radius;
         box-shadow: $block-shadow;
         padding: 20px;
-        margin-top: 54px;
         height: 730px;
     }
     &-section {
@@ -39,15 +39,31 @@
                 color: transparentize($half-font-color, 0.15);
             }
         }
+        &__grouping {
+            display: flex;
+            gap: 40px;
+            background-color: $background-color;
+            border-radius: $block-brd-radius;
+            box-shadow: $block-shadow;
+            padding: 20px;
+        }
     }
-    &-user {
+    &-main {
         display: grid;
-        grid-template-columns: 150px 1fr;
-        grid-template-rows: 150px 1fr;
-        grid-template-areas: 
-        "image info"
-        "image roles";
-        gap: 20px;
+        grid-template-columns: 150px 1fr;        
+        gap: 50px;
+        
+        &_u {
+            grid-template-areas: 
+            "image info"
+            "image roles";
+            grid-template-rows: 150px 1fr;
+        }
+
+        &_d {
+            grid-template-areas: 
+            "image info"
+        }
 
         background-color: $block-color;
         border-radius: $block-brd-radius;
@@ -69,13 +85,23 @@
             max-height: 150px;
             border-radius: 100%;
             overflow: hidden;
-            margin-right: 50px;
             grid-area: image;
 
             img {
                 width: 100px;
                 height: 100px;
                 object-fit: contain;
+                opacity: 0.5;
+            }
+            &_d {
+                background: none!important;
+                border-radius: 0!important;
+                overflow: hidden;
+
+                img {
+                    width: 150px;
+                    height: 150px;
+                }
             }
         }
         &-info {
@@ -89,17 +115,20 @@
                 position: relative;
                 display: flex;
                 align-items: center;
+                gap: 20px;
                 width: 100%;
                 margin-bottom: 20px;
             }
 
             &__label {
+                display: block;
                 position: relative;
                 font-family: $roboto-font;
                 font-weight: 500;
                 width: 100%;
+                min-height: 50px;
 
-                span {
+                & > span {
                     font-size: 18px;
                     position: absolute;
                     top: 50%; left: 20px;
@@ -108,17 +137,29 @@
                     transition: top .3s ease-in-out,
                                 font-size .3s ease-in-out,
                                 transform .3s ease-in-out;
+                    pointer-events: none;
                 }
             }
-            &__label + &__label {
-                margin-left: 20px;
+            &__placeholder {
+                font-size: 18px;
+                    position: absolute;
+                    top: 50%; left: 20px;
+                    transform: translateY(-50%);
+                    color: transparentize($half-font-color, 0.1);
+                    transition: top .3s ease-in-out,
+                                font-size .3s ease-in-out,
+                                transform .3s ease-in-out;
+                    pointer-events: none;
             }
             &__input {
+                margin: 0;
+                padding: 0;
                 font-size: 18px;
                 padding: 0 20px;
                 width: 100%;
                 height: 50px;
                 padding-top: 5px; 
+
             }
             &__input::placeholder {
                 opacity: 0;
@@ -176,4 +217,7 @@
             }
         }
     }
+
+
+
 }

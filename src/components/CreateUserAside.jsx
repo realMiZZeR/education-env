@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSavedUsers } from '../hooks/useSavedUsers';
 
 // icons
@@ -14,31 +14,31 @@ const UsersList = () => {
         saveUser(formValues);
     }
 
-    function userDeleteHandler() {
-        deleteUser();
+    function userDeleteHandler(id) {
+        deleteUser(id);
     }
 
-    function testForm(id) {
+    function itemClickHandler(id) {
         setCurrentUser(id);
         setFormValues(savedUsers[id]);
     }
-
+    
     const users = savedUsers.map(user => {
         return (
             <li key={user.id} 
             className={`aside-users-list__item ${(currentUser === user.id) ? 'aside-users-list__item_current' : ''}`}
-            onClick={() => { testForm(user.id) }}
+            onClick={() => { itemClickHandler(user.id) }}
             >
                 <div className='aside-users-list__image'>
                     <img src={defaultUserIcon} alt='Аватарка' />
                 </div>
-                <h4 className='aside-users-list__login'>{ (user?.login) ? user.login : 'пусто' }</h4>
+                <h4 className='aside-users-list__login'>{ (user?.login) ? user.login : 'Логин' }</h4>
                 {(currentUser === user.id) &&
                 <div className='aside-users-list__buttons'>
                     <button onClick={userSaveHandler} className='aside-users-list__button button'>
                         <img src={saveIcon} alt='Сохранить' />
                     </button>
-                    <button onClick={userDeleteHandler} className='aside-users-list__button button'>
+                    <button onClick={() => { userDeleteHandler(user.id) } } className='aside-users-list__button button'>
                         <img src={deleteIcon} alt='Удалить' />
                     </button>
                 </div>
@@ -66,7 +66,7 @@ const CreateUserAside = () => {
     }
 
     return (
-        <aside className='aside'>
+        <aside className='aside aside_without-head'>
             <div className='create-aside'>
                 <div className='aside-users'>
                     <UsersList />

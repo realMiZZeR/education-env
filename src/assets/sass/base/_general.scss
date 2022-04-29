@@ -16,11 +16,18 @@ $half-font-color: rgba(0, 0, 0, 0.5);
 $error-block: rgba(207, 47, 47, 0.808);
 $loading-cell: rgba(0, 0, 0, 0.2);
 
+$dropdown-color: rgb(240, 240, 240);
+
 $purple-color: #8E3BE3;
 $green-color: #21E929;
 $orange-color: #F9AA4D;
 
 $role-block: rgba(0, 0, 0, 0.05);
+$user-card-color: rgba(0, 0, 0, 0.15);
+$user-card-shadow: 0 4px 10px $user-card-color;
+$user-card-border: 1px solid $user-card-color;
+$user-card-shadow_teacher: 0 4px 10px transparentize($main-color, 0.85);
+$user-card-border_teacher: 2px solid transparentize($main-color, 0.85);
 
 // achievements
 $standard-color: linear-gradient(135deg, #4D69F9 0%, #9D6CDC 100%);
@@ -85,6 +92,33 @@ body {
     color: $font-color;
 }
 
+.select {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    cursor: pointer;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 45%; right: 15px;
+        width: 20px;
+        height: 20px;
+        background-image: url('../../images/icons/arrow.svg');
+        background-repeat: no-repeat;
+        background-size: contain;
+        transform: translateY(-50%) rotate(-90deg);
+        transition: .3s transform ease-in-out;
+        z-index: 1;
+        opacity: 0.5;
+    }
+    &_active::before {
+        transform: translateY(-45%) rotate(90deg);
+        transition: .3s transform ease-in-out;
+
+    }
+}
+
 .hamburger {
     cursor: pointer;
 }
@@ -99,11 +133,12 @@ body {
 // styles for layouts
 .content-main__grid_two {
     display: grid;
-    margin-top: 50px;
     grid-template-columns: 1fr 550px;
     gap: 30px;
     width: 100%;
+    min-height: 720px;
     height: auto;
+    margin-top: 50px;
 }
 
 @media screen and (max-width: 1366px) {

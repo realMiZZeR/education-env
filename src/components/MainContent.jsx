@@ -1,15 +1,19 @@
 import { Route, Routes } from 'react-router-dom';
 import React, { Suspense } from 'react';
-import LoadingPage from './LoadingPage';
+
+// components
 import Search from './Search';
+import LoadingPage from './LoadingPage';
+
+// hoc
+import { TimetableProvider } from '../hoc/TimetableProvider';
+import AuthController from '../hoc/AuthController';
+import AdminController from '../hoc/AdminController';
 
 // images
 import hamburgerIcon from '../assets/images/icons/hamburger.svg';
-import AuthController from '../hoc/AuthController';
-import { AuthProvider } from '../hoc/AuthProvider';
-import AdminController from '../hoc/AdminController';
-import CreateUserPage from '../pages/CreateUserPage';
 
+// pages
 const Auth = React.lazy(() => import('../pages/Auth'));
 const Home = React.lazy(() => import('../pages/Home'));
 const Messanger = React.lazy(() => import('../pages/Messanger'));
@@ -20,6 +24,9 @@ const Journal = React.lazy(() => import('../pages/Journal'));
 const PageNotFound = React.lazy(() => import('../pages/PageNotFound'));
 const Profile = React.lazy(() => import('../pages/Profile'));
 
+// admin pages
+const CreateUserPage = React.lazy(() => import('../pages/CreateUserPage'));
+const CreateDisciplinePage = React.lazy(() => import('../pages/CreateDisciplinePage'));
 
 
 export default function MainContent() {
@@ -42,7 +49,11 @@ export default function MainContent() {
                                     <Home title="Главная" />
                                 </AuthController>
                             } />
-                            <Route path='/timetable' element={<Timetable title="Расписание" />} />
+                            <Route path='/timetable' element={
+                                <TimetableProvider>
+                                    <Timetable title="Расписание" />
+                                </TimetableProvider>
+                            } />
                             <Route path='/messanger' element={
                                 <AuthController>
                                     <Messanger title="Сообщения" />
@@ -75,6 +86,11 @@ export default function MainContent() {
                             <Route path='/create-user' element={
                                 <AdminController>
                                     <CreateUserPage title="Создание пользователя" />
+                                </AdminController>
+                            } />
+                            <Route path='/create-discipline' element={
+                                <AdminController>
+                                    <CreateDisciplinePage title="Создание дисциплины" />
                                 </AdminController>
                             } />
                         </Routes>

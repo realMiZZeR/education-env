@@ -2,14 +2,16 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 
-// images
-import PrevArrow from '../components/PrevArrow';
-import NextArrow from '../components/NextArrow';
 import DevidedByTwo from '../layouts/DevidedByTwo';
-import TimetableComponent from '../components/TimetableComponent';
-import Messages from '../components/Messages';
+import TimetableComponent from './TimetableComponent';
+import Messages from './Messages';
+
+// images
+import PrevArrow from './PrevArrow';
+import NextArrow from './NextArrow';
 
 import getDisciplineImage from '../assets/js/getDisciplineImage';
+import { TimetableProvider } from '../hoc/TimetableProvider';
 
 const tasksList = [
     {
@@ -115,7 +117,9 @@ function HomePageUser() {
                 <TestSlide tasksList={tasksList} />
             </article>
             <DevidedByTwo>
-                <TimetableComponent />
+                <TimetableProvider>
+                    <TimetableComponent />
+                </TimetableProvider>
                 <Messages />
             </DevidedByTwo>
         </>

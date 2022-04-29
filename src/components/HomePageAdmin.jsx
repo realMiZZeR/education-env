@@ -8,6 +8,7 @@ import createGroupIcon from '../assets/images/icons/admin/create_group.svg';
 import DevidedByTwo from '../layouts/DevidedByTwo';
 import TimetableComponent from './TimetableComponent';
 import Messages from './Messages';
+import { TimetableProvider } from '../hoc/TimetableProvider';
 
 function HomePageAdmin() {
     return (
@@ -31,7 +32,9 @@ function HomePageAdmin() {
                 link='/create-user' />
             </Cards>
             <DevidedByTwo>
-                <TimetableComponent />
+                <TimetableProvider>
+                    <TimetableComponent />
+                </TimetableProvider>
                 <Messages />
             </DevidedByTwo>
                 

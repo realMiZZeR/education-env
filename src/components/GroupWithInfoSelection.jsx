@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 
 import GroupInfo from './GroupInfo';
 import Search from './Search';
 
 import defaultGroupIcon from '../assets/images/icons/default_group.png';
 import { useSavedUsers } from '../hooks/useSavedUsers';
+import { useAxios } from '../hooks/useAxios';
 
 const GroupsList = () => {
 
@@ -13,17 +13,14 @@ const GroupsList = () => {
 
     const [ data, setData ] = useState([]);
 
+    const [groups, isError, isLoading] = useAxios({
+        url: '/api/admin/getGroup',
+        method: 'get'
+    });
+
     useEffect(() => {
-        const fetchData = async () => {
-            const result = await axios(
-                'http://server.selestia.ru/api/admin/getGroup'
-            );
-
-            setData(result.data);
-        }
-
-        fetchData();
-    }, []);
+        if(groups && groups.data) setData(groups.data);
+    }, [groups]);
 
     function groupClickHandler(id) {
         setFormValues({
@@ -34,7 +31,7 @@ const GroupsList = () => {
 
     return (
         <ul className='groups-selection-list'>
-            { data.map(item => (
+            { !isError && data.map(item => (
                 <li 
                 key={item.id} 
                 className={`groups-selection-list__item ${(item.id === formValues.group) ? 'groups-selection-list__item_current' : ''}`}
@@ -45,11 +42,14 @@ const GroupsList = () => {
                     <h4 className='groups-selection-list__title'>{ item.title }</h4>
                 </li>
             )) }
+            { isError && 
+                <div className=''>stop</div>
+            }
         </ul>
     );
 }
 
-const GroupSelection = () => {
+const GroupWithInfoSelection = () => {
 
     const { formValues } = useSavedUsers();
 
@@ -66,27 +66,24 @@ const GroupSelection = () => {
     } 
 
     return (
-        <>
-        {!formValues.isTeacher && 
-            <div className='create-section'>
-                <h2 className='create-section__heading'>
-                    <span>Группа</span>
-                    <span>Выбрано: { formValues.group }</span>
-                </h2>
-                <div className='groups_a'>
-                    <div ref={groupSelectionBlock} className='groups-selection'>
-                        <Search className={`groups-selection__search search`} />
-                        <GroupsList />
-                    </div>
-                    
-                    <GroupInfo refHandler={groupHighlightHandler} />
-
+        <div className='create-section'>
+            <h2 className='create-section__heading'>
+                <span>Группа</span>
+                <span>
+                    Выбрано: { (formValues.group) ? formValues.group : 'нет' }
+                </span>
+            </h2>
+            <div className='groups_a'>
+                <div ref={groupSelectionBlock} className='groups-selection'>
+                    <Search className={`groups-selection__search search`} />
+                    <GroupsList />
                 </div>
+                
+                <GroupInfo refHandler={groupHighlightHandler} />
+
             </div>
-        }
-        </>
-        
+        </div>
     );
 }
 
-export default GroupSelection;
+export default GroupWithInfoSelection;

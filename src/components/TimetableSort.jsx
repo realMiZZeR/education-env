@@ -1,7 +1,7 @@
 import React, { Suspense, useState } from 'react';
 
 import LoadingPage from './LoadingPage';
-import Groups from './Groups';
+import TimetableGroups from './TimetableGroups';
 import Teachers from './Teachers';
 import SwitchButton from './SwitchButton';
 import Search from './Search';
@@ -22,7 +22,7 @@ export default function TimetableSort() {
             </SwitchButton>
             <Search className='search' />
             <Suspense fallback={<LoadingPage />}>
-                {!isTeacher && <Groups />}
+                {!isTeacher && <TimetableGroups />}
                 {isTeacher && <Teachers />}
             </Suspense>
         </article>

@@ -47,6 +47,13 @@
         &__item:hover {
             background-color: $hover-color;
         }
+        &__item_current {
+            color: $w-font-color;
+            background-color: $main-color;
+        }
+        &__item_current:hover {
+            background-color: $main-color!important;
+        }
         &__name {
             font-family: $roboto-font;
             font-weight: 500;
@@ -79,6 +86,13 @@
             height: 50px;
             margin-bottom: 20px;
             padding: 0 20px;
+        }
+        &__grouping {
+            background-color: $block-color;
+            border-radius: $block-brd-radius;
+            box-shadow: $block-shadow;
+            height: 100%;
+            padding: 20px;
         }
         &-list {
             height: 100%;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SwitchButton from '../components/SwitchButton';
+import SwitchButton from './SwitchButton';
 import EditIcon from '../assets/images/icons/edit.svg';
 
 function UserSettings(props) {

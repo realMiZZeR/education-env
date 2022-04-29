@@ -1,7 +1,5 @@
 import React from 'react';
 import NavbarList from './NavbarList';
-import userImage from '../assets/images/user_image.jfif'
-import { AuthProvider } from '../hoc/AuthProvider'; 
 import { useAuth } from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
 

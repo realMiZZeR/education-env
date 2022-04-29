@@ -4,7 +4,7 @@ import { createContext, useState } from 'react';
 
 export const SavedUsersContext = createContext(null);
 
-export const AdminCreateLayout = ({ children }) => {
+export const CreateUserProvider = ({ children }) => {
 
     const [ id, setId ] = useState(0);
 
@@ -51,10 +51,20 @@ export const AdminCreateLayout = ({ children }) => {
         setSavedUsers( arr => [
             ...replaceValue(arr, user)
         ]);
+        localStorage.setItem('savedUsers', JSON.stringify(savedUsers));
     }
 
-    const deleteUser = (user) => {
+    // delete object in array savedUsers
+    function deleteValue(arr, id) {
+        arr.splice(id, 1);
+        return arr;
+    }
 
+    const deleteUser = (id) => {
+        setSavedUsers( arr => [
+            ...deleteValue(arr, id),
+        ]);
+        localStorage.setItem('savedUsers', JSON.stringify(savedUsers));
     }
 
     function saveUsersData() {
@@ -86,7 +96,11 @@ export const AdminCreateLayout = ({ children }) => {
     // loading first user on render
     useEffect(() => {
         return () => {
-            addUser(formFields);
+            if(localStorage.getItem('savedUsers')) {
+                setSavedUsers(JSON.parse(localStorage.getItem('savedUsers')));
+            } else {
+                addUser(formFields);
+            }
         }
     }, []);
 

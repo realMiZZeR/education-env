@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default function Teachers() {
+export const Error = () => {
     return (
-        <div className='teachers'>
+        <div className='error'>
             
         </div>
     );

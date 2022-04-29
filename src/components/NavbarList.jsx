@@ -185,13 +185,15 @@ function NavList() {
         key={item.key}
         onClick={item.name === 'Выход' ? () => signOut(() => navigate(item.link, {replace: true})) : null}
         onMouseEnter={ e => { e.currentTarget.children[0].children[0].children[0].src = item.imgActive } }
-        onMouseLeave={  e => { e.currentTarget.children[0].children[0].children[0].src = item.img } }>
+        onMouseLeave={ e => { e.currentTarget.children[0].children[0].children[0].src = item.img } }>
+
             <Link to={item.link} className='nav-list__link link'>
                 <div className='nav-list__image'>
                     <img src={item.img} alt={item?.alt} />
                 </div>
                 <p className='nav-list__title'>{item?.name}</p>
             </Link>
+
         </li>
         );
     });

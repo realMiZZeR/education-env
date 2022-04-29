@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import updateTitle from '../assets/js/updateTitle';
 import CreateUserAside from '../components/CreateUserAside';
 import CreateUserContent from '../components/CreateUserContent';
-import { AdminCreateLayout } from '../layouts/AdminCreateLayout';
+import { CreateUserProvider } from '../hoc/CreateUserProvider';
 
 function CreateUser(props) {
     // load title from Route in MainContent
@@ -13,10 +13,10 @@ function CreateUser(props) {
     }, [props.title]);
 
     return (
-        <AdminCreateLayout>
+        <CreateUserProvider>
             <CreateUserContent />
             <CreateUserAside />
-        </AdminCreateLayout>
+        </CreateUserProvider>
     );
 }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import updateTitle from '../assets/js/updateTitle';
 import SwitchButton from '../components/SwitchButton';
@@ -19,7 +19,6 @@ function Auth(props) {
     }, [props.title]);
 
     const navigate = useNavigate();
-    const location = useLocation();
     const { signIn } = useAuth();
 
     const [ login, setLogin ] = useState(null);
@@ -29,11 +28,21 @@ function Auth(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        
         setErrorMessages({});
 
-        const form = e.target;
-
-        // сделать валидацию
+        if(!login) {
+            setErrorMessages({
+                ...errorMessages,
+                ['login']: 'Введите логин'
+            });
+        }
+        if(!password) {
+            setErrorMessages({
+                ...errorMessages,
+                ['password']: 'Введите пароль'
+            });
+        }
 
         if(Object.keys(errorMessages).length > 0) return;
 
@@ -47,6 +56,11 @@ function Auth(props) {
         signIn(user, () => navigate('/home', {replace: true}));
 
     }
+
+    // useEffect(() => {
+    //     console.log(errorMessages);
+    // }, [errorMessages]);
+
     const rememberPasswordHandler = () => {
         setRememberPassword(!rememberPassword);
     }

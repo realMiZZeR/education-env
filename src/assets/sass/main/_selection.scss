@@ -1,0 +1,83 @@
+.selection {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 500px;
+    transition: box-shadow .3s ease-in-out;
+
+    &__title {
+        font-family: $montserrat-font;
+        font-weight: 700;
+        font-size: 14px;
+        color: $font-color;
+        margin-bottom: 10px;
+    }
+    &__search {
+        margin-bottom: 20px;
+    }
+
+    &-list {
+        height: 100%;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+            width: 5px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: $main-color;
+            border-radius: $block-brd-radius;
+        }
+        &::-webkit-scrollbar-track {
+            background-color: $group-color;
+        }
+
+        &__item {
+            display: flex;
+            align-items: center;
+            background-color: transparent;
+            border-radius: $block-brd-radius;
+            height: 50px;
+            padding: 5px 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: $hover-color;
+            }
+            &_current {
+                color: $w-font-color;
+                background-color: $main-color;
+            }
+            &_current:hover {
+                background-color: $main-color!important;
+            }
+        }
+        &__item_active {
+            background-color: $main-color;
+        }
+        &__image {
+            $size: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: $size;
+            min-height: $size;
+            background-color: #EDEDED;
+            border-radius: 100%;
+            overflow: hidden;
+            margin-right: 15px;
+
+            img {
+                top: 0; left: 0;
+                width: calc($size / 2);
+                height: calc($size / 2);
+                object-fit: contain;
+            }
+        }
+        &__title {
+            font-family: $roboto-font;
+            font-weight: 500;
+            font-size: 14px;
+        }
+    }
+}

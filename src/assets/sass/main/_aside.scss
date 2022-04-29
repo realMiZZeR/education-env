@@ -1,6 +1,17 @@
 .aside {
     position: relative;
 
+    &_without-head {
+        margin-top: 54px;
+    }
+
+    &__heading {
+        font-family: $montserrat-font;
+        font-weight: 800;
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
     &__confirm {
         position: relative;
         background-color: $block-color;
