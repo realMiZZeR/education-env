@@ -31,6 +31,7 @@ const Users = (props) => {
         return () => {
             return;
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
     const [ teachers, setTeachers ] = useState([]);
@@ -41,6 +42,7 @@ const Users = (props) => {
         return () => {
             return;
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
     console.log(users);

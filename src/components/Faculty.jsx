@@ -8,7 +8,7 @@ const Faculty = ({formValues, setFormValues}) => {
     const [ data, setData ] = useState([]);
 
     const [faculties, isError, isLoading] = useAxios({
-        url: '/api/admin/getGroup',
+        url: '/api/admin/createGroup/getFacultet',
         method: 'get'
     });
 
@@ -34,14 +34,14 @@ const Faculty = ({formValues, setFormValues}) => {
                         data.map(item => (
                             <li 
                             key={item.id} 
-                            className={`selection-list__item ${(item.id === formValues.group) ? 'selection-list__item_current' : ''}`}
+                            className={`selection-list__item selection-list__item_faculty ${(item.id === formValues.faculty) ? 'selection-list__item_current' : ''}`}
                             onClick={() => groupClickHandler(item.id)}>
                                 <h4 className='selection-list__title'>{ item.title }</h4>
                             </li>
                         ))
                         // if error -> show error
                     ) : (
-                        <ErrorPage message='no' />
+                        <ErrorPage error='CONNECTION_REFUSED' />
                     ) }
                 </>
             )}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Error } from './Error';
+import ErrorPage from './ErrorPage';
 
 // hooks
 import { useFetchAPI } from '../hooks/useFetchAPI';
@@ -53,7 +53,7 @@ export default function TimetableGroups() {
     return(
         <div className='groups'>
             { !isError && <GroupsList groupsList={data} />}
-            { isError && <Error />}
+            { isError && <ErrorPage />}
         </div>
     );
 }

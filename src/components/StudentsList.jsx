@@ -10,13 +10,13 @@ const StudentsList = ({ formValues }) => {
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios(
-                `http://server.selestia.ru/api/admin/studentInGroup?idGroup=${formValues.group}`
+                `http://server.selestia.ru/api/admin/studentInGroup?idGroup=${JSON.stringify(formValues.group)}`
             );
             
             setStudents(result.data);
         }
 
-        if(formValues.group) {
+        if(formValues.group && formValues.group.length > 0) {
             fetchData();
         }
     }, [formValues.group]);

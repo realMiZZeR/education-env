@@ -9,8 +9,8 @@ export const CreateDisciplineProvider = ({ children }) => {
         number: '',
         type: '',
         title: '',
-        teacher: '',
-        group: ''
+        teacher: [],
+        group: []
     }
 
     const [ formValues, setFormValues ] = useState(formFields);
@@ -33,10 +33,6 @@ export const CreateDisciplineProvider = ({ children }) => {
         setFormValues,
         saveDisciplineData
     }
-
-    useEffect(() => {
-        console.log(formValues);
-    }, [formValues.type]);
 
     return (
         <DisciplineContext.Provider value={value}>

@@ -36,7 +36,7 @@ const CreateDisciplineContent = () => {
     const formTypeHandler = (value) => {
         setFormValues({
             ...formValues,
-            [type]: value // 'type'
+            ['type']: value
         });
     }
 

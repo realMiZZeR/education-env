@@ -51,15 +51,21 @@
                 background-color: $hover-color;
             }
             &_current {
-                color: $w-font-color;
                 background-color: $main-color;
             }
             &_current:hover {
                 background-color: $main-color!important;
             }
         }
+        &__item_current &__title {
+            color: $w-font-color!important;
+        }
         &__item_active {
             background-color: $main-color;
+        }
+        &__item_faculty {
+            justify-content: center;
+            text-align: center;
         }
         &__image {
             $size: 40px;
@@ -84,6 +90,11 @@
             font-family: $roboto-font;
             font-weight: 500;
             font-size: 14px;
+            color: $font-color;
+            width: 350px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
         }
     }
 }

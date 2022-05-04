@@ -3,16 +3,19 @@ import React, { useState, useEffect } from 'react';
 
 const defaultIcon = 'http://server.selestia.ru/userAvatar/standartUser.png';
 
-const StudentsListSelect = ({ formValues }) => {
+const StudentsListSelect = ({ context }) => {
+
+    const { formValues, setFormValues } = context;
 
     const [ students, setStudents ] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios(
-                `http://server.selestia.ru/api/admin/`
+                `http://server.selestia.ru/api/admin/allStudent`
             );
             
+            console.log(result.data);
             setStudents(result.data);
         }
 
@@ -22,7 +25,10 @@ const StudentsListSelect = ({ formValues }) => {
     }, []);
 
     const itemClickHandler = () => {
+        setFormValues({
+            ...formValues,
 
+        });
     }
 
     return (
@@ -33,7 +39,7 @@ const StudentsListSelect = ({ formValues }) => {
                 key={item.id} 
                 className='students-list__item'
                 onClick={() => {itemClickHandler(item.id)} }>
-                    <div className={`students-list__image ${!item.image ? 'students-list__image_empty' : ''} `}>
+                    <div className={`students-list__image ${!item.image ? 'students-list__image_empty' : ''}`}>
                         <img src={!item.image ? defaultIcon : item.image} alt='Аватарка' />
                     </div>
                     <p className='students-list__fullname'>{ item.fio }</p>
@@ -41,7 +47,7 @@ const StudentsListSelect = ({ formValues }) => {
                 </li>
             );
         })}
-    </ul>
+        </ul>
     )
 }
 

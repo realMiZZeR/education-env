@@ -6,7 +6,7 @@ const useAxios = (config) => {
 
     const [ response, setResponse ] = useState(null);
     const [ isError, setIsError ] = useState(false);
-    const [ isLoading, setIsLoading ] = useState(false);
+    const [ isLoading, setIsLoading ] = useState(true);
 
     useEffect(() => {
         fetchData();

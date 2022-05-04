@@ -19,11 +19,39 @@ const Groups = ({formValues, setFormValues}) => {
         if(groups && groups.data) setData(groups.data);
     }, [groups]);
 
+    function getGroupValues(id) {
+        const result = [];
+
+        if(result.includes(id)) result = result.filter(item => item !== id)
+        else result = [...result, id];
+
+        return result;
+    }
+
     function groupClickHandler(id) {
-        setFormValues({
-            ...formValues,
-            ['group']: id
-        });
+        if(Array.isArray(formValues.group)) {
+            setFormValues({
+                ...formValues,
+                ['group']: getGroupValues(id)
+            });
+        } else {
+            setFormValues({
+                ...formValues,
+                ['group']: id
+            });
+        }
+    }
+
+    console.log(formValues);
+
+    const doItemActive = (id) => {
+
+        if(Array.isArray(formValues.group)) {
+            return (formValues.group.includes(id)) ? 'selection-list__item_current' : '';
+        }
+
+        // for group of any type except array
+        return (id === formValues.group) ? 'selection-list__item_current' : '';
     }
 
     return (
@@ -38,7 +66,7 @@ const Groups = ({formValues, setFormValues}) => {
                         data.map(item => (
                             <li 
                             key={item.id} 
-                            className={`selection-list__item ${(item.id === formValues.group) ? 'selection-list__item_current' : ''}`}
+                            className={`selection-list__item ${doItemActive(item.id)}`}
                             onClick={() => groupClickHandler(item.id)}>
                                 <div className='selection-list__image'>
                                     <img src={(!item.img) ? defaultIcon : item.img} alt='Аватар группы' />
@@ -48,7 +76,7 @@ const Groups = ({formValues, setFormValues}) => {
                         ))
                         // if error -> show error
                     ) : (
-                        <ErrorPage message='no' />
+                        <ErrorPage error='CONNECTION_REFUSED' />
                     ) }
                 </>
             )}

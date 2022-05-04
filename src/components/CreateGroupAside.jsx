@@ -6,7 +6,7 @@ import StudentsListSelect from './StudentsListSelect';
 
 const CreateGroupAside = () => {
 
-    const { formValues, saveGroupData } = useGroup();
+    const { formValues, setFormValues, saveGroupData } = useGroup();
 
 
     const saveGroupHandler = () => {
@@ -18,7 +18,7 @@ const CreateGroupAside = () => {
             <h2 className='aside__heading'>Список студентов</h2>
             <div className='create-aside'>
                 <Search className='students-list__search search' />
-                <StudentsListSelect formValues={formValues} />
+                <StudentsListSelect context={{formValues, setFormValues}} />
             </div>
             <button type='submit' className='aside__confirm button' onClick={saveGroupHandler}>
                 <span>Сохранить</span>
