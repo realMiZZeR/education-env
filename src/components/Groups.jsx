@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-import useDiscipline from '../hooks/useDiscipline';
 import { useAxios } from '../hooks/useAxios';
+import LoadingPage from './LoadingPage';
+import ErrorPage from './ErrorPage';
 
-import defaultGroupIcon from '../assets/images/icons/users.svg';
+const defaultIcon = 'http://server.selestia.ru/userAvatar/standartUser.png';
 
-const Groups = () => {
-
-    const { formValues, setFormValues } = useDiscipline();
+const Groups = ({formValues, setFormValues}) => {
 
     const [ data, setData ] = useState([]);
 
@@ -31,7 +30,7 @@ const Groups = () => {
         <ul className='selection-list'>
 
             { isLoading ? (
-                <p>Loading...</p>
+                <LoadingPage />
             ) : (
                 <>
                 {/* no error -> load items */}
@@ -42,14 +41,14 @@ const Groups = () => {
                             className={`selection-list__item ${(item.id === formValues.group) ? 'selection-list__item_current' : ''}`}
                             onClick={() => groupClickHandler(item.id)}>
                                 <div className='selection-list__image'>
-                                    <img src={(!item.img) ? defaultGroupIcon : item.img} alt='Аватар группы' />
+                                    <img src={(!item.img) ? defaultIcon : item.img} alt='Аватар группы' />
                                 </div>
                                 <h4 className='selection-list__title'>{ item.title }</h4>
                             </li>
                         ))
                         // if error -> show error
                     ) : (
-                        <div className=''>stop</div>
+                        <ErrorPage message='no' />
                     ) }
                 </>
             )}

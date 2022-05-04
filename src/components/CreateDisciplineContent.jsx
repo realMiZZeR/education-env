@@ -36,7 +36,7 @@ const CreateDisciplineContent = () => {
     const formTypeHandler = (value) => {
         setFormValues({
             ...formValues,
-            ['type']: value
+            [type]: value // 'type'
         });
     }
 
@@ -87,8 +87,8 @@ const CreateDisciplineContent = () => {
             <div className='create-section'>
                 <h2 className='create-section__heading'>Настройки доступа</h2>
                 <div className='create-section__grouping'>
-                    <Selection title='Преподаватели' />
-                    <Selection title='Группы' />
+                    <Selection title='Преподаватели' context={{formValues, setFormValues}} />
+                    <Selection title='Группы' context={{formValues, setFormValues}} />
                 </div>
             </div>
         </form>

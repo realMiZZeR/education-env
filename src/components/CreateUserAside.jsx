@@ -15,12 +15,13 @@ const UsersList = () => {
     }
 
     function userDeleteHandler(id) {
-        deleteUser(id);
+        deleteUser(id);        
     }
 
     function itemClickHandler(id) {
         setCurrentUser(id);
-        setFormValues(savedUsers[id]);
+        const [ value ] = savedUsers.filter((user, index) => user.id === id);
+        setFormValues(value);
     }
     
     const users = savedUsers.map(user => {
@@ -73,6 +74,7 @@ const CreateUserAside = () => {
                     <button onClick={addUserHandler} className='aside-users__button button'>
                         <span>Добавить</span>
                     </button>
+                    
                 </div>
             </div>
             <button type='submit' className='aside__confirm button' onClick={saveUsersHandler}>

@@ -22,7 +22,6 @@ export default function TimetableComponent() {
 
     const { selectedDate, setSelectedDate, selectedGroup } = useTimetable();
 
-    console.log(selectedDate)
     const { user } = useAuth();
 
     // for timetable page

@@ -27,6 +27,7 @@ const Profile = React.lazy(() => import('../pages/Profile'));
 // admin pages
 const CreateUserPage = React.lazy(() => import('../pages/CreateUserPage'));
 const CreateDisciplinePage = React.lazy(() => import('../pages/CreateDisciplinePage'));
+const CreateGroupPage = React.lazy(() => import('../pages/CreateGroupPage'));
 
 
 export default function MainContent() {
@@ -91,6 +92,11 @@ export default function MainContent() {
                             <Route path='/create-discipline' element={
                                 <AdminController>
                                     <CreateDisciplinePage title="Создание дисциплины" />
+                                </AdminController>
+                            } />
+                            <Route path='/create-group' element={
+                                <AdminController>
+                                    <CreateGroupPage title="Создание группы" />
                                 </AdminController>
                             } />
                         </Routes>

@@ -1,48 +1,50 @@
-import axios from 'axios';
+import axios from "axios";
 import { useState, createContext, useEffect } from "react";
 
-export const DisciplineContext = createContext(null);
+export const GroupContext = createContext(null);
 
-export const CreateDisciplineProvider = ({ children }) => {
+export const CreateGroupProvider = ({ children }) => {
 
     const formFields = {
-        number: '',
-        type: '',
         title: '',
+        entrance: '',
+        expiration: '',
         teacher: '',
-        group: ''
+        faculty: '',
+        students: []
     }
 
     const [ formValues, setFormValues ] = useState(formFields);
-    
-    function saveDisciplineData() {
+
+    function saveGroupData() {
         const fetchData = async () => {
             const result = await axios.post(
-                'http://server.selestia.ru/api/admin/createDist', 
+                'http://server.selestia.ru/api/admin/createGroup', 
                 formValues
             );
             
             console.log(result);
         }
 
-        fetchData();
+        // fetchData();
     }
+
 
     const value = {
         formValues,
         setFormValues,
-        saveDisciplineData
+        saveGroupData
     }
-
+    
     useEffect(() => {
         console.log(formValues);
-    }, [formValues.type]);
+    }, [formValues]);
 
     return (
-        <DisciplineContext.Provider value={value}>
+        <GroupContext.Provider value={value}>
             <div className='create-wrapper'>
                 { children }
             </div>
-        </DisciplineContext.Provider>
-    );
+        </GroupContext.Provider>
+    )
 }

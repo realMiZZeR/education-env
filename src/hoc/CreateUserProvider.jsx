@@ -42,7 +42,9 @@ export const CreateUserProvider = ({ children }) => {
 
     // replace object in array by form fields
     function replaceValue(arr, user) {
-        arr[currentUser] = user;
+        arr.forEach((item, index) => {
+            if(item.id === user.id) arr[index] = user
+        });
         return arr;
     }
 
@@ -56,8 +58,8 @@ export const CreateUserProvider = ({ children }) => {
 
     // delete object in array savedUsers
     function deleteValue(arr, id) {
-        arr.splice(id, 1);
-        return arr;
+        const newUsers = arr.filter(user => user.id !== id);
+        return newUsers;
     }
 
     const deleteUser = (id) => {
@@ -97,12 +99,20 @@ export const CreateUserProvider = ({ children }) => {
     useEffect(() => {
         return () => {
             if(localStorage.getItem('savedUsers')) {
-                setSavedUsers(JSON.parse(localStorage.getItem('savedUsers')));
+                const savedUsersStorage = JSON.parse(localStorage.getItem('savedUsers'));
+                savedUsersStorage.forEach(user => {
+                    if(user.id >= id) setId(user.id + 1);
+                });
+                setSavedUsers(savedUsersStorage);
             } else {
                 addUser(formFields);
             }
         }
     }, []);
+
+    useEffect(() => {
+        console.log(id);
+    }, [savedUsers]);
 
     return (
         <SavedUsersContext.Provider value={value}>

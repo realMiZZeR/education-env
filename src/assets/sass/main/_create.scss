@@ -21,6 +21,7 @@
     &-section {
         position: relative;
         margin-bottom: 30px;
+        grid-area: section;
 
         &__heading {
             display: flex;
@@ -52,7 +53,13 @@
         display: grid;
         grid-template-columns: 150px 1fr;        
         gap: 50px;
-        
+        background-color: $block-color;
+        border-radius: $block-brd-radius;
+        box-shadow: $block-shadow;
+        padding: 30px;
+
+        // grid tempalate for
+        // user create form
         &_u {
             grid-template-areas: 
             "image info"
@@ -60,15 +67,20 @@
             grid-template-rows: 150px 1fr;
         }
 
+        // grid tempalate for
+        // discipline create form
         &_d {
             grid-template-areas: 
             "image info"
         }
 
-        background-color: $block-color;
-        border-radius: $block-brd-radius;
-        box-shadow: $block-shadow;
-        padding: 30px;
+        // grid tempalate for
+        // group create form
+        &_g {
+            grid-template-areas:
+            "image info"
+            "section section";
+        }
 
         &__content {
             display: flex;
@@ -108,6 +120,7 @@
             display: flex;
             justify-content: center;
             flex-direction: column;
+            gap: 20px;
             width: 100%;
             grid-area: info;
 
@@ -117,7 +130,6 @@
                 align-items: center;
                 gap: 20px;
                 width: 100%;
-                margin-bottom: 20px;
             }
 
             &__label {

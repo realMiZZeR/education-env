@@ -1,36 +1,30 @@
 import React, { useState, useEffect } from 'react';
-
-import useDiscipline from '../hooks/useDiscipline';
 import { useAxios } from '../hooks/useAxios';
-import LoadingPage from './LoadingPage';
 import ErrorPage from './ErrorPage';
+import LoadingPage from './LoadingPage';
 
-const defaultIcon = 'http://server.selestia.ru/userAvatar/standartUser.png';
-
-const Teachers = ({formValues, setFormValues}) => {
+const Faculty = ({formValues, setFormValues}) => {
 
     const [ data, setData ] = useState([]);
 
-    // get teachers replace
-    const [teachers, isError, isLoading] = useAxios({
+    const [faculties, isError, isLoading] = useAxios({
         url: '/api/admin/getGroup',
         method: 'get'
     });
 
     useEffect(() => {
-        if(teachers && teachers.data) setData(teachers.data);
-    }, [teachers]);
+        if(faculties && faculties.data) setData(faculties.data);
+    }, [faculties]);
 
-    function teacherClickHandler(id) {
+    function groupClickHandler(id) {
         setFormValues({
             ...formValues,
-            ['teacher']: id
+            ['faculty']: id
         });
     }
 
     return (
-        <ul className='selection-list'>
-
+        <div className='selection-list'>
             { isLoading ? (
                 <LoadingPage />
             ) : (
@@ -40,11 +34,8 @@ const Teachers = ({formValues, setFormValues}) => {
                         data.map(item => (
                             <li 
                             key={item.id} 
-                            className={`selection-list__item ${(item.id === formValues.teacher) ? 'selection-list__item_current' : ''}`}
-                            onClick={() => teacherClickHandler(item.id)}>
-                                <div className='selection-list__image'>
-                                    <img src={(!item.img) ? defaultIcon : item.img} alt='Аватар группы' />
-                                </div>
+                            className={`selection-list__item ${(item.id === formValues.group) ? 'selection-list__item_current' : ''}`}
+                            onClick={() => groupClickHandler(item.id)}>
                                 <h4 className='selection-list__title'>{ item.title }</h4>
                             </li>
                         ))
@@ -54,8 +45,8 @@ const Teachers = ({formValues, setFormValues}) => {
                     ) }
                 </>
             )}
-        </ul>
+        </div>
     );
 }
 
-export default Teachers;
+export default Faculty;

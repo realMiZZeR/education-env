@@ -1,9 +1,8 @@
 import React, { useEffect, useReducer } from 'react';
 import Groups from './Groups';
 import Teachers from './Teachers';
+import Faculty from './Faculty';
 import Search from './Search';
-
-import useDiscipline from '../hooks/useDiscipline';
 
 function componentsReducer(state, action) {
 
@@ -12,14 +11,16 @@ function componentsReducer(state, action) {
             return {component: <Teachers />}
         case 'Группы':
             return {component: <Groups />}
+        case 'Факультет':
+            return {component: <Faculty />}
         default:
             throw new Error();
     }
 }
 
-const Selection = ({ title }) => {
+const Selection = ({ title, context }) => {
 
-    const { formValues, setFormValues } = useDiscipline();
+    const { formValues, setFormValues } = context;
 
     const initialState = {
         component: '',

@@ -1,0 +1,59 @@
+.students-list {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    &__item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 50px;
+        background-color: transparent;
+        border-radius: $block-brd-radius;
+        margin-bottom: 10px;
+        padding: 5px 10px;
+    }
+    &__item:hover {
+        background-color: $hover-color;
+    }
+    &__image {
+        position: relative;
+        min-width: 40px;
+        min-height: 40px;
+        background-color: #EDEDED;
+        border-radius: 100%;
+        overflow: hidden;
+        margin-right: 15px;
+
+        img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    &__image_empty {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            position: static;
+            width: 20px;
+            height: 20px;
+        }
+    }
+    &__fullname {
+        font-family: $roboto-font;
+        font-weight: 500;
+        font-size: 14px;
+        color: $font-color;
+    }
+    &__checkbox {
+        margin-left: auto;
+    }
+    &__search {
+        margin-bottom: 20px;
+    }
+}
