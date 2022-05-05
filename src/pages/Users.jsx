@@ -17,6 +17,8 @@ const Users = (props) => {
         `http://server.selestia.ru/api/user/getAll`
     )
 
+    console.log(data);
+
     const [ users, setUsers ] = useState([]);
 
     useEffect(() => {

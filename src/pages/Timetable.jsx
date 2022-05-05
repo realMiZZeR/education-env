@@ -16,43 +16,46 @@ const Timetable = (props) => {
         updateTitle(props.title);
     }, [props.title]);
 
-    const [ datesList, updateDateList ] = useState([]);
+    const [ datesList, setDateList ] = useState([]);
 
-    function getDays(currentDate, interval) {
-        let [ day, month, year ] = currentDate.split('.');
-        day = Number(day);
+    // today = new Date(), next = new Date(), days = number
+    function addDays(today, next, days) {
+        next.setDate(today.getDate() + days)
+        return next.toLocaleDateString();
+    }
+
+    function getIntervalDays(interval) {
+
+        const currentDate = new Date();
+        const nextDate = new Date();
 
         if(interval >= 0) {
             for(let i = 0; i <= interval; i++) {
-                updateDateList( arr => [
+                setDateList( arr => [
                     ...arr,
-                    `${(day + i)}.${month}.${year}`
+                    addDays(currentDate, nextDate, i)
                 ]);
             } 
         }
         else {
             for(let i = interval; i < 0; i++) {
-                updateDateList( arr => [
+                setDateList( arr => [
                     ...arr,
-                    `${(day + i)}.${month}.${year}`
+                    addDays(currentDate, nextDate, i)
                 ]);
             }
         }
 
-        updateDateList( arr => arr.sort() );
+        setDateList( arr => arr.sort() );
     }
 
     useEffect(() => {
         // clear dates list after updating
-        updateDateList([]);
-
-        // getting date like 01.01.1970 as string
-        const options = {day: 'numeric', month: 'numeric', year: 'numeric'};
-        const currentDate = new Date().toLocaleDateString('ru-RU', options);
+        setDateList([]);
 
         // getting three days ago and next three days
-        getDays(currentDate, -3);
-        getDays(currentDate, 3);
+        getIntervalDays(-3);
+        getIntervalDays(3);
 
     }, []);
 
@@ -64,8 +67,8 @@ const Timetable = (props) => {
             <DevidedByTwo>
                 <TimetableProvider>
                     <TimetableComponent />
+                    <TimetableSort />
                 </TimetableProvider>
-                <TimetableSort />
             </DevidedByTwo>
         </>
     );

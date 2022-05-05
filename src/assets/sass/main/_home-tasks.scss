@@ -45,9 +45,9 @@
         //     transform: rotate(180deg);
         // }
         &__item {
-            display: flex;
+            display: flex!important;
             align-items: center;
-            width: 380px;
+            width: 380px!important;
             height: 175px;
             background-color: $block-color;
             border-radius: 10px;

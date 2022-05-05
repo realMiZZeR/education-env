@@ -1,8 +1,11 @@
 import React, { createContext, useEffect, useState } from 'react';
+import { useAuth } from '../hooks/useAuth';
 
 export const TimetableContext = createContext(null);
 
 export const TimetableProvider = ({ children }) => {
+
+    const { user } = useAuth();
 
     const [ selectedDate, setSelectedDate ] = useState(null);
     const [ selectedGroup, setSelectedGroup ] = useState(null);

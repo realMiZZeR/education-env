@@ -1,6 +1,6 @@
 import React from 'react';
 
-function SwitchButton(props) { 
+const SwitchButton = (props) => { 
     return (
         <div className='switch'>
             { props?.children }

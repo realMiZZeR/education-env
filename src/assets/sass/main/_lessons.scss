@@ -96,6 +96,9 @@
             margin-right: 30px;
         }
     }
+    &-sublist &-info__title {
+        width: 300px;
+    }
     &-sublist .lesson-info__teacher {
         width: 125px;
     }

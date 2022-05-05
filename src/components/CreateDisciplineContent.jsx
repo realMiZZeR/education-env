@@ -22,7 +22,7 @@ const CreateDisciplineContent = () => {
 
     const { formValues, setFormValues } = useDiscipline();
 
-    const [ type, setType ] = useState(null);
+    const [ typeImage, setTypeImage ] = useState(null);
 
     const formInputChangeHandler = (e) => {
         const { name, value } = e.target;
@@ -42,7 +42,7 @@ const CreateDisciplineContent = () => {
 
     useEffect(() => {
         if(formValues.type) {
-            setType(getDisciplineImage(formValues.type));
+            setTypeImage(getDisciplineImage(formValues.type));
         }
     }, [formValues.type]);
 
@@ -52,7 +52,7 @@ const CreateDisciplineContent = () => {
                 <h2 className='create-section__heading'>Информация о дисциплине</h2>
                 <div className='create-main create-main_d'>
                     <div className='create-main__image create-main__image_d'>
-                        <img src={type} alt='Дисциплина' />
+                        <img src={typeImage} alt='Дисциплина' />
                     </div>
                     <div className='create-main-info'>
                         <div className='create-main-info__grouping'>

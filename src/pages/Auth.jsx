@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import updateTitle from '../assets/js/updateTitle';
 import SwitchButton from '../components/SwitchButton';
+import axios from 'axios';
 
 function AuthAsideParagraph(props) {
     return (
@@ -21,48 +22,55 @@ function Auth(props) {
     const navigate = useNavigate();
     const { signIn } = useAuth();
 
-    const [ login, setLogin ] = useState(null);
-    const [ password, setPassword ] = useState(null);
-    const [ rememberPassword, setRememberPassword ] = useState(false);
+    const formFields = {
+        login: '',
+        password: '',
+        rememberPassword: false
+    }
+
+    const [ formValues, setFormValues ] = useState(formFields);
+
     const [ errorMessages, setErrorMessages ] = useState({});
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
+        let isValid = true;
+        let errors = {}
         setErrorMessages({});
 
-        if(!login) {
-            setErrorMessages({
-                ...errorMessages,
-                ['login']: 'Введите логин'
-            });
+        if(!formValues.login) {
+            isValid = false;
+            errors['login'] = 'Введите логин';
         }
-        if(!password) {
-            setErrorMessages({
-                ...errorMessages,
-                ['password']: 'Введите пароль'
-            });
+        if(!formValues.password) {
+            isValid = false;
+            errors['password'] = 'Введите пароль';
         }
 
-        if(Object.keys(errorMessages).length > 0) return;
-
-        const user = {
-            login: login,
-            password: password,
+        if(!isValid) {
+            setErrorMessages(errors);
+            return;
         };
 
-        
-
-        signIn(user, () => navigate('/home', {replace: true}));
+        signIn(formValues, () => navigate('/home', {replace: true}));
 
     }
 
-    // useEffect(() => {
-    //     console.log(errorMessages);
-    // }, [errorMessages]);
+    const formChangeHandler = (e) => {
+        const { name, value } = e.target;
+
+        setFormValues({
+            ...formValues,
+            [name]: value
+        });
+    }
 
     const rememberPasswordHandler = () => {
-        setRememberPassword(!rememberPassword);
+        setFormValues({
+            ...formValues,
+            ['rememberPassword']: !formValues.rememberPassword
+        });
     }
 
     return (
@@ -75,29 +83,23 @@ function Auth(props) {
                     <input 
                     type='text' 
                     name='login' 
-                    onChange={e => setLogin(e.target.value)}
-                    className='auth-form__input input' 
+                    onChange={formChangeHandler}
+                    className={`auth-form__input input ${(errorMessages.login ? 'input_error' : '')}`} 
                     placeholder='Логин'
                     />
-                    {errorMessages.login && 
-                        <span className='auth-form__error'>{errorMessages.login}</span>
-                    }
                 </div>
                 <div className='auth-form__field'>
                     <input 
                     type='password' 
                     name='password' 
-                    onChange={e => setPassword(e.target.value)} 
-                    className='auth-form__input input' 
+                    onChange={formChangeHandler} 
+                    className={`auth-form__input input ${(errorMessages.password ? 'input_error' : '')}`} 
                     placeholder='Пароль'
                     />
-                    {errorMessages.password && 
-                        <span className='auth-form__error'>{errorMessages.password}</span>
-                    }
                 </div>
                 <a href='#' className='auth-form__forget'>Забыли пароль?</a>
                 <footer className='auth-form__footer'>
-                    <SwitchButton handler={rememberPasswordHandler} value={rememberPassword}>
+                    <SwitchButton handler={rememberPasswordHandler} value={formValues.rememberPassword}>
                         <span className='switch__title'>Запомнить меня</span>
                     </SwitchButton>
                     <button type='submit' className='auth-form__submit button'>

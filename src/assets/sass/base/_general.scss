@@ -114,10 +114,16 @@ body {
     border-radius: 10px;
     background-color: $input-color;
     color: $half-font-color;
+    transition: .3s background-color ease-in-out;
 }
 
 .input:focus {
     color: $font-color;
+}
+
+.input_error {
+    background-color: transparentize($error-color, 0.75);
+    transition: .3s background-color ease-in-out;
 }
 
 .select {

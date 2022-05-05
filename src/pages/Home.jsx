@@ -13,16 +13,6 @@ export default function Home(props) {
         updateTitle(props.title);
     }, [props.title]);
 
-    // // fetching messages
-    // useEffect( async() => {
-
-    // }, []);
-
-    // // fetching timetable
-    // useEffect( async() => {
-
-    // }, []);
-
     return (
         <HomeController>
             <HomePageUser />

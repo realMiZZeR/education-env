@@ -16,7 +16,6 @@ const TimetableDatesList = ({ datesList }) => {
     const itemClickHandler = (date) => {
         setSelectedDate(date);
     }
-
     // item = date (01.01.1970)
     const datesItems = datesList.map((item, index) => {
         return (

@@ -6,23 +6,42 @@ import TimetableLessons from './TimetableLessons';
 
 // functions
 import getDateYearMonthDay from '../assets/js/getDateYearMonthDay';
+import getDayOfWeek from '../assets/js/getDayOfWeek';
 
 // hooks
 import { useTimetable } from '../hooks/useTimetable';
 import { useAuth } from '../hooks/useAuth';
 
 
-export default function TimetableComponent() {
+const TimetableComponent = () => {
 
     const location = useLocation();
     let isHome = (location.pathname === '/home');
 
-    const [ lessons, setLessons ] = useState([]);
-    const [ lastUpdate, setLastUpdate ] = useState(null);
+    const timetableJSON = {
+        schedule: [],
+        weekEven: '',
+        lastUpdate: ''
+    }
 
-    const { selectedDate, setSelectedDate, selectedGroup } = useTimetable();
+    const [ timetable, setTimetable ] = useState(timetableJSON);
+
+    const { selectedDate, selectedGroup, setSelectedGroup } = useTimetable();
 
     const { user } = useAuth();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await axios.post(
+                'http://server.selestia.ru/api/getScheduleToken',
+                {token: user.token}
+            ).then(response => {
+                setSelectedGroup(response.data.groupId);
+            }).catch(error => console.log(error.toJSON()));
+        }
+
+        if(user?.token) fetchData();
+    }, [])
 
     // for timetable page
     useEffect(() => {
@@ -36,11 +55,15 @@ export default function TimetableComponent() {
                 }
             }).then(response => {
                 const { schedule, lastUpdate } = response.data;
-                setLessons(schedule);
-                setLastUpdate(lastUpdate);
+                console.log(response)
+                setTimetable({
+                    schedule: schedule.schedule,
+                    weekEven: schedule.weekEven,
+                    lastUpdate: lastUpdate
+                });
             });
         }
-
+        
         if(selectedDate && selectedGroup) fetchData();
     }, [selectedDate, selectedGroup]);
     
@@ -48,17 +71,21 @@ export default function TimetableComponent() {
         <article className='timetable'>
             {isHome &&
             <header className='timetable__heading'>
-                <h2 className='timetable__title'>Расписание на { lastUpdate }</h2>
+                <h2 className='timetable__title'>Расписание на { selectedDate }</h2>
             </header>
             }
+
+            {console.log(selectedDate)}
             
             <div className='timetable-info'>
                 {isHome &&
                 <div className='timetable-info__heading'>
-                    <h3 className='timetable-info__dayweek'>Понедельник / нечётная</h3>
+                    <h3 className='timetable-info__dayweek'>
+                    {(selectedDate) ? getDayOfWeek(selectedDate) : ''} / {timetable.weekEven.toLowerCase()}
+                    </h3>
                 </div>
                 }
-                <TimetableLessons lessons={lessons} />
+                <TimetableLessons lessons={timetable.schedule}  />
             </div>
             {isHome &&
             <footer className='timetable__footer'>
@@ -68,3 +95,5 @@ export default function TimetableComponent() {
         </article>
     );
 }
+
+export default TimetableComponent;
