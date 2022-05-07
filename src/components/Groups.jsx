@@ -20,10 +20,16 @@ const Groups = ({formValues, setFormValues}) => {
     }, [groups]);
 
     function getGroupValues(id) {
-        const result = [];
+        let result = [];
 
-        if(result.includes(id)) result = result.filter(item => item !== id)
-        else result = [...result, id];
+        if(formValues.group.includes(id)) {
+            result = formValues.group.filter(value => value !== id);
+        } else {
+            result = [
+                ...formValues.group,
+                id
+            ];
+        }
 
         return result;
     }
@@ -41,8 +47,6 @@ const Groups = ({formValues, setFormValues}) => {
             });
         }
     }
-
-    console.log(formValues);
 
     const doItemActive = (id) => {
 

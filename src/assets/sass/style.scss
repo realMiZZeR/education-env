@@ -17,7 +17,8 @@
 @import './main/groups';
 @import './main/profile';
 @import './main/notfound';
-@import './main/create';
+// @import './main/create';
+@import './main/createN';
 @import './main/aside';
 @import './main/loading';
 @import './main/stats';
@@ -26,6 +27,7 @@
 @import './main/contacts-list';
 @import './main/students-list';
 @import './main/achievements-list';
+@import './main/disciplines-list';
 @import './main/settings';
 @import './main/extra';
 @import './main/selection';
@@ -34,3 +36,4 @@
 @import './main/search';
 @import './main/dropdown';
 @import './main/error';
+@import './main/files';

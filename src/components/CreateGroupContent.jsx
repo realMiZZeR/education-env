@@ -1,10 +1,13 @@
 import React from 'react';
 
 import Selection from './Selection';
+import InputEffect from './InputEffect';
 
 import { useGroup } from '../hooks/useGroup';
 
 import defaultGroupIcon from '../assets/images/icons/default_group.svg';
+
+import isEmptyUserImage from '../assets/js/isEmptyUserImage';
 
 const CreateGroupContent = () => {
 
@@ -20,57 +23,58 @@ const CreateGroupContent = () => {
     }
 
     return (
-        <form className='create'>
-            <div className='create-section'>
-                <h2 className='create-section__heading'>Информация о группе</h2>
-                <div className='create-main create-main_g'>
-                    <div className='create-main__image'>
-                        <img src={defaultGroupIcon} alt='Аватарка группы' />
-                    </div>
-                    <div className='create-main-info'>
-                        <label htmlFor='title' className='create-main-info__label'>
-                            <input 
-                            name='title'
-                            value={formValues.title} 
-                            onChange={formInputChangeHandler}
-                            type='text' 
-                            className='create-main-info__input input' 
-                            placeholder='&nbsp;' />
-                            <span>Название группы</span>
-                        </label>
-                        <div className='create-main-info__grouping'>
-                            <label htmlFor='entrance' className='create-main-info__label'>
-                                <input 
-                                name='entrance'
-                                value={formValues.number} 
-                                onChange={formInputChangeHandler}
-                                type='date' 
-                                className='create-main-info__input input' 
-                                placeholder='&nbsp;' />
-                                <span>Дата поступления</span>
-                            </label>
-                            <label htmlFor='expiration' className='create-main-info__label'>
-                                <input 
-                                name='expiration'
-                                value={formValues.number} 
-                                onChange={formInputChangeHandler}
-                                type='date' 
-                                className='create-main-info__input input' 
-                                placeholder='&nbsp;' />
-                                <span>Дата окончания</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div className='create-section'>
-                        <div className='selections'>
-                            <Selection title='Преподаватели' context={{formValues, setFormValues}} />
-                            <Selection title='Факультет' context={{formValues, setFormValues}}  />
-                        </div>
+        <section className='create-form__content'>
+            <h2 className='create-form__heading'>Информация о группе</h2>
+            <div className='create-form-section create-form-section_blank'>
+                <div className={isEmptyUserImage(null, 'create-form-section__image')}>
+                    <img src={defaultGroupIcon} alt='Аватарка' />
+                </div>
+                <div className='create-form-section_blank-content'>
+                    <InputEffect
+                        name='title'
+                        value={formValues.title}
+                        handler={formInputChangeHandler}
+                        type='text'
+                        placeholder='Название группы'
+                    />
+                    <div className='create-form-section__grouping'>
+                        <InputEffect
+                            name='entrance'
+                            value={formValues.entrance}
+                            handler={formInputChangeHandler}
+                            type='date'
+                            placeholder='Дата поступления'
+                        />
+                        <InputEffect
+                            name='expiration'
+                            value={formValues.expiration}
+                            handler={formInputChangeHandler}
+                            type='date'
+                            placeholder='Дата окончания'
+                        />
                     </div>
                 </div>
             </div>
-        </form>
+            <h2 className='create-form__heading'>Содержимое группы</h2>
+            <div className='create-form-section'>
+                <div className='create-form-section__grouping'>
+                    <Selection title='Преподаватели' context={{formValues, setFormValues}} />
+                    <Selection title='Факультет' context={{formValues, setFormValues}}  />
+                </div>
+            </div>
+            
+        </section>
     )
+
+
+    //                 <div className='create-section'>
+    //                     <div className='selections'>
+    //                         <Selection title='Преподаватели' context={{formValues, setFormValues}} />
+    //                         <Selection title='Факультет' context={{formValues, setFormValues}}  />
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         </div>
 }
 
 export default CreateGroupContent;

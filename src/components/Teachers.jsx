@@ -20,14 +20,26 @@ const Teachers = ({formValues, setFormValues}) => {
         if(teachers && teachers.data) setData(teachers.data);
     }, [teachers]);
 
+    function getTeacherValues(id) {
+        let result = [];
+
+        if(formValues.teacher.includes(id)) {
+            result = formValues.teacher.filter(value => value !== id);
+        } else {
+            result = [
+                ...formValues.teacher,
+                id
+            ];
+        }
+
+        return result;
+    }
+
     function teacherClickHandler(id) {
-        if(Array.isArray(formValues.group)) {
+        if(Array.isArray(formValues.teacher)) {
             setFormValues({
                 ...formValues,
-                ['teacher']: [
-                    ...formValues.group,
-                    id
-                ]
+                ['teacher']: getTeacherValues(id)
             });
         } else {
             setFormValues({
@@ -35,6 +47,16 @@ const Teachers = ({formValues, setFormValues}) => {
                 ['teacher']: id
             });
         }
+    }
+
+    const doItemActive = (id) => {
+
+        if(Array.isArray(formValues.teacher)) {
+            return (formValues.teacher.includes(id)) ? 'selection-list__item_current' : '';
+        }
+
+        // for group of any type except array
+        return (id === formValues.teacher) ? 'selection-list__item_current' : '';
     }
 
     return (
@@ -49,7 +71,7 @@ const Teachers = ({formValues, setFormValues}) => {
                         data.map(item => (
                             <li 
                             key={item.id} 
-                            className={`selection-list__item ${(item.id === formValues.teacher) ? 'selection-list__item_current' : ''}`}
+                            className={`selection-list__item ${doItemActive(item.id)}`}
                             onClick={() => teacherClickHandler(item.id)}>
                                 <div className='selection-list__image'>
                                     <img src={(!item.image) ? defaultIcon : item.image} alt='Аватар группы' />

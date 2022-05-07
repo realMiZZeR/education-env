@@ -41,20 +41,21 @@ const GroupsList = ({ groupsList }) => {
     );
 }
 
-export default function TimetableGroups() {
+const TimetableGroups = () => {
 
     const [ data, setData ] = useState([]);
 
-    const [ groups, isLoading, isError ] = useAxios({
+    const [ groups, isError, isLoading ] = useAxios({
         url: `/api/getAll`,
         method: 'get'
     });
 
     useEffect(() => {
-         if(groups && groups.data) setData(groups.data);
+        console.log(groups)
+        if(groups && groups.data) setData(groups.data);
     }, [groups]);
 
-    return(
+    return (
         <div className='groups'>
         {isLoading ? (
             <LoadingPage />   
@@ -70,3 +71,5 @@ export default function TimetableGroups() {
         </div>
     );
 }
+
+export default TimetableGroups;

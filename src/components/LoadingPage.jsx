@@ -1,6 +1,6 @@
 import React from 'react';
 
-function LoadingPage() {
+const LoadingPage = () => {
     return (
         <div className='loading'>
             <div className='loading-cells'>

@@ -60,17 +60,15 @@ const Timetable = (props) => {
     }, []);
 
     return (
-        <>
+        <TimetableProvider>
             <article className='timetable-dates'>
                 <TimetableDatesList datesList={ datesList } />
             </article>
             <DevidedByTwo>
-                <TimetableProvider>
-                    <TimetableComponent />
-                    <TimetableSort />
-                </TimetableProvider>
+                <TimetableComponent />
+                <TimetableSort />
             </DevidedByTwo>
-        </>
+        </TimetableProvider>
     );
 }
 

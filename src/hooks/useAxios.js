@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+// returns array of response, state of error and state of loading
 const useAxios = (config) => {
     axios.defaults.baseURL = 'http://server.selestia.ru';
 

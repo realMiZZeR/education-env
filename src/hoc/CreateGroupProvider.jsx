@@ -16,7 +16,9 @@ export const CreateGroupProvider = ({ children }) => {
 
     const [ formValues, setFormValues ] = useState(formFields);
 
-    function saveGroupData() {
+    function saveGroupData(e) {
+        e.preventDefault();
+
         const fetchData = async () => {
             const result = await axios.post(
                 'http://server.selestia.ru/api/admin/createGroup', 
@@ -26,7 +28,7 @@ export const CreateGroupProvider = ({ children }) => {
             console.log(result);
         }
 
-        // fetchData();
+        fetchData();
     }
 
 
@@ -42,9 +44,9 @@ export const CreateGroupProvider = ({ children }) => {
 
     return (
         <GroupContext.Provider value={value}>
-            <div className='create-wrapper'>
+            <form onSubmit={saveGroupData} className='create-form'>
                 { children }
-            </div>
+            </form>
         </GroupContext.Provider>
     )
 }

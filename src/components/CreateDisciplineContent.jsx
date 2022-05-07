@@ -11,16 +11,27 @@ import getDisciplineImage from '../assets/js/getDisciplineImage';
 
 // hooks
 import useDiscipline from '../hooks/useDiscipline';
-
-const types = [
-    {id: 1, title: 'Технологии', value: 'tech'},
-    {id: 2, title: 'Учебный', value: 'study'},
-    {id: 3, title: 'Алхимия', value: 'alch'},
-]
+import InputEffect from './InputEffect';
+import { useAxios } from '../hooks/useAxios';
 
 const CreateDisciplineContent = () => {
 
     const { formValues, setFormValues } = useDiscipline();
+
+    const [ types, setTypes ] = useState([]);
+
+    const [ typesAxios, isError, isLoading ] = useAxios({
+        url: '/api/admin/getTypeDiscipline',
+        method: 'get'
+    });
+
+    useEffect(() => {
+        if(typesAxios && typesAxios.data) setTypes(typesAxios.data);
+    }, [typesAxios]);
+
+    useEffect(() => {
+        console.log(typesAxios)
+    }, [types]);
 
     const [ typeImage, setTypeImage ] = useState(null);
 
@@ -33,10 +44,10 @@ const CreateDisciplineContent = () => {
         });
     }
 
-    const formTypeHandler = (value) => {
+    const formTypeHandler = (id) => {
         setFormValues({
             ...formValues,
-            ['type']: value
+            ['type']: id
         });
     }
 
@@ -47,51 +58,44 @@ const CreateDisciplineContent = () => {
     }, [formValues.type]);
 
     return (
-        <form className='create'>
-            <div className='create-section'>
-                <h2 className='create-section__heading'>Информация о дисциплине</h2>
-                <div className='create-main create-main_d'>
-                    <div className='create-main__image create-main__image_d'>
-                        <img src={typeImage} alt='Дисциплина' />
-                    </div>
-                    <div className='create-main-info'>
-                        <div className='create-main-info__grouping'>
-                            <label htmlFor='number' className='create-main-info__label'>
-                                <input 
-                                name='number'
-                                value={formValues.number} 
-                                onChange={formInputChangeHandler}
-                                type='text' 
-                                className='create-main-info__input input' 
-                                placeholder='&nbsp;' />
-                                <span>Номер дисциплины</span>
-                            </label>
-                            <FormSelect 
-                            labelClassName={`create-main-info__label`}
+        <section className='create-form__content'>
+            <h2 className='create-form__heading'>Информация о дисциплине</h2>
+            <div className='create-form-section create-form-section_blank'>
+                <div className='create-form-section__image_type'>
+                    <img src={typeImage} alt='' />
+                </div>
+                <div className='create-form-section_blank-content'>
+                    <div className='create-form-section__grouping'>
+                        <InputEffect
+                            name='number'
+                            value={formValues.number}
+                            handler={formInputChangeHandler}
+                            type='text'
+                            placeholder='Номер дисциплины'
+                        />
+                        <FormSelect 
                             handler={formTypeHandler}
-                            options={types} />
-                        </div>
-                        <label htmlFor='title' className='create-main-info__label'>
-                            <input 
-                            name='title'
-                            value={formValues.title} 
-                            onChange={formInputChangeHandler}
-                            type='text' 
-                            className='create-main-info__input input' 
-                            placeholder='&nbsp;' />
-                            <span>Название дисциплины</span>
-                        </label>
+                            options={types} 
+                            title='Тип дисциплины'
+                        />
                     </div>
+                    <InputEffect
+                        name='title'
+                        value={formValues.title}
+                        handler={formInputChangeHandler}
+                        type='text'
+                        placeholder='Название дисциплины'
+                    />
                 </div>
             </div>
-            <div className='create-section'>
-                <h2 className='create-section__heading'>Настройки доступа</h2>
-                <div className='create-section__grouping'>
+            <h2 className='create-form__heading'>Настройки доступа</h2>
+            <div className='create-form-section create-form-section_full'>
+                <div className='create-form-section__grouping'>
                     <Selection title='Преподаватели' context={{formValues, setFormValues}} />
                     <Selection title='Группы' context={{formValues, setFormValues}} />
                 </div>
             </div>
-        </form>
+        </section>
     );
 }
 

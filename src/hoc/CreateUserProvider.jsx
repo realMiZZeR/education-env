@@ -69,7 +69,9 @@ export const CreateUserProvider = ({ children }) => {
         localStorage.setItem('savedUsers', JSON.stringify(savedUsers));
     }
 
-    function saveUsersData() {
+    function saveUsersData(e) {
+        e.preventDefault();
+        
         const fetchData = async () => {
             const result = await axios.post(
                 'http://server.selestia.ru/api/admin/createUser', 
@@ -108,17 +110,18 @@ export const CreateUserProvider = ({ children }) => {
                 addUser(formFields);
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
-        console.log(id);
-    }, [savedUsers]);
+        console.log(formValues)
+    }, [formValues]);
 
     return (
         <SavedUsersContext.Provider value={value}>
-            <div className='create-wrapper'>
+            <form onSubmit={saveUsersData} className='create-form'>
                 { children }
-            </div>
+            </form>
         </SavedUsersContext.Provider>
         
     )

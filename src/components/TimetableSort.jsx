@@ -1,30 +1,30 @@
-import React, { Suspense, useState } from 'react';
+import React, { useState } from 'react';
 
-import LoadingPage from './LoadingPage';
 import TimetableGroups from './TimetableGroups';
 import Teachers from './Teachers';
 import SwitchButton from './SwitchButton';
 import Search from './Search';
 
-export default function TimetableSort() {
+const TimetableSort = () => {
+
     const [ isTeacher, setIsTeacher ] = useState(false);
 
-    function teacherHandleChange() {
+    const teacherChangeHandler = () => {
         setIsTeacher(!isTeacher);
     }
 
     return (
         <article className='timetable-sort'>
-            <SwitchButton handler={teacherHandleChange} value={isTeacher} >
+            <SwitchButton handler={teacherChangeHandler} value={isTeacher} >
                 <p className='switch__title'>
                     Расписание для { isTeacher ? 'преподавателя' : 'студента' }
                 </p>
             </SwitchButton>
             <Search className='search' />
-            <Suspense fallback={<LoadingPage />}>
-                {!isTeacher && <TimetableGroups />}
-                {isTeacher && <Teachers />}
-            </Suspense>
+            {!isTeacher && <TimetableGroups />}
+            {isTeacher && <Teachers />}
         </article>
     );
 }
+
+export default TimetableSort;

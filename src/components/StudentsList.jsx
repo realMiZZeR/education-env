@@ -19,6 +19,9 @@ const StudentsList = ({ formValues }) => {
         if(formValues.group && formValues.group.length > 0) {
             fetchData();
         }
+        return () => {
+            if(formValues.group) setStudents([])
+        }
     }, [formValues.group]);
 
     return (

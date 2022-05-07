@@ -82,7 +82,7 @@ function NavList() {
                 img: messsagesIcon,
                 imgActive: messsagesIconActive,
                 name: 'Сообщения',
-                link: '/messages',
+                link: '/messager',
                 alt: 'Сообщения'
             },
             {
@@ -132,7 +132,7 @@ function NavList() {
                 img: messsagesIcon,
                 imgActive: messsagesIconActive,
                 name: 'Сообщения',
-                link: '/messages',
+                link: '/messager',
                 alt: 'Сообщения'
             },
             {

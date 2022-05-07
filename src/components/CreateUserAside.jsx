@@ -67,21 +67,21 @@ const CreateUserAside = () => {
     }
 
     return (
-        <aside className='aside aside_without-head'>
-            <div className='create-aside'>
-                <div className='aside-users'>
-                    <UsersList />
-                    <button onClick={addUserHandler} className='aside-users__button button'>
-                        <span>Добавить</span>
-                    </button>
-                    
-                </div>
+        <aside className='create-form__aside'>
+            <h2 className='create-form__heading'>&nbsp;</h2>
+            <div className='create-form-section create-form-section_full'>
+                <UsersList />
+                <button onClick={addUserHandler} className='create-form-section__add button'>
+                    <span>Добавить</span>
+                </button>
             </div>
-            <button type='submit' className='aside__confirm button' onClick={saveUsersHandler}>
-                <span>Сохранить всё</span>
+            <button type='submit' className='create-form-button button'>
+                <div className='create-form-button__image'>
+                    <img src={defaultUserIcon} alt='Создать' />
+                </div>
+                <p className='create-form-button__text'>Создать</p>
             </button>
         </aside>
-        
     );
 }
 

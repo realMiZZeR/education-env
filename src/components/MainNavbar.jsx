@@ -19,8 +19,9 @@ export default function MainNavbar() {
                     <p className='navbar-user__name'>{ (user?.login) ? user.login : 'Гость' }</p>
                     {user?.login && 
                     <small className='navbar-user__attr'>
-                        <span>ПР-18,</span>
-                        <span>4 курс</span>
+                        {user.role === 0 && <span>Студент</span>      }
+                        {user.role === 1 && <span>Преподаватель</span>}
+                        {user.role === 2 && <span>Администратор</span>}
                     </small>
                     }
                     {!user?.login &&

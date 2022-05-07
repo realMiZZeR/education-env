@@ -24,6 +24,9 @@ const Journal = React.lazy(() => import('../pages/Journal'));
 const PageNotFound = React.lazy(() => import('../pages/PageNotFound'));
 const Profile = React.lazy(() => import('../pages/Profile'));
 
+// teacher pages
+const CreateTaskPage = React.lazy(() => import('../pages/CreateTaskPage'));
+
 // admin pages
 const CreateUserPage = React.lazy(() => import('../pages/CreateUserPage'));
 const CreateDisciplinePage = React.lazy(() => import('../pages/CreateDisciplinePage'));
@@ -81,6 +84,13 @@ export default function MainContent() {
                                 </AuthController>
                             } />
                             <Route path='*' element={<PageNotFound />} />
+
+                            {/* teacher pages */}
+                            <Route path='create-task' element={
+                                <AuthController>
+                                    <CreateTaskPage title='Новое задание' />
+                                </AuthController>
+                            } />
 
                             {/* admin pages */}
 

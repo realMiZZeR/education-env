@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import GroupInfo from './GroupInfo';
 import Search from './Search';
+import LoadingPage from './LoadingPage';
+import ErrorPage from './ErrorPage';
+
 
 import defaultGroupIcon from '../assets/images/icons/default_group.png';
 import { useSavedUsers } from '../hooks/useSavedUsers';
@@ -31,20 +34,27 @@ const GroupsList = () => {
 
     return (
         <ul className='groups-selection-list'>
-            { !isError && data.map(item => (
-                <li 
-                key={item.id} 
-                className={`groups-selection-list__item ${(item.id === formValues.group) ? 'groups-selection-list__item_current' : ''}`}
-                onClick={() => groupClickHandler(item.id)}>
-                    <div className='groups-selection-list__image'>
-                        <img src={(!item.img) ? defaultGroupIcon : item.img} alt='Аватар группы' />
-                    </div>
-                    <h4 className='groups-selection-list__title'>{ item.title }</h4>
-                </li>
-            )) }
-            { isError && 
-                <div className=''>stop</div>
-            }
+            {isLoading ? (
+                <LoadingPage />
+            ) : (
+                <>
+                    {!isError ? (
+                        data.map(item => {
+                            return <li 
+                            key={item.id} 
+                            className={`groups-selection-list__item ${(item.id === formValues.group) ? 'groups-selection-list__item_current' : ''}`}
+                            onClick={() => groupClickHandler(item.id)}>
+                                <div className='groups-selection-list__image'>
+                                    <img src={(!item.img) ? defaultGroupIcon : item.img} alt='Аватар группы' />
+                                </div>
+                                <h4 className='groups-selection-list__title'>{ item.title }</h4>
+                            </li>
+                        })
+                    ) : (
+                        <ErrorPage error='CONNECTION_REFUSED' />
+                    )}
+                </>
+            )}
         </ul>
     );
 }
@@ -66,8 +76,8 @@ const GroupWithInfoSelection = () => {
     } 
 
     return (
-        <div className='create-section'>
-            <h2 className='create-section__heading'>
+        <>
+            <h2 className='create-form__heading create-form__heading_group'>
                 <span>Группа</span>
                 <span>
                     Выбрано: { (formValues.group) ? formValues.group : 'нет' }
@@ -78,11 +88,9 @@ const GroupWithInfoSelection = () => {
                     <Search className={`groups-selection__search search`} />
                     <GroupsList />
                 </div>
-                
                 <GroupInfo refHandler={groupHighlightHandler} />
-
             </div>
-        </div>
+        </>
     );
 }
 

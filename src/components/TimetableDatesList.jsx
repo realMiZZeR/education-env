@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import calendarIcon from '../assets/images/icons/calendar.svg';
 import calendarActiveIcon from '../assets/images/icons/calendar_active.svg';
@@ -16,6 +16,7 @@ const TimetableDatesList = ({ datesList }) => {
     const itemClickHandler = (date) => {
         setSelectedDate(date);
     }
+
     // item = date (01.01.1970)
     const datesItems = datesList.map((item, index) => {
         return (

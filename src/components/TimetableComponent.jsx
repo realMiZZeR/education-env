@@ -55,7 +55,6 @@ const TimetableComponent = () => {
                 }
             }).then(response => {
                 const { schedule, lastUpdate } = response.data;
-                console.log(response)
                 setTimetable({
                     schedule: schedule.schedule,
                     weekEven: schedule.weekEven,
@@ -74,8 +73,6 @@ const TimetableComponent = () => {
                 <h2 className='timetable__title'>Расписание на { selectedDate }</h2>
             </header>
             }
-
-            {console.log(selectedDate)}
             
             <div className='timetable-info'>
                 {isHome &&

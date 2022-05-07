@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext } from "react";
 
 export const DisciplineContext = createContext(null);
 
@@ -15,17 +15,13 @@ export const CreateDisciplineProvider = ({ children }) => {
 
     const [ formValues, setFormValues ] = useState(formFields);
     
-    function saveDisciplineData() {
-        const fetchData = async () => {
-            const result = await axios.post(
-                'http://server.selestia.ru/api/admin/createDist', 
-                formValues
-            );
-            
-            console.log(result);
-        }
+    const saveDisciplineData = async (e) => {
+        e.preventDefault();
 
-        fetchData();
+        await axios.post(
+            'http://server.selestia.ru/api/admin/createDist', 
+            formValues
+        ).catch(error => console.warn(error));
     }
 
     const value = {
@@ -36,9 +32,9 @@ export const CreateDisciplineProvider = ({ children }) => {
 
     return (
         <DisciplineContext.Provider value={value}>
-            <div className='create-wrapper'>
+            <form onSubmit={saveDisciplineData} className='create-form'>
                 { children }
-            </div>
+            </form>
         </DisciplineContext.Provider>
     );
 }
