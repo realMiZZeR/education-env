@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
 import homeIcon from '../assets/images/icons/home.svg';
@@ -20,10 +20,11 @@ import profileIconActive from '../assets/images/icons/profile_active.svg';
 import usersIconActive from '../assets/images/icons/users_active.svg';
 import logoutIconActive from '../assets/images/icons/logout_active.svg';
 
-function NavList() {
+const NavList = () => {
 
     const { user, signOut, isAdmin } = useAuth() || {};
     const navigate = useNavigate();
+    const location = useLocation();
 
     const navListItems = {
         guest: [
@@ -178,20 +179,26 @@ function NavList() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user?.login]);
 
+    const hoverItem = (e, img, isCurrent) => {
+        if(isCurrent) return;
+        e.currentTarget.children[0].children[0].children[0].src = img;
+    }
+
     const listItems = currentNavbar.map(item => {
+        let isCurrent = (location.pathname === item.link)
         return (
         <li 
-        className={`nav-list__item ${item.name === 'Выход' ? 'nav-list__item_exit' : ''}`} 
+        className={`nav-list__item ${isCurrent ? 'nav-list__item_active' : ''} ${item.name === 'Выход' ? 'nav-list__item_exit' : ''}`} 
         key={item.key}
         onClick={item.name === 'Выход' ? () => signOut(() => navigate(item.link, {replace: true})) : null}
-        onMouseEnter={ e => { e.currentTarget.children[0].children[0].children[0].src = item.imgActive } }
-        onMouseLeave={ e => { e.currentTarget.children[0].children[0].children[0].src = item.img } }>
+        onMouseEnter={ e => { hoverItem(e, item.imgActive, isCurrent) } }
+        onMouseLeave={ e => { hoverItem(e, item.img, isCurrent)} }>
 
             <Link to={item.link} className='nav-list__link link'>
                 <div className='nav-list__image'>
-                    <img src={item.img} alt={item?.alt} />
+                    <img src={`${isCurrent ? item.imgActive : item.img}`} alt={item?.alt} />
                 </div>
-                <p className='nav-list__title'>{item?.name}</p>
+                <p className='nav-list__title'>{item.name}</p>
             </Link>
 
         </li>
@@ -203,10 +210,12 @@ function NavList() {
     );
 }
 
-export default function NavbarList(props) {
+const NavbarList = () => {
     return (
         <nav className='navbar-nav nav'>
             <NavList />
         </nav>
     );
 }
+
+export default NavbarList;

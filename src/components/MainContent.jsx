@@ -12,6 +12,7 @@ import AdminController from '../hoc/AdminController';
 
 // images
 import hamburgerIcon from '../assets/images/icons/hamburger.svg';
+import TaskInfoPage from '../pages/TaskInfoPage';
 
 // pages
 const Auth = React.lazy(() => import('../pages/Auth'));
@@ -76,6 +77,11 @@ export default function MainContent() {
                             <Route path='/tasks' element={
                                 <AuthController>
                                     <Tasks title="Задания" />
+                                </AuthController>
+                            } />
+                            <Route path='/tasks/:id' element={
+                                <AuthController>
+                                    <TaskInfoPage title="Задание" />
                                 </AuthController>
                             } />
                             <Route path='/journal' element={

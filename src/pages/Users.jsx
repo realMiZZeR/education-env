@@ -13,41 +13,33 @@ const Users = (props) => {
         updateTitle(props.title);
     }, [props.title]);
 
-    const {data, isError, isLoading} = useAxios(
+    const [ response, isError, isLoading ] = useAxios(
         `http://server.selestia.ru/api/user/getAll`
     )
-
-    console.log(data);
 
     const [ users, setUsers ] = useState([]);
 
     useEffect(() => {
-        setUsers(data);
-    }, [data]);
+        if(response && response.data) setUsers(response.data);
+    }, [response]);
+
+    console.log(response)
 
     const [ students, setStudents ] = useState([]);
 
     useEffect(() => {
         setStudents(users.filter(user => user.isTeacher === false));
 
-        return () => {
-            return;
-        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data]);
+    }, [response]);
 
     const [ teachers, setTeachers ] = useState([]);
 
     useEffect(() => {
         setTeachers(users.filter(user => user.isTeacher === true));
 
-        return () => {
-            return;
-        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data]);
-
-    console.log(users);
+    }, [response]);
 
     return (
         <article className='users'>

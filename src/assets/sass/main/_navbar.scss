@@ -100,6 +100,14 @@ $navbar-item-color: #FFFFFF;
         color: $main-color;
     }
 
+    &__item_active {
+        background-color: $block-color;
+    }
+
+    &__item_active &__title {
+        color: $main-color;
+    }
+
     &__item_exit {
         margin-top: auto;
     }

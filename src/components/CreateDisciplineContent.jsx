@@ -53,7 +53,7 @@ const CreateDisciplineContent = () => {
 
     useEffect(() => {
         if(formValues.type) {
-            setTypeImage(getDisciplineImage(formValues.type));
+            setTypeImage(getDisciplineImage({type: formValues.type}));
         }
     }, [formValues.type]);
 

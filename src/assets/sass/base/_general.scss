@@ -134,6 +134,11 @@ body {
     transition: .3s background-color ease-in-out;
 }
 
+input[type=file], /* FF, IE7+, chrome (except button) */
+input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
+    cursor: pointer; 
+}
+
 .input:focus {
     color: $font-color;
 }
@@ -235,6 +240,33 @@ body {
     outline: none;
 }
 
+.mark {
+    background-color: $main-color;
+
+    &_one {
+        background-color: $error-color;
+    }
+    &_two {
+        background-color: $error-color;
+    }
+    &_three {
+        background-color: $orange-color
+    }
+    &_four {
+        background-color: $mythical-color;
+    }
+    &_five {
+        background-color: $green-color;
+    }
+    &_another {
+        background-color: $main-color;
+    }
+}
+
+.infinite-scroll-component__outerdiv {
+    height: 100%;
+}
+
 // styles for layouts
 .content-main__grid_two {
     display: grid;
@@ -242,7 +274,7 @@ body {
     gap: 30px;
     width: 100%;
     min-height: 720px;
-    height: auto;
+    height: 100%;
     margin-top: 50px;
 }
 

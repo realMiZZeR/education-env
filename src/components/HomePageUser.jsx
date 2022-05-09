@@ -18,42 +18,42 @@ const tasksList = [
         id: 1,
         title: 'Интеллект-карта Лекция 1',
         discipline: 'МДК 02.01 Технология разработки программного обеспечения',
-        disciplineType: 'study',
+        disciplineType: 1,
         deadline: '15.02.2022'
     },
     {
         id: 2,
         title: 'Интеллект-карта Лекция 1',
         discipline: 'МДК 02.01 Технология разработки программного обеспечения',
-        disciplineType: 'study',
+        disciplineType: 1,
         deadline: '15.02.2022'
     },
     {
         id: 3,
         title: 'Интеллект-карта Лекция 1',
         discipline: 'МДК 02.01 Технология разработки программного обеспечения',
-        disciplineType: 'study',
+        disciplineType: 1,
         deadline: '15.02.2022'
     },
     {
         id: 4,
         title: 'Интеллект-карта Лекция 1',
         discipline: 'МДК 02.01 Технология разработки программного обеспечения',
-        disciplineType: 'study',
+        disciplineType: 1,
         deadline: '15.02.2022'
     },
     {
         id: 5,
         title: 'Интеллект-карта Лекция 1',
         discipline: 'МДК 02.01 Технология разработки программного обеспечения',
-        disciplineType: 'study',
+        disciplineType: 1,
         deadline: '15.02.2022'
     },
     {
         id: 6,
         title: 'Интеллект-карта Лекция 1',
         discipline: 'МДК 02.01 Технология разработки программного обеспечения',
-        disciplineType: 'study',
+        disciplineType: 1,
         deadline: '15.02.2022'
     },
 ];
@@ -67,7 +67,7 @@ function HomePageUser() {
             return (
                 <li key={task.id} className='home-tasks-list__item'>
                     <div className='home-tasks-list__image'>
-                        <img src={getDisciplineImage(task.disciplineType)} alt={task.disciplineType} />
+                        <img src={getDisciplineImage({type: task.disciplineType})} alt={task.disciplineType} />
                     </div>
                     <div className='home-tasks-list__info'>
                         <p className='home-tasks-list__discipline' title={ task.discipline }>{ task.discipline }</p>

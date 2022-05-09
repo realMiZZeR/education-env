@@ -1,9 +1,12 @@
 import axios from "axios";
 import { useState, createContext, useEffect } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 export const TaskContext = createContext(null);
 
 export const CreateTaskProvider = ({ children }) => {
+
+    const { user } = useAuth();
 
     const formFields = {
         title: '',
@@ -33,6 +36,7 @@ export const CreateTaskProvider = ({ children }) => {
                     formData.append(key, formValues[key]);
                 }
             }
+            formData.append('token', user.token);
 
             const result = await axios.request({ 
                 url:     'http://server.selestia.ru/api/teacher/createTask',
