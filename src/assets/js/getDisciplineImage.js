@@ -10,7 +10,7 @@ import technologyActiveIcon from '../images/icons/disciplines/tech_active.svg';
 import studyActiveIcon from '../images/icons/disciplines/study_active.svg';
 
 // isAlternative means blue icons
-const getDisciplineImage = ({type, isActive, isAlternative = false}) => {
+const getDisciplineImage = ({type, isActive = false, isAlternative = false}) => {
 
     if(isActive) {
         switch(type) {
@@ -21,7 +21,7 @@ const getDisciplineImage = ({type, isActive, isAlternative = false}) => {
             case 3:
                 return technologyActiveIcon;
         } 
-    } else {
+    } else if(isAlternative) {
         switch(type) {
             case 1:
                 return technologyAlternativeIcon;

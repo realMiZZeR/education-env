@@ -15,7 +15,8 @@ const FullDisciplinesList = () => {
     const [ isActive, setIsActive ] = useState(null);
     
     useEffect(() => {
-        const fetchData = async () => {
+        // get disciplines for common user
+        const fetchUser = async () => {
             const result = await axios.get(
                 `http://server.selestia.ru/api/student/getDisciplineTask`,
                 {
@@ -27,9 +28,25 @@ const FullDisciplinesList = () => {
 
             setDisciplines(result.data);
         }
+        // get disciplines for teacher
+        const fetchTeacher = async () => {
+            const result = await axios.get(
+                `http://server.selestia.ru/api/teacher/getDisciplineTask`,
+                {
+                    params: {
+                        token: user.token
+                    }
+                }
+            );
 
-        if(user) fetchData();
+            setDisciplines(result.data);
+        }
+
+        if(user.role === 0) fetchUser();
+        if(user.role === 1) fetchTeacher();
     }, []);
+
+    console.log(disciplines)
 
     useEffect(() => {
         if(disciplines.length > 0) {
@@ -55,8 +72,8 @@ const FullDisciplinesList = () => {
                         className={`disciplines-list__item disciplines-list__item_full ${(isActive === item.id) ? 'disciplines-list__item_active' : ''}`} 
                         onClick={() => { itemClickHandler(item.id) }} 
                         key={item.id}>
-                            <div className='disciplines-list__image'>
-                                <img src={getDisciplineImage({type: item.type, isActive: (isActive === item.id)})} alt='Дисциплина' />
+                            <div className='disciplines-list__image' title={item.typeTitle}>
+                                <img src={getDisciplineImage({type: item.idType, isActive: (isActive === item.id)})} alt='Дисциплина' />
                             </div>
                             <h4 className='disciplines-list__title'>{ item.title }</h4>
                         </li>

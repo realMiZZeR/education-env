@@ -5,7 +5,7 @@ import { TasksProvider } from '../hoc/TasksProvider';
 // functions
 import updateTitle from '../assets/js/updateTitle';
 
-import TasksList from '../components/TasksList';
+import TasksComponent from '../components/TasksComponent';
 import FullDisciplinesList from '../components/FullDisciplinesList';
 
 const Tasks = (props) => {
@@ -18,7 +18,7 @@ const Tasks = (props) => {
     return (
         <TasksProvider>
             <div className='tasks-wrapper'>
-                <TasksList />
+                <TasksComponent />
                 <FullDisciplinesList />
             </div>
         </TasksProvider>

@@ -35,11 +35,13 @@ const taskFields = {
 }
 
 const TaskInfoPage = (props) => {
+
+    const [ task, setTask ] = useState(taskFields);
     
     // load title from Route in MainContent
     useEffect(() => {
-        updateTitle(`${props.title} «»`);
-    }, [props.title]);
+        updateTitle(`${props.title} «${task?.title}»`);
+    }, [props.title, task]);
 
     const { user } = useAuth();
 
@@ -51,12 +53,10 @@ const TaskInfoPage = (props) => {
         setIdTask(params.id);
     }, [params]);
 
-    const [ task, setTask ] = useState(taskFields);
-
     const [ isLoading, setIsLoading ] = useState(false);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const userData = async () => {
             setIsLoading(true);
             await axios.get(
                 `http://server.selestia.ru/api/task/getMainInfo`, {
@@ -71,7 +71,9 @@ const TaskInfoPage = (props) => {
             .finally(setIsLoading(false));
         }
 
-        if(idTask) fetchData()
+        console.log(task);
+
+        if(idTask) userData()
     }, [idTask]);
 
     return (
@@ -81,7 +83,7 @@ const TaskInfoPage = (props) => {
             ) : (
                 <>
                     <TaskContent task={ task } />
-                    <TaskAside task={ task } />
+                    <TaskAside task={ task } idTask={idTask} />
                 </>
             )}
             

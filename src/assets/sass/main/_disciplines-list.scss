@@ -2,6 +2,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    gap: 10px;
     height: 100%;
 
     &__item {
@@ -18,17 +19,21 @@
         cursor: pointer;
     }
     &__item_active {
-        background-color: $main-color;
+        background-color: $main-color!important;
     }
     &__item_active &__title {
         color: $w-font-color;
     }
     &__item_full {
         height: 60px;
+        background-color: transparent;
 
         .disciplines-list__title {
             font-size: 18px;
         }
+    }
+    &__item_full:hover {
+        background-color: $hover-color;
     }
     &__image {
         $size: 50px;

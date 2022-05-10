@@ -1,28 +1,24 @@
-import axios from 'axios';
+import axios from "axios";
 import React, { useState, useEffect } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { Link } from 'react-router-dom';
+import InfiniteScroll from "react-infinite-scroll-component";
+import { Link } from "react-router-dom";
 
-import getColorMark from '../assets/js/getColorMark';
-import getTypeTask from '../assets/js/getTypeTask';
-import isEmptyUserImage from '../assets/js/isEmptyUserImage';
+import { useTasks } from "../hooks/useTasks";
+import SwitchButton from "./SwitchButton";
 
-import { useAuth } from '../hooks/useAuth';
-import { useTasks } from '../hooks/useTasks';
-import SwitchButton from './SwitchButton';
+import getColorMark from "../assets/js/getColorMark";
+import getTypeTask from "../assets/js/getTypeTask";
+import isEmptyUserImage from "../assets/js/isEmptyUserImage";
 
 const defaultIcon = 'http://server.selestia.ru/userAvatar/standartUser.png';
 
-const TasksList = () => {
-
-    const { user } = useAuth();
+const TasksUser = ({user}) => {
 
     const { selectedDiscipline } = useTasks();
 
     const [ tasks, setTasks ] = useState([]);
 
     useEffect(() => {
-        console.log(selectedDiscipline)
         const fetchData = async () => {
             const result = await axios.get(
                 `http://server.selestia.ru/api/student/getTaskStudent`,
@@ -49,11 +45,10 @@ const TasksList = () => {
     const nextScroll = () => {
         
     }
-    
+
     return (
-        <article className='tasks'>
+        <>
             <header className='tasks-header'>
-            {user.role === 0 &&
                 <>
                     <SwitchButton handler={switchHandler} value={showUncompleted}>
                         <span className='switch__title'>Показать невыполненные</span>
@@ -62,7 +57,6 @@ const TasksList = () => {
                         Список лидеров
                     </Link>
                 </>
-            }
             </header>
 
             <InfiniteScroll
@@ -77,7 +71,7 @@ const TasksList = () => {
                     <section key={task.id} className='tasks-section'>
                         <Link to={`/tasks/${task.id}`} className='tasks-section__link_h' />
                         <div className='tasks-section__image'>
-                            <img src={getTypeTask(task.type)} alt='Тип' />
+                            <img src={getTypeTask({type: task.type})} alt='Тип' />
                         </div>
                         <div className='tasks-info'>
                             <small className='tasks-info__date'>Срок сдачи до { new Date(task.dateTo).toLocaleDateString('ru-RU') }</small>
@@ -104,9 +98,8 @@ const TasksList = () => {
                 )
             })}
             </InfiniteScroll>
-
-        </article>
+        </>  
     );
 }
 
-export default TasksList;
+export default TasksUser;

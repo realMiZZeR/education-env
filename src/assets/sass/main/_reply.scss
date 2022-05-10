@@ -26,6 +26,15 @@
         margin-bottom: 50px;
     }
 
+    &-description_empty {
+        margin-bottom: 20px;
+    }
+
+    &-files_attach {
+        margin-bottom: 0;
+        margin-top: 31px;
+    }
+
     &-description::before,
     &-files::before {
         content: '';
@@ -48,6 +57,12 @@
             align-items: center;
             min-height: $icon-size;
             margin-bottom: 17px;
+
+            span {
+                display: block;
+                margin-left: 5px;
+                font-weight: 400;
+            }
         }
         &__text {
             font-family: $roboto-font;
@@ -69,6 +84,59 @@
             min-height: $icon-size;
             margin-bottom: 17px;
         }
+        &__list {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        &__item {
+            $size: 85px;
+            max-width: $size;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        &__link {
+            $size: 85px;
+            position: relative;
+            width: $size;
+            height: $size;
+            max-width: $size;
+            max-height: $size;
+            border-radius: $block-brd-radius;
+            overflow: hidden;
+            margin-bottom: 10px;
+
+            img {
+                position: absolute;
+                top: 0; left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+        &__link:hover {
+            background-color: $hover-color;
+        }
+        &__name {
+            font-family: $roboto-font;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 16px;
+            color: $font-color;
+            text-align: center;
+            width: 100%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    }
+    &-files_attach {
+        padding-left: 0;
+    }
+    &-files_attach::before {
+        background-image: none;
     }
 }
 
