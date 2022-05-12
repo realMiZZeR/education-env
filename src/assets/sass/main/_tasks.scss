@@ -23,10 +23,15 @@
         display: none;
     }
 
+    &-list_teacher {
+        gap: 30px;
+    }
+
     &-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 20px;
         margin-bottom: 20px;
 
         &__link {
@@ -265,6 +270,40 @@ $aside-width: 550px;
         box-shadow: $block-shadow;
         height: 100%;
         padding: 20px;
+    }
+    &__link {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 100px;
+        background-color: $block-color;
+        border-radius: $block-brd-radius;
+        box-shadow: $block-shadow;
+        padding: 25px 40px;
+    }
+    &__image {
+        position: relative;
+        width: 50px;
+        height: 50px;
+        max-width: 50px;
+        max-height: 50px;
+        opacity: 0.35;
+
+        img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+    &__heading {
+        font-family: $montserrat-font;
+        font-weight: 800;
+        font-size: 24px;
+        color: $font-color;
+        width: 100%;
+        text-align: center;
     }
 }
 

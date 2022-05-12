@@ -11,6 +11,8 @@ const UsersList = () => {
     const { savedUsers, saveUser, deleteUser, currentUser, setCurrentUser, formValues, setFormValues } = useSavedUsers();
 
     function userSaveHandler() {
+        // todo: validate fields before saving with server
+
         saveUser(formValues);
     }
 
@@ -20,7 +22,7 @@ const UsersList = () => {
 
     function itemClickHandler(id) {
         setCurrentUser(id);
-        const [ value ] = savedUsers.filter((user, index) => user.id === id);
+        const [ value ] = savedUsers.filter(user => user.id === id);
         setFormValues(value);
     }
     

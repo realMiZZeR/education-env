@@ -5,6 +5,9 @@ import { useAuth } from '../hooks/useAuth';
 import { useTasks } from '../hooks/useTasks';
 import Search from './Search';
 
+import createTaskIcon from '../assets/images/icons/create_task.png';
+import { Link } from 'react-router-dom';
+
 const FullDisciplinesList = () => {
 
     const { user } = useAuth();
@@ -46,8 +49,6 @@ const FullDisciplinesList = () => {
         if(user.role === 1) fetchTeacher();
     }, []);
 
-    console.log(disciplines)
-
     useEffect(() => {
         if(disciplines.length > 0) {
             setIsActive(disciplines[0].id);
@@ -63,6 +64,12 @@ const FullDisciplinesList = () => {
     
     return (
         <aside className='tasks-aside'>
+            <Link to='/create-task' className='tasks-aside__link link'>
+                <div className='tasks-aside__image'>
+                    <img src={createTaskIcon} alt='Логотоип создания' />
+                </div>
+                <h2 className='tasks-aside__heading'>Создать новое задание</h2>
+            </Link>
             <div className='tasks-aside__disciplines'>
                 <Search className='tasks-aside__search search' />
                 <ul className='disciplines-list'>

@@ -1,12 +1,14 @@
 import axios from "axios";
 import { useState, createContext, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
+import { useModal } from "../hooks/useModal";
 
 export const TaskContext = createContext(null);
 
 export const CreateTaskProvider = ({ children }) => {
 
     const { user } = useAuth();
+    const { setModal } = useModal();
 
     const formFields = {
         title: '',
@@ -26,26 +28,30 @@ export const CreateTaskProvider = ({ children }) => {
 
         const fetchData = async () => {
 
-            let formData = new FormData();
-            for(let key in formValues) {
-                if(key === 'files') {
-                    for(let i = 0; i < formValues.files.length; i++) {
-                        formData.append('files', formValues.files[i]);
-                    }
-                } else {
-                    formData.append(key, formValues[key]);
-                }
-            }
-            formData.append('token', user.token);
+            // let formData = new FormData();
+            // for(let key in formValues) {
+            //     if(key === 'files') {
+            //         for(let i = 0; i < formValues.files.length; i++) {
+            //             formData.append('files', formValues.files[i]);
+            //         }
+            //     } else {
+            //         formData.append(key, formValues[key]);
+            //     }
+            // }
+            // formData.append('token', user.token);
 
-            const result = await axios.request({ 
-                url:     'http://server.selestia.ru/api/teacher/createTask',
-                method:  'post',
-                data:     formData,
-                headers:  {'Content-Type': 'multipart/form-data'}
-            });
+            // const result = await axios.request({ 
+            //     url:     'http://server.selestia.ru/api/teacher/createTask',
+            //     method:  'post',
+            //     data:     formData,
+            //     headers:  {'Content-Type': 'multipart/form-data'}
+            // });
             
-            console.log(result);
+            setModal(
+                {title: 'Создание задания', 
+                message: 'Задание успешно создано!', 
+                type: 'success'}
+            );
         }
 
         fetchData();
@@ -56,10 +62,6 @@ export const CreateTaskProvider = ({ children }) => {
         setFormValues,
         saveTaskData
     }
-    
-    useEffect(() => {
-        console.log(formValues);
-    }, [formValues.title]);
 
     return (
         <TaskContext.Provider value={value}>

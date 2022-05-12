@@ -12,7 +12,7 @@ const CreateUserContent = () => {
 
     const { formValues, setFormValues } = useSavedUsers();
 
-    function formInputChangeHandler(e) {
+    const formInputChangeHandler = (e) => {
         const { name, value } = e.target;
 
         setFormValues({
@@ -21,7 +21,7 @@ const CreateUserContent = () => {
         });
     }
 
-    function formRadioHandler(e) {
+    const formRadioHandler = (e) => {
         const { name, value } = e.target;
 
         setFormValues({
@@ -123,38 +123,6 @@ const CreateUserContent = () => {
             
         </section>
     );
-
-    //        <div className='create-section'>
-    //            <h2 className='create-section__heading'>Дополнительно</h2>
-    //            <div className='extra'>
-    //                <div className='extra__grouping'>
-    //                    <label htmlFor='userId' className='extra__label'>ID Пользователя</label>
-    //                    <div className='extra__field'>
-    //                         <input 
-    //                         type='text' 
-    //                         name='idUser'
-    //                         value={formValues.idUser} 
-    //                         onChange={formInputChangeHandler}
-    //                         className='extra__input input' />
-    //                         <span>Заполняется автоматически при создании</span>
-    //                    </div>
-    //                </div>
-    //                <div className='extra__grouping'>
-    //                    <label htmlFor='userId' className='extra__label'>Электронная почта</label>
-    //                    <div className='extra__field'>
-    //                         <input 
-    //                         type='text'
-    //                         name='email' 
-    //                         value={formValues.email} 
-    //                         onChange={formInputChangeHandler}
-    //                         className='extra__input input' />
-    //                         <span>Для получения писем о&nbsp;восстановлении пароля, опубликации новых заданий и&nbsp;т.п.</span>
-    //                    </div>
-    //                </div>
-    //            </div>
-    //        </div>
-    //     </form>
-    // );
 }
 
 export default CreateUserContent;

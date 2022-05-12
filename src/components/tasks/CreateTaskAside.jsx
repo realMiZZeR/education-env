@@ -67,8 +67,18 @@ const CreateTaskAside = () => {
         <aside className='create-form__aside'>
             <h2 className='create-form__heading'>&nbsp;</h2>
             <div className='create-form-section create-form-section_full'>
-                <FormSelect title='Выбор группы' handler={selectGroupHandler} options={groups} />
-                <FormSelect title='Тип задания' handler={taskTypeHandler} options={types} />
+                <FormSelect 
+                    name='group'
+                    title='Выбор группы' 
+                    handler={selectGroupHandler} 
+                    options={groups} 
+                />
+                <FormSelect 
+                    name='taskType'
+                    title='Тип задания' 
+                    handler={taskTypeHandler} 
+                    options={types} 
+                />
                 <div className='create-form-section__grouping'>
                     <label htmlFor='dateFrom' className='input-effect'>
                         <input 

@@ -30,6 +30,11 @@ $user-card-border: 1px solid $user-card-color;
 $user-card-shadow_teacher: 0 4px 10px transparentize($main-color, 0.85);
 $user-card-border_teacher: 2px solid transparentize($main-color, 0.85);
 
+// modal color
+$modal-success: rgba(30, 179, 50, 0.9);
+$modal-message: rgba(255, 255, 255, 1);
+$modal-error: rgba(177, 25, 25, 0.5);
+
 // achievements
 $standard-color: linear-gradient(135deg, #4D69F9 0%, #9D6CDC 100%);
 $epic-color: linear-gradient(135deg, #CC4DF9 0%, #F94DD3 100%);

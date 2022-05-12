@@ -1,9 +1,12 @@
 import axios from 'axios';
-import { createContext, useEffect, useState } from "react";
+import { useEffect, createContext, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
+
+    const navigate = useNavigate();
 
     const [ user, setUser ] = useState(null);
     const [ isAdmin, setIsAdmin ] = useState(null);
@@ -28,22 +31,17 @@ export const AuthProvider = ({ children }) => {
                 if(!isError && response.status === 200) {
                     const { token, role } = response.data;
 
-                    switch(role) {
-                        case 0:
-                            break;
-                        case 1:
-                            break;
-                        case 2:
-                            break;
-                    }
-
                     if(role === 2) setIsAdmin(true);
                     
                     setUser({
-                        ...user,
                         token: token,
                         role: role
                     });
+
+                    // remember me
+                    if(user.rememberPassword) {
+                        localStorage.setItem('token', token);
+                    } 
 
                     callback();
                 }
@@ -52,9 +50,36 @@ export const AuthProvider = ({ children }) => {
 
         fetchData();
     }
+
+    useEffect(() => {
+        if(localStorage.getItem('token')) {
+            const authToken = async () => {
+                await axios.post(
+                    'http://server.selestia.ru/api/authToken',
+                    {
+                        token: localStorage.getItem('token')
+                    }
+                ).then(response => {
+                    const { token, role } = response.data;
+                    setUser({
+                        token: token,
+                        role: role
+                    });
+    
+                    navigate('/home', {replace: true});
+                }).catch(error => console.warn(error));
+            }
+            if(!user) authToken();
+        }
+    }, []);
+
     const signOut = (callback) => {
         setUser(null);
         setIsAdmin(null);
+        // forget me, if I was remembered :)
+        if(localStorage.getItem('token')) {
+            localStorage.removeItem('token');
+        }
         callback();
     }
 

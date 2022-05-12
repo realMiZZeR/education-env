@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import updateTitle from '../assets/js/updateTitle';
 import SwitchButton from '../components/SwitchButton';
-import axios from 'axios';
 
-function AuthAsideParagraph(props) {
+const AuthAsideParagraph = (props) => {
     return (
         <p className='auth-aside__paragraph'>
             { props.children }
@@ -51,10 +50,9 @@ function Auth(props) {
         if(!isValid) {
             setErrorMessages(errors);
             return;
-        };
+        }
 
         signIn(formValues, () => navigate('/home', {replace: true}));
-
     }
 
     const formChangeHandler = (e) => {
@@ -69,7 +67,7 @@ function Auth(props) {
     const rememberPasswordHandler = () => {
         setFormValues({
             ...formValues,
-            ['rememberPassword']: !formValues.rememberPassword
+            'rememberPassword': !formValues.rememberPassword
         });
     }
 
@@ -97,7 +95,7 @@ function Auth(props) {
                     placeholder='Пароль'
                     />
                 </div>
-                <a href='#' className='auth-form__forget'>Забыли пароль?</a>
+                <a href='/' className='auth-form__forget'>Забыли пароль?</a>
                 <footer className='auth-form__footer'>
                     <SwitchButton handler={rememberPasswordHandler} value={formValues.rememberPassword}>
                         <span className='switch__title'>Запомнить меня</span>

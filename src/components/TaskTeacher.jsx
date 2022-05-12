@@ -28,11 +28,7 @@ const TaskTeacher = ({ task }) => {
                     </ul>
                     }
                 </div>
-                <span 
-                    className={`tasks-section__mark ${getColorMark({className: 'mark', mark: task.mark})}`}
-                >
-                    { (task.mark) ? task.mark : '?' }
-                </span>
+                
             </article>
             
         </div>

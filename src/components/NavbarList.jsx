@@ -22,7 +22,7 @@ import logoutIconActive from '../assets/images/icons/logout_active.svg';
 
 const NavList = () => {
 
-    const { user, signOut, isAdmin } = useAuth() || {};
+    const { user, signOut } = useAuth() || {};
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -166,18 +166,18 @@ const NavList = () => {
     const [ currentNavbar, setCurrentNavbar ] = useState(navListItems.guest);
 
     useEffect(() => {
-        if(!user) {
+        if(user === null) {
             setCurrentNavbar(navListItems.guest);
         }
-        if(user) {
+        if(user?.role === 0 || user?.role === 1) {
             setCurrentNavbar(navListItems.auth)
         }
-        if(isAdmin) {
+        if(user?.role === 2) {
             setCurrentNavbar(navListItems.admin);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user?.login]);
+    }, [user?.role]);
 
     const hoverItem = (e, img, isCurrent) => {
         if(isCurrent) return;

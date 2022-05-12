@@ -62,19 +62,8 @@ const CreateGroupContent = () => {
                     <Selection title='Факультет' context={{formValues, setFormValues}}  />
                 </div>
             </div>
-            
         </section>
     )
-
-
-    //                 <div className='create-section'>
-    //                     <div className='selections'>
-    //                         <Selection title='Преподаватели' context={{formValues, setFormValues}} />
-    //                         <Selection title='Факультет' context={{formValues, setFormValues}}  />
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         </div>
 }
 
 export default CreateGroupContent;

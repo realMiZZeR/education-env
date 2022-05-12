@@ -14,12 +14,13 @@ const StudentsListSelect = ({ context }) => {
     const [ students, setStudents ] = useState([]);
 
     const [ studentsAxios, isError, isLoading ] = useAxios({
-        url: '/api/admin/allStudent',
+        url: '/api/admin/createGroup/allStudent',
         method: 'get'
     });
 
     useEffect(() => {
         if(studentsAxios && studentsAxios.data) setStudents(studentsAxios.data);
+        console.log(studentsAxios);
     }, [studentsAxios]);
 
     const getStudents = (id) => {

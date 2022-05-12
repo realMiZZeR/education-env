@@ -13,9 +13,10 @@ const Users = (props) => {
         updateTitle(props.title);
     }, [props.title]);
 
-    const [ response, isError, isLoading ] = useAxios(
-        `http://server.selestia.ru/api/user/getAll`
-    )
+    const [ response, isError, isLoading ] = useAxios({
+        url: `/api/user/getAll`,
+        method: 'get'
+    });
 
     const [ users, setUsers ] = useState([]);
 
@@ -23,11 +24,10 @@ const Users = (props) => {
         if(response && response.data) setUsers(response.data);
     }, [response]);
 
-    console.log(response)
-
     const [ students, setStudents ] = useState([]);
 
     useEffect(() => {
+        console.log(response);
         setStudents(users.filter(user => user.isTeacher === false));
 
         // eslint-disable-next-line react-hooks/exhaustive-deps

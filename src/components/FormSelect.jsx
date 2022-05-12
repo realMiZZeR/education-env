@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const FormSelect = ({title, handler, options}) => {
+const FormSelect = ({title, name, handler, options}) => {
 
     const [ optionTitle, setOptionTitle ] = useState(options[0]?.id);
     const [ isDropdownOpen, setIsDropdownOpen ] = useState(false);
@@ -21,14 +21,15 @@ const FormSelect = ({title, handler, options}) => {
 
     return (
         <div className={`select ${isDropdownOpen ? 'select_active' : ''}`} onClick={selectClickHandler}>
-            <label className='input-effect'>
+            <label htmlFor={name} className='input-effect'>
                 <input 
-                type='text' 
-                className='input-effect__input input' 
-                value={optionTitle}
-                placeholder='&nbsp;'
-                onChange={() => {}}
-                readOnly />
+                    name={name}
+                    type='text' 
+                    className='input-effect__input input' 
+                    value={optionTitle || ''}
+                    placeholder='&nbsp;'
+                    readOnly
+                 />
                 <span>{ title }</span>
             </label>
             <div className={`dropdown ${isDropdownOpen ? 'dropdown_active' : ''}`}>

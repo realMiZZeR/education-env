@@ -94,13 +94,12 @@ const TasksTeacher = ({user}) => {
                 next={nextScroll}
                 hasMore={true}
                 loader={<span>Подождите...</span>}
-                className='tasks-list'
+                className='tasks-list tasks-list_teacher'
             >
             {tasks.map(task => {
-                console.log(task)
                 return (
                     <section key={task.id} className='tasks-section'>
-                        <Link to={`/tasks/${task.id}`} className='tasks-section__link_h' />
+                        <Link to={`/tasks/${task.id}/answers`} className='tasks-section__link_h' />
                         <div className='tasks-section__image'>
                             <img src={getTypeTask({type: task.typeTask.id})} alt='Тип' />
                         </div>
@@ -108,7 +107,7 @@ const TasksTeacher = ({user}) => {
                             <small className='tasks-info__date'>Срок сдачи до { new Date(task.dateTo).toLocaleDateString('ru-RU') }</small>
                             <h3 className='tasks-info__title'>{ task.title }</h3>
                             <p className='tasks-info__descr'>{ task.description }</p>
-                            <p className='tasks-info__answer'>Ваш ответ: { (task.answer) ? task.answer : 'отсутствует' }</p>
+                            <p className='tasks-info__answer'>Количество ответов: { task.countAnswer }</p>
                             <div className='tasks-info__author'>
                                 <div className='tasks-info-group'>
                                     <div className={`tasks-info-group__image`}>

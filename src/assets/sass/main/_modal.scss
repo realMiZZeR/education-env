@@ -1,0 +1,54 @@
+.modal-wrapper {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 99;
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 350px;
+    height: 80px;
+    padding: 20px;
+    background-color: $block-color;
+    border-radius: $block-brd-radius;
+    transform: translateX(10px);
+    opacity: 0;
+    transition: .3s transform ease-in-out
+                .3s opacity ease-in-out;
+
+    &_show {
+        transform: translateX(0);
+        opacity: 1;
+        transition: .3s transform ease-in-out
+                    .3s opacity ease-in-out;
+    }
+    &_success {
+        background-color: $modal-success;
+        flex-direction: column;
+    }
+    &_message {
+        background-color: $block-color;
+        box-shadow: $block-shadow;
+    }
+}
+.modal__heading {
+    font-family: $roboto-font;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 26px;
+    color: $w-font-color;
+    margin-bottom: 5px;
+}
+.modal__message {
+    font-family: $roboto-font;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: $w-font-color;
+}
