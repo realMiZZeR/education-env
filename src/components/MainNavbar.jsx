@@ -1,10 +1,12 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import NavbarList from './NavbarList';
 import { useAuth } from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
 
+import NavbarList from './NavbarList';
+import getInitials from '../assets/js/getInitials';
+
 import defaultUserIcon from '../assets/images/icons/profile/user.svg';
-import axios from 'axios';
 
 const MainNavbar = () => {
 
@@ -18,13 +20,12 @@ const MainNavbar = () => {
                 'http://server.selestia.ru/api/user/miniInfo',
                 {params: {token: user?.token}}
             ).then(response => {
-                console.log(response)
                 setNavbarInfo(response.data)
             }).catch(error => console.warn(`miniinfo ${error}`));
         }
 
         if(user?.token) fetchData();
-    }, []);
+    }, [user?.token]);
 
     return (
         <div className='navbar'>
@@ -33,7 +34,7 @@ const MainNavbar = () => {
                     <img src={(navbarInfo?.image) ? navbarInfo.image : defaultUserIcon} alt='Аватарка' />
                 </div>
                 <div className='navbar-user__info'>
-                    <p className='navbar-user__name'>{ (navbarInfo?.token) ? navbarInfo.fullname : 'Гость' }</p>
+                    <p className='navbar-user__name'>{ (user?.token) ? getInitials(navbarInfo?.fullname) : 'Гость' }</p>
                     {user?.token && 
                     <small className='navbar-user__attr'>
                         {user.role === 0 && <span>{navbarInfo?.group}, {navbarInfo?.course} курс</span>}

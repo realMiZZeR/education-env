@@ -14,8 +14,9 @@ import AdminController from '../hoc/AdminController';
 
 // images
 import hamburgerIcon from '../assets/images/icons/hamburger.svg';
-import TaskInfoPage from '../pages/TaskInfoPage';
+import {TaskInfoPage} from '../pages/TaskInfoPage';
 import ModalNotification from './ModalNotification';
+import StudentAnswerPage from '../pages/StudentAnswerPage';
 
 // pages
 const Auth = React.lazy(() => import('../pages/Auth'));
@@ -154,10 +155,14 @@ export const MainContent = () => {
                                     </AuthController>
 
                                 } />
-                                
                                 <Route path='/tasks/:id/answers' element={
                                     <AuthController>
                                         <AnswersPage title='Ответы' />
+                                    </AuthController>
+                                } />
+                                <Route path='/tasks/:idTask/answers/:idUser' element={
+                                    <AuthController>
+                                        <StudentAnswerPage title='Содержимое ответа' />
                                     </AuthController>
                                 } />
 

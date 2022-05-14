@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import TimetableDatesList from '../components/TimetableDatesList';
 
 // images
-import DevidedByTwo from '../layouts/DevidedByTwo';
 import TimetableComponent from '../components/TimetableComponent';
 import TimetableSort from '../components/TimetableSort';
 import updateTitle from '../assets/js/updateTitle';
@@ -64,10 +63,10 @@ const Timetable = (props) => {
             <article className='timetable-dates'>
                 <TimetableDatesList datesList={ datesList } />
             </article>
-            <DevidedByTwo>
+            <div className='content-main__grid_two'>
                 <TimetableComponent />
                 <TimetableSort />
-            </DevidedByTwo>
+            </div>
         </TimetableProvider>
     );
 }

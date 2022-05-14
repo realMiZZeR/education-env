@@ -2,15 +2,15 @@
 const getColorMark = ({ className, mark }) => {
     switch(mark) {
         case 1:
-            return `${className}_one`;
+            return `${className}_terrible`;
         case 2:
-            return `${className}_two`;
+            return `${className}_bad`;
         case 3:
-            return `${className}_three`;
+            return `${className}_satisfactorily`;
         case 4:
-            return `${className}_four`;
+            return `${className}_good`;
         case 5:
-            return `${className}_five`;
+            return `${className}_excellent`;
         default:
             return `${className}_another`;
     }

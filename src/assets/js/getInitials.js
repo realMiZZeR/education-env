@@ -1,4 +1,5 @@
 function getInitials(fullname) {
+    if(!fullname) return;
     let initials = fullname.split(' ');
     if(initials.length === 3) {
 

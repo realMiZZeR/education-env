@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import getColorMark from '../assets/js/getColorMark';
+import { TaskContext } from '../pages/TaskInfoPage';
 
 const baseUrl = 'http://server.selestia.ru'
 
-const TaskUser = ({ task }) => {
+const TaskUser = () => {
+
+    const { task } = useContext(TaskContext);
 
     return (
         <div className='task-content'>
@@ -12,9 +15,9 @@ const TaskUser = ({ task }) => {
                     <h3 className='task-description__heading'>{ task.title }</h3>
                     <p className='task-description__text'>{ task.description }</p>
                 </div>
-                <div className='task-files'>
+                {task.files.length > 0 && <div className='task-files'>
                     <h3 className='task-files__heading'>Прикреплённые файлы:</h3>
-                    {task.files.length > 0 && <ul className='task-files__list'>
+                    <ul className='task-files__list'>
                         { task.files.map(file => {
                             return (
                                 <li key={file.id} className='task-files__item'>
@@ -26,8 +29,8 @@ const TaskUser = ({ task }) => {
                             )
                         }) }
                     </ul>
-                    }
                 </div>
+                }
                 <span 
                     className={`tasks-section__mark ${getColorMark({className: 'mark', mark: task.mark})}`}
                 >

@@ -4,6 +4,7 @@ $background-color: #FCFCFC;
 $block-color: #FFFFFF;
 $block-brd-radius: 10px;
 $block-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+$block-shadow-hover: 0 4px 10px rgba(0, 0, 0, 0.15);
 $block-shadow_highlight: 0 4px 10px transparentize($main-color, 0.5);
 $lesson-color: #F4F4F4;
 $group-color: #F4F4F4;
@@ -35,6 +36,13 @@ $modal-success: rgba(30, 179, 50, 0.9);
 $modal-message: rgba(255, 255, 255, 1);
 $modal-error: rgba(177, 25, 25, 0.5);
 
+// marks
+$excellent-mark: #21E929;
+$good-mark: #EBEF18;
+$satisfactorily-mark: #F9B44D;
+$bad-mark: #F9764D;
+$terrible-mark: #F01F1F;
+
 // achievements
 $standard-color: linear-gradient(135deg, #4D69F9 0%, #9D6CDC 100%);
 $epic-color: linear-gradient(135deg, #CC4DF9 0%, #F94DD3 100%);
@@ -60,18 +68,18 @@ $montserrat-font: 'Montserrat';
 // 
 //  default scrollbar for lists
 //
-/* 
-&::-webkit-scrollbar {
+
+::-webkit-scrollbar {
     width: 5px;
 }
-&::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background-color: $main-color;
     border-radius: $block-brd-radius;
 }
-&::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     background-color: $group-color;
 }
-*/
+
 
 ::-webkit-calendar-picker-indicator {
     color: rgba(0, 0, 0, 0);
@@ -97,11 +105,11 @@ body {
 .container {
     display: flex;
     flex-direction: column;
-    max-width: 1600px;
+    max-width: 1620px;
     width: 100%;
     margin: 0 auto;
     padding: 20px;
-    padding-bottom: 40px;
+    padding-bottom: 30px;
     overflow: hidden;
 }
 
@@ -248,23 +256,23 @@ input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
 .mark {
     background-color: $main-color;
 
-    &_one {
-        background-color: $error-color;
+    &_terrible {
+        background-color: $terrible-mark!important;
     }
-    &_two {
-        background-color: $error-color;
+    &_bad {
+        background-color: $bad-mark!important;
     }
-    &_three {
-        background-color: $orange-color
+    &_satisfactorily {
+        background-color: $satisfactorily-mark!important;
     }
-    &_four {
-        background-color: $mythical-color;
+    &_good {
+        background-color: $good-mark!important;
     }
-    &_five {
-        background-color: $green-color;
+    &_excellent {
+        background-color: $excellent-mark!important;
     }
     &_another {
-        background-color: $main-color;
+        background-color: $main-color!important;
     }
 }
 

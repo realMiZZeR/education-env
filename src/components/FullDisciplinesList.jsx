@@ -64,12 +64,13 @@ const FullDisciplinesList = () => {
     
     return (
         <aside className='tasks-aside'>
-            <Link to='/create-task' className='tasks-aside__link link'>
+            {user.role === 1 && <Link to='/create-task' className='tasks-aside__link link'>
                 <div className='tasks-aside__image'>
                     <img src={createTaskIcon} alt='Логотоип создания' />
                 </div>
                 <h2 className='tasks-aside__heading'>Создать новое задание</h2>
             </Link>
+            }
             <div className='tasks-aside__disciplines'>
                 <Search className='tasks-aside__search search' />
                 <ul className='disciplines-list'>

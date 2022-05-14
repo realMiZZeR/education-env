@@ -5,7 +5,6 @@ import { Cards, CardsItem } from './Cards';
 import createUserIcon from '../assets/images/icons/admin/create_user.svg';
 import createDisciplineIcon from '../assets/images/icons/admin/create_discipline.svg';
 import createGroupIcon from '../assets/images/icons/admin/create_group.svg';
-import DevidedByTwo from '../layouts/DevidedByTwo';
 import TimetableComponent from './TimetableComponent';
 import Messages from './Messages';
 import { TimetableProvider } from '../hoc/TimetableProvider';
@@ -31,12 +30,12 @@ function HomePageAdmin() {
                 image={createUserIcon}
                 link='/create-user' />
             </Cards>
-            <DevidedByTwo>
+            <div className='content-main__grid_two'>
                 <TimetableProvider>
                     <TimetableComponent />
                 </TimetableProvider>
                 <Messages />
-            </DevidedByTwo>
+            </div>
                 
         </>
     );

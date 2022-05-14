@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import updateTitle from "../assets/js/updateTitle";
@@ -34,7 +34,9 @@ const taskFields = {
     }
 }
 
-const TaskInfoPage = (props) => {
+export const TaskContext = createContext(null);
+
+export const TaskInfoPage = (props) => {
 
     const [ task, setTask ] = useState(taskFields);
     
@@ -71,24 +73,24 @@ const TaskInfoPage = (props) => {
             .finally(setIsLoading(false));
         }
 
-        console.log(task);
-
         if(idTask) userData()
     }, [idTask]);
+
+    const value = {
+        task, idTask
+    }
 
     return (
         <div className='tasks-wrapper'>
             {isLoading ? (
                 <LoadingPage />
             ) : (
-                <>
-                    <TaskContent task={ task } />
-                    <TaskAside task={ task } idTask={idTask} />
-                </>
+                <TaskContext.Provider value={value}>
+                    <TaskContent />
+                    <TaskAside task={task} />
+                </TaskContext.Provider>
             )}
             
         </div>
     );
 }
-
-export default TaskInfoPage

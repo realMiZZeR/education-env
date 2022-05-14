@@ -3,7 +3,6 @@
     width: 100%;
     min-height: 100vh;
     padding-left: 300px;
-    // padding-bottom: 30px;
 
     &-top {
         display: flex;
@@ -13,6 +12,8 @@
     }
 
     &-main {
+        display: flex;
+        flex-direction: column;
         position: relative;
         width: 100%;
         height: 100%;

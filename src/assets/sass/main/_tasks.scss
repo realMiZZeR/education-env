@@ -315,6 +315,10 @@ $aside-width: 550px;
     box-shadow: $block-shadow;
     padding: 30px;
 
+    &-content {
+        width: 100%;
+    }
+
     &-description__heading,
     &-files__heading {
         position: relative;
@@ -422,7 +426,7 @@ $aside-width: 550px;
 
     &-aside {
         position: relative;
-        min-width: 550px;
+        width: min(100% - 2rem, 550px);
     }
     &-attributes {
         display: grid;
@@ -486,7 +490,8 @@ $aside-width: 550px;
             padding-top: 20px;
         }
     }
-    &-attributes-author {
+    &-attributes-author,
+    &-attributes-group {
         display: flex;
         align-items: center;
         gap: 15px;

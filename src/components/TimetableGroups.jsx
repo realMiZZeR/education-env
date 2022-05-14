@@ -51,7 +51,6 @@ const TimetableGroups = () => {
     });
 
     useEffect(() => {
-        console.log(groups)
         if(groups && groups.data) setData(groups.data);
     }, [groups]);
 

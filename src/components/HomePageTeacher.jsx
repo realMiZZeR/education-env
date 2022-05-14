@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Cards, CardsItem } from './Cards';
-import DevidedByTwo from '../layouts/DevidedByTwo';
 import Messages from './Messages';
 import TimetableComponent from './TimetableComponent';
 
@@ -34,12 +33,12 @@ function HomePageAdmin() {
                 image={disciplinesIcon}
                 link='/disciplines' />
             </Cards>
-            <DevidedByTwo>
+            <div className='content-main__grid_two'>
                 <TimetableProvider>
                     <TimetableComponent />
                 </TimetableProvider>
                 <Messages />
-            </DevidedByTwo>
+            </div>
                 
         </>
     );

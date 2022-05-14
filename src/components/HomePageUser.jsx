@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 
-import DevidedByTwo from '../layouts/DevidedByTwo';
 import TimetableComponent from './TimetableComponent';
 import Messages from './Messages';
 
@@ -106,12 +105,12 @@ function HomePageUser() {
                 </div>
                 <TasksSlider tasksList={tasksList} />
             </article>
-            <DevidedByTwo>
+            <div className='content-main__grid_two'>
                 <TimetableProvider>
                     <TimetableComponent />
                 </TimetableProvider>
                 <Messages />
-            </DevidedByTwo>
+            </div>
         </>
     );
 }

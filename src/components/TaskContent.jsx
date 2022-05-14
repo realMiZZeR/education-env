@@ -5,18 +5,16 @@ import TaskUser from './TaskUser';
 import TaskTeacher from './TaskTeacher';
 import ErrorPage from './ErrorPage';
 
-const baseUrl = 'http://server.selestia.ru'
-
-const TaskContent = ({ task }) => {
+const TaskContent = () => {
 
     const { user } = useAuth();
 
     if(user.role === 0) {
-        return <TaskUser task={task} />
+        return <TaskUser />
     }
 
     if(user.role === 1) {
-        return <TaskTeacher task={task} />
+        return <TaskTeacher />
     }
 
     return <ErrorPage />
