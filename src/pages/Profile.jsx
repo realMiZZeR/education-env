@@ -23,7 +23,7 @@ import UserImage from '../assets/images/user_image.jfif';
 // functions
 import updateTitle from '../assets/js/updateTitle';
 
-function Stats({ statsList }) {
+const Stats = ({ statsList }) => {
 
     const statsItems = statsList.map( item => {
             return (
@@ -47,13 +47,13 @@ function Stats({ statsList }) {
     )
 }
 
-export default function Profile(props) {
-
-    const { id } = useParams();
+const Profile = (props) => {
 
     useEffect(() => {
         updateTitle(props.title);
     }, [props.title]);
+
+    const params = useParams();
 
     const user = {
         id: 101,
@@ -122,3 +122,5 @@ export default function Profile(props) {
         </article>
     );
 }
+
+export default Profile;
