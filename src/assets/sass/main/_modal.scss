@@ -11,25 +11,21 @@
 .modal {
     display: flex;
     justify-content: center;
-    align-items: flex-end;
     width: 350px;
     height: 80px;
     padding: 20px;
     background-color: $block-color;
     border-radius: $block-brd-radius;
-    transform: translateX(10px);
     opacity: 0;
-    transition: .3s transform ease-in-out
-                .3s opacity ease-in-out;
-
-    &_show {
-        transform: translateX(0);
-        opacity: 1;
-        transition: .3s transform ease-in-out
-                    .3s opacity ease-in-out;
-    }
+    transform: translateX(20px);
+    animation: 4s appear ease-in-out forwards;
+    
     &_success {
         background-color: $modal-success;
+        flex-direction: column;
+    }
+    &_error {
+        background-color: $modal-error;
         flex-direction: column;
     }
     &_message {
@@ -37,18 +33,38 @@
         box-shadow: $block-shadow;
     }
 }
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    25% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    75% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}
+
 .modal__heading {
     font-family: $roboto-font;
     font-weight: 600;
-    font-size: 24px;
-    line-height: 26px;
+    font-size: 20px;
+    line-height: 22px;
     color: $w-font-color;
     margin-bottom: 5px;
 }
 .modal__message {
     font-family: $roboto-font;
     font-weight: 400;
-    font-size: 18px;
-    line-height: 20px;
+    font-size: 14px;
+    line-height: 16px;
     color: $w-font-color;
 }

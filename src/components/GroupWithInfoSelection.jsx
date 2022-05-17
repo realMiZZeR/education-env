@@ -5,7 +5,6 @@ import Search from './Search';
 import LoadingPage from './LoadingPage';
 import ErrorPage from './ErrorPage';
 
-
 import defaultGroupIcon from '../assets/images/icons/default_group.png';
 import { useSavedUsers } from '../hooks/useSavedUsers';
 import { useAxios } from '../hooks/useAxios';

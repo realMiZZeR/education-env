@@ -8,11 +8,17 @@ import deleteIcon from '../assets/images/icons/trashcan.png';
 
 const UsersList = () => {
 
-    const { savedUsers, saveUser, deleteUser, currentUser, setCurrentUser, formValues, setFormValues } = useSavedUsers();
+    const { 
+        savedUsers, 
+        saveUser, 
+        deleteUser, 
+        currentUser, 
+        setCurrentUser, 
+        formValues, 
+        setFormValues,
+        invalidUsers } = useSavedUsers();
 
     function userSaveHandler() {
-        // todo: validate fields before saving with server
-
         saveUser(formValues);
     }
 
@@ -25,11 +31,23 @@ const UsersList = () => {
         const [ value ] = savedUsers.filter(user => user.id === id);
         setFormValues(value);
     }
+
+    function isCurrentItem(id) {
+        return `${(currentUser === id) ? 'aside-users-list__item_current' : ''}`
+    }
+
+    function isInvalidItem(id) {
+        let isValid = true; 
+        for(let item of invalidUsers) {
+            if(item.id === id) isValid = false;
+        }
+        return (!isValid) ? 'aside-users-list__item_invalid' : ''
+    }
     
     const users = savedUsers.map(user => {
         return (
             <li key={user.id} 
-            className={`aside-users-list__item ${(currentUser === user.id) ? 'aside-users-list__item_current' : ''}`}
+            className={`aside-users-list__item ${isInvalidItem(user.id)} ${isCurrentItem(user.id)}`}
             onClick={() => { itemClickHandler(user.id) }}
             >
                 <div className='aside-users-list__image'>
@@ -64,16 +82,12 @@ const CreateUserAside = () => {
         addUser();
     }
 
-    function saveUsersHandler() {
-        saveUsersData();
-    }
-
     return (
         <aside className='create-form__aside'>
             <h2 className='create-form__heading'>&nbsp;</h2>
             <div className='create-form-section create-form-section_full'>
                 <UsersList />
-                <button onClick={addUserHandler} className='create-form-section__add button'>
+                <button type='button' onClick={addUserHandler} className='create-form-section__add button'>
                     <span>Добавить</span>
                 </button>
             </div>

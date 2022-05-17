@@ -10,17 +10,16 @@ export const AuthProvider = ({ children }) => {
 
     const [ user, setUser ] = useState(null);
     const [ isAdmin, setIsAdmin ] = useState(null);
-    const [ isError, setIsError ] = useState(false);
+    // const [ status, setStatus ] = useState(null);
 
-    const signIn = (user, callback) => {
-
-        setIsError(false);
+    const signIn = ({user, callback, promise}) => {
 
         // checking for admin
         (user.login === 'admin') ? setIsAdmin(true) : setIsAdmin(false);
 
         // process of authorization
         const fetchData = async () => {
+            let status = null;
             await axios.post(
                 'http://server.selestia.ru/api/auth',
                 {
@@ -28,7 +27,8 @@ export const AuthProvider = ({ children }) => {
                     password: user.password
                 }
             ).then(response => {
-                if(!isError && response.status === 200) {
+                status = response.status;
+                if(response.status === 200) {
                     const { token, role } = response.data;
 
                     if(role === 2) setIsAdmin(true);
@@ -44,8 +44,13 @@ export const AuthProvider = ({ children }) => {
                     } 
 
                     callback();
+                    
+                } else {
+                    throw new Error();
                 }
-            }).catch(error => console.log(error.toJSON()));
+            }).catch(error => {
+                status = error.response.status;
+            }).finally(() => (promise) ? promise.resolve(status) : '');
         }
 
         fetchData();
@@ -67,10 +72,11 @@ export const AuthProvider = ({ children }) => {
                     });
     
                     navigate('/home', {replace: true});
-                }).catch(error => console.warn(error));
+                }).catch(error => console.dir(error));
             }
             if(!user) authToken();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const signOut = (callback) => {

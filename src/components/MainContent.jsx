@@ -10,12 +10,12 @@ import { TimetableProvider } from '../hoc/TimetableProvider';
 import AuthController from '../hoc/AuthController';
 import TeacherController from '../hoc/TeacherController';
 import AdminController from '../hoc/AdminController';
-
+import { ModalProvider } from '../hoc/ModalProvider';
 
 // images
 import hamburgerIcon from '../assets/images/icons/hamburger.svg';
-import {TaskInfoPage} from '../pages/TaskInfoPage';
-import ModalNotification from './ModalNotification';
+
+import { TaskInfoPage } from '../pages/TaskInfoPage';
 import StudentAnswerPage from '../pages/StudentAnswerPage';
 
 // pages
@@ -37,58 +37,6 @@ const AnswersPage = React.lazy(() => import('../pages/AnswersPage'));
 const CreateUserPage = React.lazy(() => import('../pages/CreateUserPage'));
 const CreateDisciplinePage = React.lazy(() => import('../pages/CreateDisciplinePage'));
 const CreateGroupPage = React.lazy(() => import('../pages/CreateGroupPage'));
-
-export const ModalMessages = createContext(null);
-
-const ModalProvider = ({ children }) => {
-
-    const [ notifications, setNotifications ] = useState([]);
-    const [ modal, setModal ] = useState(null);
-
-    useEffect(() => {
-        if(modal) setNotifications([...notifications, modal]);
-    }, [modal]);
-
-    // clear every 5 seconds modals if they are exist
-    // useEffect(() => {
-    //     if(notifications.length) {
-    //         setTimeout(() => {
-    //             let result = [...notifications];
-    //             result.shift();
-    //             setNotifications(result);
-    //         }, 5000);
-    //     }
-        
-    // }, [notifications]);
-
-    const value = {
-        setModal,
-        notifications
-    }
-
-    // useEffect(() => {
-    //     console.log(modal)
-    // }, [modal]);
-
-    return (
-        <ModalMessages.Provider value={value}>
-            { children }
-            {notifications.length > 0 && notifications.map((item, index) => {
-                return (
-                    <ModalNotification
-                        key={index}
-                        context={
-                            {title: item.title,
-                            message: item.message,
-                            type: item.type}
-                        }
-                        className=''
-                     />
-                );
-            })}
-        </ModalMessages.Provider>
-    )
-}
 
 export const MainContent = () => {
     return (
@@ -186,7 +134,6 @@ export const MainContent = () => {
                             </Routes>
                         </Suspense>
                     </div>
-
                 </ModalProvider>
             </div>
         </div>

@@ -39,12 +39,12 @@ const Teachers = ({formValues, setFormValues}) => {
         if(Array.isArray(formValues.teacher)) {
             setFormValues({
                 ...formValues,
-                ['teacher']: getTeacherValues(id)
+                teacher: getTeacherValues(id)
             });
         } else {
             setFormValues({
                 ...formValues,
-                ['teacher']: id
+                teacher: id
             });
         }
     }

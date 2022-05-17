@@ -4,7 +4,7 @@ import React from 'react';
 import teacherIcon from '../assets/images/icons/teacher.svg';
 import cabinetIcon from '../assets/images/icons/cabinet.svg';
 
-function Lesson({ lessonNumber, children }) {
+const Lesson = ({ lessonNumber, children }) => {
     return (
         <li className='lesson'>
             <h3 className='lesson__number'>{ lessonNumber }</h3>
@@ -56,7 +56,7 @@ const Sublist = ({ lessonSublist }) => {
     );
 }
 
-function TimetableLessons({ lessons }) {    
+const TimetableLessons = ({ lessons }) => {    
     // item =   {
     //          "teacher": "",
     //          "auditorium": "",

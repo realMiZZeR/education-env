@@ -1,46 +1,51 @@
 import React, { useEffect, useState } from 'react';
-import { CSSTransition } from 'react-transition-group';
-
-import isEmptyUserImage from '../assets/js/isEmptyUserImage';
-import { useModal } from '../hooks/useModal';
 
 const defaultIcon = 'http://server.selestia.ru/userAvatar/standartUser.png'
 
-const ModalNotification = ({context = {title: '', message: '', type: ''}}) => {
+function getModalType({type, handler}) {
+    switch(type) {
+        case 'AUTH':
+            handler([
+                {id: 1, status: 422, title: 'Ошибка входа', message: 'Введены неверные логин или пароль.'},
+                {id: 2, status: 500, title: 'Ошибка входа', message: 'Подключение прервано.'},
+            ]);
+            break;
+        case 'CREATE':
+            handler([
+                {id: 1, status: 422, title: 'Не удалось создать', message: 'Один или несколько полей введены неверно.'}
+            ]);
+            break;
+    }
+}
 
-    const { notifications } = useModal();
+function modalStyle(type) {
+    switch(type) {
+        case 422:
+            return 'modal_error';
+    }
+}
 
-    // all avaiable types of notifications
-    const types = [
-        {id: 200, name: 'success'},
-        {id: 500, name: 'message'},
-        {id: 502, name: 'error'},
-    ];
+const ModalNotification = ({ status, type }) => {
+
+    const [ types, setTypes ] = useState(null);
 
     useEffect(() => {
-        console.log(notifications);
-    }, [notifications]);
+        getModalType({type: type, handler: setTypes})
+    }, [type]);
 
     return (
-        <div className='modal-wrapper'>
-        {/* content = {title, message, type} */}
-            {notifications.map(content => {
+        <>
+        {types && types.map((item, index) => {
+            if(Object.values(item).indexOf(status) > -1) {
                 return (
-                    <CSSTransition>
-                    <div className={`modal modal_${content.type}`}>
-                        {/* content.type === 'message' */}
-                        {content.type === types[1].name &&
-                        <div className={`modal__image ${isEmptyUserImage(content.image, 'modal__image')}`}>
-                            <img src={(content.image) ? content.image : defaultIcon} alt='Аватарка' />
-                        </div>
-                        }
-                        <h3 className='modal__heading'>{ content.title }</h3>
-                        <p className='modal__message'>{ content.message }</p>
+                    <div className={`modal ${modalStyle(item.status)}`}>
+                        <h3 className='modal__heading'>{ item.title }</h3>
+                        <p className='modal__message'>{ item.message }</p>
                     </div>
-                    </CSSTransition>
                 );
-            })}
-        </div>
+            }
+        })}
+        </>
     );
 }
 

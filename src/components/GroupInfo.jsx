@@ -17,23 +17,22 @@ const GroupInfo = ({ refHandler }) => {
 
     const [ groupInfo, setGroupInfo ] = useState(null);
     const [ isError, setIsError ] = useState(false);
+    const [ isLoading, setIsLoading ] = useState(false);
 
     useEffect(() => {
         setIsGroupSelected(Boolean(formValues.group))
     }, [formValues.group]);
 
     useEffect(() => {
-        setIsError(false);
-
+        
         const fetchData = async () => {
-            try {
-                const result = await axios(
-                    `http://server.selestia.ru/api/admin/getGroupInfo?groupID=${formValues.group}`
-                );
-                setGroupInfo(result.data);
-            } catch (error) {
-                setIsError(true);
-            }
+            setIsLoading(true)
+
+            await axios(
+                `http://server.selestia.ru/api/admin/getGroupInfo?groupID=${formValues.group}`
+            ).then(response => setGroupInfo(response.data)
+            ).catch(error => console.dir(error)
+            ).finally(() => setIsLoading(false));
         }
 
         fetchData();

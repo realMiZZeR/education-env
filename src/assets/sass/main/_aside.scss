@@ -83,6 +83,9 @@
             &_current:hover {
                 background-color: $main-color!important;
             }
+            &_invalid {
+                background-color: $error-block;
+            }
         }
         &__item:hover {
             background-color: $hover-color;

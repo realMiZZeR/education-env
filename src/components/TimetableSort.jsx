@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import TimetableGroups from './TimetableGroups';
-import Teachers from './Teachers';
+import TimetableTeachers from './TimetableTeachers';
 import SwitchButton from './SwitchButton';
 import Search from './Search';
+import { useAuth } from '../hooks/useAuth';
 
 const TimetableSort = () => {
 
+    const { user } = useAuth();
+
     const [ isTeacher, setIsTeacher ] = useState(false);
+
+    useEffect(() => {
+        setIsTeacher(user?.role === 1)
+    }, []);
 
     const teacherChangeHandler = () => {
         setIsTeacher(!isTeacher);
@@ -22,7 +29,7 @@ const TimetableSort = () => {
             </SwitchButton>
             <Search className='search' />
             {!isTeacher && <TimetableGroups />}
-            {isTeacher && <Teachers />}
+            {isTeacher && <TimetableTeachers />}
         </article>
     );
 }

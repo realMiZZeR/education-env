@@ -2,9 +2,13 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import { createContext, useState } from 'react';
 
+import { useModal } from '../hooks/useModal';
+
 export const SavedUsersContext = createContext(null);
 
 export const CreateUserProvider = ({ children }) => {
+
+    const { setModal } = useModal();
 
     const [ id, setId ] = useState(0);
 
@@ -20,15 +24,14 @@ export const CreateUserProvider = ({ children }) => {
         fullname: '',
         isTeacher: false,
         group: null,
-        idUser: '',
+        idUser: 0,
         email: ''   
     }
 
     const [ savedUsers, setSavedUsers ] = useState([]);
-
     const [ formValues, setFormValues ] = useState(formFields);
-
     const [ currentUser, setCurrentUser ] = useState(0);
+    const [ invalidUsers, setInvalidUsers ] = useState([]);
 
     const addUser = () => {
         setSavedUsers( arr => [
@@ -69,16 +72,21 @@ export const CreateUserProvider = ({ children }) => {
         localStorage.setItem('savedUsers', JSON.stringify(savedUsers));
     }
 
+    // save users in the server
     function saveUsersData(e) {
         e.preventDefault();
         
         const fetchData = async () => {
-            const result = await axios.post(
+            await axios.post(
                 'http://server.selestia.ru/api/admin/createUser', 
                 savedUsers
-            );
+            ).then(response => setModal({status: response.status, type: 'CREATE'})
+            ).catch(error => {
+                console.dir(error)
+                setInvalidUsers(error.response.data);
+                setModal({status: error.status, type: 'CREATE'});
+            });
             
-            console.log(result);
         }
 
         fetchData();
@@ -94,7 +102,9 @@ export const CreateUserProvider = ({ children }) => {
         formValues,
         setFormValues,
         incrementId,
-        saveUsersData 
+        saveUsersData ,
+        invalidUsers,
+        setInvalidUsers
     }
 
     // loading first user on render
@@ -112,10 +122,6 @@ export const CreateUserProvider = ({ children }) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    useEffect(() => {
-        console.log(formValues)
-    }, [formValues]);
 
     return (
         <SavedUsersContext.Provider value={value}>

@@ -1,5 +1,5 @@
 import { useSavedUsers } from '../hooks/useSavedUsers';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // icons
 import defaultUserIcon from '../assets/images/icons/profile/user.svg';
@@ -10,7 +10,7 @@ import isEmptyUserImage from '../assets/js/isEmptyUserImage';
 
 const CreateUserContent = () => {
 
-    const { formValues, setFormValues } = useSavedUsers();
+    const { formValues, setFormValues, invalidUsers, setInvalidUsers } = useSavedUsers();
 
     const formInputChangeHandler = (e) => {
         const { name, value } = e.target;
@@ -30,9 +30,23 @@ const CreateUserContent = () => {
         });
     }
 
+   const [ isInvalid, setIsInvalid ] = useState({
+       login: false,
+       idUser: false
+   });
+
     useEffect(() => {
-        setFormValues(formValues);
+        for(let item of invalidUsers) {
+            if(formValues.id === item.id) {
+                setIsInvalid({
+                    login: item.err.includes('login'),
+                    idUser: item.err.includes('idUser')
+                });
+            }
+        }
     }, [formValues]);
+
+    
 
     return (
         <section className='create-form__content'>
@@ -49,6 +63,8 @@ const CreateUserContent = () => {
                             handler={formInputChangeHandler}
                             type='text'
                             placeholder='Логин'
+                            isError={isInvalid.login}
+                            
                         />
                         <InputEffect
                             name='password'

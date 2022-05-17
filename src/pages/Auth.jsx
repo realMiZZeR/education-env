@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { useModal } from '../hooks/useModal';
+
 import updateTitle from '../assets/js/updateTitle';
 import SwitchButton from '../components/SwitchButton';
 
@@ -20,6 +22,7 @@ function Auth(props) {
 
     const navigate = useNavigate();
     const { signIn } = useAuth();
+    const { setModal, setModalIsLoading } = useModal();
 
     const formFields = {
         login: '',
@@ -28,7 +31,6 @@ function Auth(props) {
     }
 
     const [ formValues, setFormValues ] = useState(formFields);
-
     const [ errorMessages, setErrorMessages ] = useState({});
 
     const handleSubmit = async (e) => {
@@ -52,7 +54,17 @@ function Auth(props) {
             return;
         }
 
-        signIn(formValues, () => navigate('/home', {replace: true}));
+        new Promise((resolve, reject) => {
+            signIn(
+                {   
+                    user: formValues, 
+                    callback: () => navigate('/home', {replace: true}),
+                    promise: {resolve: resolve, reject: reject}
+                }
+            );
+        }).then(status => {
+            setModal({status: status, type: 'AUTH'});
+        });
     }
 
     const formChangeHandler = (e) => {

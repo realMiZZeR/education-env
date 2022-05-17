@@ -23,7 +23,7 @@ function HomePageAdmin() {
                 <CardsItem
                 title='Посмотреть ответы'
                 image={repliesIcon}
-                link='/answers' />
+                link='/tasks' />
                 <CardsItem
                 title='Журнал оценок'
                 image={journalIcon}

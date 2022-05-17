@@ -6,13 +6,9 @@ import { Link } from "react-router-dom";
 import { useTasks } from "../hooks/useTasks";
 import InputEffect from "./InputEffect";
 
-import getColorMark from "../assets/js/getColorMark";
 import getTypeTask from "../assets/js/getTypeTask";
-import isEmptyUserImage from "../assets/js/isEmptyUserImage";
 
 import groupIcon from '../assets/images/icons/group.svg';
-
-const defaultIcon = 'http://server.selestia.ru/userAvatar/standartUser.png';
 
 const TasksTeacher = ({user}) => {
 
@@ -32,7 +28,6 @@ const TasksTeacher = ({user}) => {
                 }
             );
 
-            console.log(result)
             setTasks(result.data);
         }
 
@@ -53,8 +48,21 @@ const TasksTeacher = ({user}) => {
     const [ sortValues, setSortValues ] = useState(sortFields);
 
     const sortInputHandler = (e) => {
-        console.log(e);
+        const { name, value } = e.target;
+
+        setSortValues({
+            ...sortValues,
+            [name]: value
+        });
     }
+
+    useEffect(() => {
+        const exp = `${sortValues.title} ${sortValues.group} ${sortValues.deadline} ${sortValues.published}`;
+        for(let task of tasks) {
+            // console.log(new RegExp(`${task.title}`, 'g').exec(exp));
+            console.log(exp.match(`${task.title}`))
+        }
+    }, [sortValues.title, sortValues.group, sortValues.deadline, sortValues.published]);
 
     return (
         <>

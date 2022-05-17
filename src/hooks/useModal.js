@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ModalMessages } from "../components/MainContent";
+import { ModalMessages } from "../hoc/ModalProvider";
 
 export const useModal = () => {
     return useContext(ModalMessages);

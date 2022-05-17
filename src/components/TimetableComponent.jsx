@@ -26,12 +26,12 @@ const TimetableComponent = () => {
 
     const [ timetable, setTimetable ] = useState(timetableJSON);
 
-    const { selectedDate, selectedGroup, setSelectedGroup } = useTimetable();
+    const { selectedDate, selectedGroup, setSelectedGroup, selectedTeacher } = useTimetable();
 
     const { user } = useAuth();
 
     useEffect(() => {
-        const fetchData = async () => {
+        const getUserTimetable = async () => {
             await axios.post(
                 'http://server.selestia.ru/api/getScheduleToken',
                 {token: user.token}
@@ -40,12 +40,23 @@ const TimetableComponent = () => {
             }).catch(error => console.log(error.toJSON()));
         }
 
-        if(user?.token) fetchData();
+        const getTeacherTimetable = async () => {
+            await axios.post(
+                'http://server.selestia.ru/api/getScheduleToken',
+                {token: user.token}
+            ).then(response => {
+                setSelectedGroup(response.data.groupId);
+            }).catch(error => console.log(error.toJSON()));
+        }
+
+
+        if(user?.token && user?.role === 0) getUserTimetable();
+        // if(user?.token && user?.role === 1) getTeacherTimetable();
     }, [])
 
     // for timetable page
     useEffect(() => {
-        const fetchData = async () => {
+        const getGroupSchedule = async () => {
             await axios.request({
                 url: 'http://server.selestia.ru/api/groupSchedule',
                 method: 'get',
@@ -62,9 +73,29 @@ const TimetableComponent = () => {
                 });
             });
         }
+
+        const getTeacherSchedule = async () => {
+            await axios.request({
+                url: 'http://server.selestia.ru/api/schedule/getTeacherSchedule',
+                method: 'get',
+                params: {
+                    idTeacher: selectedTeacher,
+                    date: getDateYearMonthDay(selectedDate)
+                }
+            }).then(response => {
+                console.log(response);
+                const { schedule, lastUpdate } = response.data;
+                setTimetable({
+                    schedule: schedule.schedule,
+                    weekEven: schedule.weekEven,
+                    lastUpdate: lastUpdate
+                });
+            });
+        }
         
-        if(selectedDate && selectedGroup) fetchData();
-    }, [selectedDate, selectedGroup]);
+        if(selectedDate && selectedGroup) getGroupSchedule();
+        if(selectedDate && selectedTeacher) getTeacherSchedule();
+    }, [selectedDate, selectedTeacher]);
     
     return (
         <article className='timetable'>
