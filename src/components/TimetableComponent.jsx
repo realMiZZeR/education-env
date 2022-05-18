@@ -10,8 +10,7 @@ import getDayOfWeek from '../assets/js/getDayOfWeek';
 
 // hooks
 import { useTimetable } from '../hooks/useTimetable';
-import { useAuth } from '../hooks/useAuth';
-
+import LoadingPage from './LoadingPage';
 
 const TimetableComponent = () => {
 
@@ -26,37 +25,13 @@ const TimetableComponent = () => {
 
     const [ timetable, setTimetable ] = useState(timetableJSON);
 
-    const { selectedDate, selectedGroup, setSelectedGroup, selectedTeacher } = useTimetable();
+    const { selectedDate, selectedGroup, selectedTeacher, isTeacher } = useTimetable();
 
-    const { user } = useAuth();
-
-    useEffect(() => {
-        const getUserTimetable = async () => {
-            await axios.post(
-                'http://server.selestia.ru/api/getScheduleToken',
-                {token: user.token}
-            ).then(response => {
-                setSelectedGroup(response.data.groupId);
-            }).catch(error => console.log(error.toJSON()));
-        }
-
-        const getTeacherTimetable = async () => {
-            await axios.post(
-                'http://server.selestia.ru/api/getScheduleToken',
-                {token: user.token}
-            ).then(response => {
-                setSelectedGroup(response.data.groupId);
-            }).catch(error => console.log(error.toJSON()));
-        }
-
-
-        if(user?.token && user?.role === 0) getUserTimetable();
-        // if(user?.token && user?.role === 1) getTeacherTimetable();
-    }, [])
-
-    // for timetable page
+    const [ isScheduleLoading, setIsScheduleLoading ] = useState(null);
+    // fetch timetable by group id and selected date
     useEffect(() => {
         const getGroupSchedule = async () => {
+            setIsScheduleLoading(true)
             await axios.request({
                 url: 'http://server.selestia.ru/api/groupSchedule',
                 method: 'get',
@@ -71,10 +46,11 @@ const TimetableComponent = () => {
                     weekEven: schedule.weekEven,
                     lastUpdate: lastUpdate
                 });
-            });
+            }).finally(() => setIsScheduleLoading(false));
         }
 
         const getTeacherSchedule = async () => {
+            setIsScheduleLoading(true);
             await axios.request({
                 url: 'http://server.selestia.ru/api/schedule/getTeacherSchedule',
                 method: 'get',
@@ -90,12 +66,12 @@ const TimetableComponent = () => {
                     weekEven: schedule.weekEven,
                     lastUpdate: lastUpdate
                 });
-            });
+            }).finally(() => setIsScheduleLoading(false));
         }
         
-        if(selectedDate && selectedGroup) getGroupSchedule();
-        if(selectedDate && selectedTeacher) getTeacherSchedule();
-    }, [selectedDate, selectedTeacher]);
+        if(selectedDate && selectedGroup && !isTeacher) getGroupSchedule();
+        if(selectedDate && selectedTeacher && isTeacher) getTeacherSchedule();
+    }, [selectedDate, selectedGroup, selectedTeacher, isTeacher]);
     
     return (
         <article className='timetable'>
@@ -113,7 +89,11 @@ const TimetableComponent = () => {
                     </h3>
                 </div>
                 }
-                <TimetableLessons lessons={timetable.schedule}  />
+                {isScheduleLoading ? (
+                    <LoadingPage />
+                ) : (
+                    <TimetableLessons lessons={timetable.schedule}  />
+                )}
             </div>
             {isHome &&
             <footer className='timetable__footer'>

@@ -1,38 +1,46 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import getDisciplineImage from '../assets/js/getDisciplineImage';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useTasks } from '../hooks/useTasks';
+
 import Search from './Search';
+import LoadingPage from './LoadingPage';
 
 import createTaskIcon from '../assets/images/icons/create_task.png';
-import { Link } from 'react-router-dom';
+import getDisciplineImage from '../assets/js/getDisciplineImage';
 
 const FullDisciplinesList = () => {
 
     const { user } = useAuth();
 
-    const { selectedDiscipline, setSelectedDiscipline } = useTasks();
+    const { setSelectedDiscipline } = useTasks();
 
     const [ disciplines, setDisciplines ] = useState([]);
     const [ isActive, setIsActive ] = useState(null);
     
+    const [ fetchIsLoading, setFetchIsLoading ] = useState(null);
     useEffect(() => {
         // get disciplines for common user
         const fetchUser = async () => {
-            const result = await axios.get(
+            setFetchIsLoading(true);
+            await axios.get(
                 `http://server.selestia.ru/api/student/getDisciplineTask`,
                 {
                     params: {
                         token: user.token
                     }
                 }
-            );
-
-            setDisciplines(result.data);
+            ).then(response => {
+                setDisciplines(response.data);
+                console.log(response)
+            }
+            ).catch(error => console.dir(error)
+            ).finally(() => setFetchIsLoading(false));
         }
         // get disciplines for teacher
         const fetchTeacher = async () => {
+            setFetchIsLoading(true)
             const result = await axios.get(
                 `http://server.selestia.ru/api/teacher/getDisciplineTask`,
                 {
@@ -40,9 +48,9 @@ const FullDisciplinesList = () => {
                         token: user.token
                     }
                 }
-            );
-
-            setDisciplines(result.data);
+            ).then(response => setDisciplines(response.data)
+            ).catch(error => console.dir(error)
+            ).finally(() => setFetchIsLoading(false));
         }
 
         if(user.role === 0) fetchUser();
@@ -61,6 +69,7 @@ const FullDisciplinesList = () => {
         setSelectedDiscipline(id);
     }
 
+    console.log(disciplines);
     
     return (
         <aside className='tasks-aside'>
@@ -74,19 +83,26 @@ const FullDisciplinesList = () => {
             <div className='tasks-aside__disciplines'>
                 <Search className='tasks-aside__search search' />
                 <ul className='disciplines-list'>
-                {disciplines.map(item => {
-                    return (
-                        <li 
-                        className={`disciplines-list__item disciplines-list__item_full ${(isActive === item.id) ? 'disciplines-list__item_active' : ''}`} 
-                        onClick={() => { itemClickHandler(item.id) }} 
-                        key={item.id}>
-                            <div className='disciplines-list__image' title={item.typeTitle}>
-                                <img src={getDisciplineImage({type: item.idType, isActive: (isActive === item.id)})} alt='Дисциплина' />
-                            </div>
-                            <h4 className='disciplines-list__title'>{ item.title }</h4>
-                        </li>
-                    );
-                })}
+                {fetchIsLoading ? (
+                    <LoadingPage />
+                ) : (
+                    <>
+                    {disciplines.map(item => {
+                        return (
+                            <li 
+                                className={`disciplines-list__item disciplines-list__item_full ${(isActive === item.id) ? 'disciplines-list__item_active' : ''}`} 
+                                onClick={() => { itemClickHandler(item.id) }} 
+                                key={item.id}
+                            >
+                                <div className='disciplines-list__image' title={item.typeTitle}>
+                                    <img src={getDisciplineImage({type: item.idType, isActive: (isActive === item.id)})} alt='Дисциплина' />
+                                </div>
+                                <h4 className='disciplines-list__title'>{ item.title }</h4>
+                            </li>
+                        );
+                    })}
+                    </>
+                )}
                 </ul>
             </div>
         </aside>
