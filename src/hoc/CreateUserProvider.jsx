@@ -3,11 +3,13 @@ import React, { useEffect } from 'react';
 import { createContext, useState } from 'react';
 
 import { useModal } from '../hooks/useModal';
+import { useAuth } from '../hooks/useAuth';
 
 export const SavedUsersContext = createContext(null);
 
 export const CreateUserProvider = ({ children }) => {
 
+    const { user } = useAuth();
     const { setModal } = useModal();
 
     const [ id, setId ] = useState(0);
@@ -76,20 +78,24 @@ export const CreateUserProvider = ({ children }) => {
     function saveUsersData(e) {
         e.preventDefault();
         
-        const fetchData = async () => {
+        const fetchData = async (callback) => {
+            let status = null;
             await axios.post(
                 'http://server.selestia.ru/api/admin/createUser', 
-                savedUsers
-            ).then(response => setModal({status: response.status, type: 'CREATE'})
+                savedUsers,
+                {headers: {token: user.token}}
+            ).then(response => status = response.status
             ).catch(error => {
                 console.dir(error)
                 setInvalidUsers(error.response.data);
-                setModal({status: error.status, type: 'CREATE'});
-            });
-            
+                status = error.response.status;
+            }
+            ).finally(() => callback(status))
         }
 
-        fetchData();
+        new Promise((resolve, reject) => {
+            fetchData(resolve);
+        }).then(status => setModal({status: status, type: 'CREATE'}));
     }
 
     const value = { 

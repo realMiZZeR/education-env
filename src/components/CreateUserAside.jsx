@@ -5,6 +5,7 @@ import { useSavedUsers } from '../hooks/useSavedUsers';
 import defaultUserIcon from '../assets/images/icons/profile/user.png';
 import saveIcon from '../assets/images/icons/save.png';
 import deleteIcon from '../assets/images/icons/trashcan.png';
+import { useModal } from '../hooks/useModal';
 
 const UsersList = () => {
 
@@ -17,6 +18,19 @@ const UsersList = () => {
         formValues, 
         setFormValues,
         invalidUsers } = useSavedUsers();
+
+    const { setModal } = useModal();
+
+    // auto save every 5 seconds when user doesn't type
+    useEffect(() => {  
+        const autoSaveUser = setTimeout(() => {
+            saveUser(formValues);
+        }, 5000);
+
+        return () => {
+            clearTimeout(autoSaveUser);
+        }
+    }, [formValues]);
 
     function userSaveHandler() {
         saveUser(formValues);
@@ -56,10 +70,10 @@ const UsersList = () => {
                 <h4 className='aside-users-list__login'>{ (user?.login) ? user.login : 'Логин' }</h4>
                 {(currentUser === user.id) &&
                 <div className='aside-users-list__buttons'>
-                    <button onClick={userSaveHandler} className='aside-users-list__button button'>
+                    <button type='button' onClick={userSaveHandler} className='aside-users-list__button button'>
                         <img src={saveIcon} alt='Сохранить' />
                     </button>
-                    <button onClick={() => { userDeleteHandler(user.id) } } className='aside-users-list__button button'>
+                    <button type='button' onClick={() => { userDeleteHandler(user.id) } } className='aside-users-list__button button'>
                         <img src={deleteIcon} alt='Удалить' />
                     </button>
                 </div>
@@ -75,7 +89,7 @@ const UsersList = () => {
 
 const CreateUserAside = () => {
 
-    const { incrementId, addUser, saveUsersData } = useSavedUsers();
+    const { incrementId, addUser } = useSavedUsers();
 
     function addUserHandler() {
         incrementId();
