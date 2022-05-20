@@ -59,7 +59,6 @@ const TimetableComponent = () => {
                     date: getDateYearMonthDay(selectedDate)
                 }
             }).then(response => {
-                console.log(response);
                 const { schedule, lastUpdate } = response.data;
                 setTimetable({
                     schedule: schedule.schedule,
