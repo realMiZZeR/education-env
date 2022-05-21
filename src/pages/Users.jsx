@@ -27,7 +27,6 @@ const Users = (props) => {
     const [ students, setStudents ] = useState([]);
 
     useEffect(() => {
-        console.log(response);
         setStudents(users.filter(user => user.isTeacher === false));
 
         // eslint-disable-next-line react-hooks/exhaustive-deps

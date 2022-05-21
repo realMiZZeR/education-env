@@ -12,6 +12,36 @@ const CreateUserContent = () => {
 
     const { formValues, setFormValues, invalidUsers, setInvalidUsers } = useSavedUsers();
 
+    const isInvalidFields = {
+        login: false,
+       password: false,
+       fullname: false,
+       idUser: false
+    }
+
+   const [ isInvalid, setIsInvalid ] = useState(isInvalidFields);
+
+    // checking for invalid values from invalid users
+    useEffect(() => {
+        // reset invalid fields
+        setIsInvalid(isInvalidFields);
+
+        for(let item of invalidUsers) {
+            // item = {
+            //          id: id invalid user
+            //          err: avaiable -> ['login', 'password', 'fullname' 'idUser']
+            //        }
+            if(formValues.id === item.id) {
+                setIsInvalid({
+                    login: item.err.includes('login'),
+                    password: item.err.includes('password'),
+                    fullname: item.err.includes('fullname'),
+                    idUser: item.err.includes('idUser')
+                });
+            }
+        }
+    }, [formValues, invalidUsers]);
+
     const formInputChangeHandler = (e) => {
         const { name, value } = e.target;
 
@@ -19,6 +49,16 @@ const CreateUserContent = () => {
             ...formValues,
             [name]: value,
         });
+        if(name === 'login'
+        || name === 'password'
+        || name === 'fullname'
+        || name === 'idUser') {
+            setIsInvalid({
+                ...isInvalid,
+                [name]: false 
+            });
+            setInvalidUsers(invalidUsers.filter(user => formValues.id !== user.id))
+        } 
     }
 
     const formRadioHandler = (e) => {
@@ -29,24 +69,6 @@ const CreateUserContent = () => {
             [name]: JSON.parse(value),
         });
     }
-
-   const [ isInvalid, setIsInvalid ] = useState({
-       login: false,
-       idUser: false
-   });
-
-    useEffect(() => {
-        for(let item of invalidUsers) {
-            if(formValues.id === item.id) {
-                setIsInvalid({
-                    login: item.err.includes('login'),
-                    idUser: item.err.includes('idUser')
-                });
-            }
-        }
-    }, [formValues]);
-
-    
 
     return (
         <section className='create-form__content'>
@@ -72,6 +94,7 @@ const CreateUserContent = () => {
                             handler={formInputChangeHandler}
                             type='text'
                             placeholder='Пароль'
+                            isError={isInvalid.password}
                         />
                     </div>
                     <InputEffect
@@ -80,6 +103,7 @@ const CreateUserContent = () => {
                         handler={formInputChangeHandler}
                         type='text'
                         placeholder='ФИО'
+                        isError={isInvalid.fullname}
                     />
 
                     <div className='create-form-section__grouping'>

@@ -47,9 +47,6 @@
             margin-bottom: 10px;
             cursor: pointer;
 
-            &:hover {
-                background-color: $hover-color;
-            }
             &_current {
                 background-color: $main-color;
             }
@@ -57,7 +54,10 @@
                 background-color: $main-color!important;
             }
         }
-        &__item_current &__title {
+        &__item:not(.selection-list__item_active):hover {
+            background-color: $hover-color;
+        }
+        &__item_active &__title {
             color: $w-font-color!important;
         }
         &__item_active {

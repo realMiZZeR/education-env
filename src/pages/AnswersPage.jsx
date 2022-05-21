@@ -46,8 +46,6 @@ const AnswersPage = (props) => {
             ).finally(() => setIsLoading(false));
         }
 
-        console.log(data)
-
         getAnswers();
     }, [params.id]);
 

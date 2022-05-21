@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+
+import { useAuth } from '../hooks/useAuth';
+import { useTimetable } from '../hooks/useTimetable';
 
 import TimetableGroups from './TimetableGroups';
 import TimetableTeachers from './TimetableTeachers';
 import SwitchButton from './SwitchButton';
 import Search from './Search';
-import { useAuth } from '../hooks/useAuth';
 
 const TimetableSort = () => {
 
     const { user } = useAuth();
 
-    const [ isTeacher, setIsTeacher ] = useState(false);
+    const { isTeacher, setIsTeacher } = useTimetable();
 
     useEffect(() => {
         setIsTeacher(user?.role === 1)

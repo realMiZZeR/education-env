@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, createContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useModal } from "../hooks/useModal";
 
@@ -9,6 +10,7 @@ export const CreateTaskProvider = ({ children }) => {
 
     const { user } = useAuth();
     const { setModal } = useModal();
+    const navigate = useNavigate();
 
     const formFields = {
         title: '',
@@ -47,7 +49,8 @@ export const CreateTaskProvider = ({ children }) => {
                 headers:  {'Content-Type': 'multipart/form-data'}
             }
             ).then(response => setModal({status: response.status, type: 'CREATE'})
-            ).catch(error => setModal({status: error.response.staus, type: 'CREATE'}));
+            ).catch(error => setModal({status: error.response.staus, type: 'CREATE'})
+            ).finally(() => navigate('/create-task', {replace: true}));
         }
 
         fetchData();

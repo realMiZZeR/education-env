@@ -10,8 +10,8 @@ import getDayOfWeek from '../assets/js/getDayOfWeek';
 
 // hooks
 import { useTimetable } from '../hooks/useTimetable';
+import LoadingPage from './LoadingPage';
 import { useAuth } from '../hooks/useAuth';
-
 
 const TimetableComponent = () => {
 
@@ -26,7 +26,7 @@ const TimetableComponent = () => {
 
     const [ timetable, setTimetable ] = useState(timetableJSON);
 
-    const { selectedDate, selectedGroup, setSelectedGroup, selectedTeacher } = useTimetable();
+    const { selectedDate, selectedGroup, setSelectedGroup, selectedTeacher, isTeacher } = useTimetable();
 
     const { user } = useAuth();
 
@@ -55,8 +55,11 @@ const TimetableComponent = () => {
     }, [])
 
     // for timetable page
+    const [ isScheduleLoading, setIsScheduleLoading ] = useState(null);
+    // fetch timetable by group id and selected date
     useEffect(() => {
         const getGroupSchedule = async () => {
+            setIsScheduleLoading(true)
             await axios.request({
                 url: 'http://server.selestia.ru/api/groupSchedule',
                 method: 'get',
@@ -71,10 +74,11 @@ const TimetableComponent = () => {
                     weekEven: schedule.weekEven,
                     lastUpdate: lastUpdate
                 });
-            });
+            }).finally(() => setIsScheduleLoading(false));
         }
 
         const getTeacherSchedule = async () => {
+            setIsScheduleLoading(true);
             await axios.request({
                 url: 'http://server.selestia.ru/api/schedule/getTeacherSchedule',
                 method: 'get',
@@ -83,19 +87,18 @@ const TimetableComponent = () => {
                     date: getDateYearMonthDay(selectedDate)
                 }
             }).then(response => {
-                console.log(response);
                 const { schedule, lastUpdate } = response.data;
                 setTimetable({
                     schedule: schedule.schedule,
                     weekEven: schedule.weekEven,
                     lastUpdate: lastUpdate
                 });
-            });
+            }).finally(() => setIsScheduleLoading(false));
         }
         
-        if(selectedDate && selectedGroup) getGroupSchedule();
-        if(selectedDate && selectedTeacher) getTeacherSchedule();
-    }, [selectedDate, selectedTeacher]);
+        if(selectedDate && selectedGroup && !isTeacher) getGroupSchedule();
+        if(selectedDate && selectedTeacher && isTeacher) getTeacherSchedule();
+    }, [selectedDate, selectedGroup, selectedTeacher, isTeacher]);
     
     return (
         <article className='timetable'>
@@ -113,7 +116,11 @@ const TimetableComponent = () => {
                     </h3>
                 </div>
                 }
-                <TimetableLessons lessons={timetable.schedule}  />
+                {isScheduleLoading ? (
+                    <LoadingPage />
+                ) : (
+                    <TimetableLessons lessons={timetable.schedule}  />
+                )}
             </div>
             {isHome &&
             <footer className='timetable__footer'>

@@ -80,12 +80,19 @@
                 background-color: $main-color;
                 color: $w-font-color;
             }
-            &_current:hover {
+            &_current:not(&_invalid):hover {
                 background-color: $main-color!important;
             }
             &_invalid {
                 background-color: $error-block;
+
+                &.aside-users-list__item_current {
+                    background-color: opacify($error-block, 0.25);
+                }
             }
+        }
+        &__item_invalid:hover {
+            background-color: opacify($error-block, 0.25)!important;
         }
         &__item:hover {
             background-color: $hover-color;
