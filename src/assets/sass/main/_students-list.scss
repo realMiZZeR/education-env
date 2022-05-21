@@ -13,8 +13,11 @@
         margin-bottom: 10px;
         padding: 5px 10px;
     }
-    &__item:hover {
+    &__item:not(.students-list__item_current):hover {
         background-color: $hover-color;
+    }
+    &__item_current {
+        background-color: $main-color;
     }
     &__image {
         position: relative;
@@ -49,6 +52,9 @@
         font-weight: 500;
         font-size: 14px;
         color: $font-color;
+    }
+    &__item_current &__fullname {
+        color: $w-font-color;
     }
     &__checkbox {
         margin-left: auto;

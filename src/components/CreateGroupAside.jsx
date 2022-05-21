@@ -4,7 +4,7 @@ import { useGroup } from '../hooks/useGroup';
 import Search from './Search';
 import StudentsListSelect from './StudentsListSelect';
 
-import createTaskIcon from '../assets/images/icons/teacher/create_task.svg';
+import createGroupIcon from '../assets/images/icons/admin/create_group.svg';
 
 const CreateGroupAside = () => {
 
@@ -19,7 +19,7 @@ const CreateGroupAside = () => {
             </div>
             <button type='submit' className='create-form-button button'>
                 <div className='create-form-button__image'>
-                    <img src={createTaskIcon} alt='Создать' />
+                    <img src={createGroupIcon} alt='Создать' />
                 </div>
                 <p className='create-form-button__text'>Создать</p>
             </button>

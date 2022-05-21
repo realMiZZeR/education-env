@@ -58,7 +58,7 @@ const tasksList = [
 ];
 
 
-function HomePageUser() {
+const HomePageUser = () => {
 
     const TasksSlider = ({ tasksList }) => {
 

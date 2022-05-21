@@ -15,6 +15,12 @@ function getModalType({type, handler}) {
                 {id: 1, status: 422, title: 'Не удалось создать', message: 'Один или несколько полей введены неверно.'}
             ]);
             break;
+        case 'REFRESH':
+            handler([
+                {id: 1, status: 422, title: 'Обновление', message: 'Не удалось обновить.'},
+                {id: 2, status: 200, title: 'Обновление', message: 'Успешно обновлено.'}
+            ]);
+            break;
     }
 }
 
@@ -22,6 +28,10 @@ function modalStyle(type) {
     switch(type) {
         case 422:
             return 'modal_error';
+        case 500:
+            return 'modal_error'
+        case 200:
+            return 'modal_success'
     }
 }
 
@@ -38,7 +48,7 @@ const ModalNotification = ({ status, type }) => {
         {types && types.map((item, index) => {
             if(Object.values(item).indexOf(status) > -1) {
                 return (
-                    <div className={`modal ${modalStyle(item.status)}`}>
+                    <div key={index} className={`modal ${modalStyle(item.status)}`}>
                         <h3 className='modal__heading'>{ item.title }</h3>
                         <p className='modal__message'>{ item.message }</p>
                     </div>

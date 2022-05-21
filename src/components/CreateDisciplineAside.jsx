@@ -4,11 +4,11 @@ import Search from './Search';
 
 import StudentsList from './StudentsList';
 
-import createTaskIcon from '../assets/images/icons/teacher/create_task.svg';
+import createDisciplineIcon from '../assets/images/icons/admin/create_discipline.png';
 
 const CreateDisciplineAside = () => {
 
-    const { saveDisciplineData, formValues } = useDiscipline();
+    const { formValues } = useDiscipline();
 
     return (
         <aside className='create-form__aside'>
@@ -19,7 +19,7 @@ const CreateDisciplineAside = () => {
             </div>
             <button type='submit' className='create-form-button button'>
                 <div className='create-form-button__image'>
-                    <img src={createTaskIcon} alt='Создать' />
+                    <img src={createDisciplineIcon} alt='Создать' />
                 </div>
                 <p className='create-form-button__text'>Создать</p>
             </button>

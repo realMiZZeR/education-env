@@ -246,6 +246,10 @@
             font-family: $roboto-font;
             font-weight: 400;
             font-size: 16px;
+            color: $font-color;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
         &-count {
             display: flex;

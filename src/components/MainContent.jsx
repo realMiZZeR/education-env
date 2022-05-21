@@ -1,9 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
-import React, { useState, useEffect, createContext, Suspense } from 'react';
+import React, { Suspense } from 'react';
 
 // components
 import Search from './Search';
 import LoadingPage from './LoadingPage';
+import { TaskInfoPage } from '../pages/TaskInfoPage';
+import StudentAnswerPage from '../pages/StudentAnswerPage';
 
 // hoc
 import { TimetableProvider } from '../hoc/TimetableProvider';
@@ -14,9 +16,6 @@ import { ModalProvider } from '../hoc/ModalProvider';
 
 // images
 import hamburgerIcon from '../assets/images/icons/hamburger.svg';
-
-import { TaskInfoPage } from '../pages/TaskInfoPage';
-import StudentAnswerPage from '../pages/StudentAnswerPage';
 
 // pages
 const Auth = React.lazy(() => import('../pages/Auth'));
@@ -52,7 +51,6 @@ export const MainContent = () => {
                     <div className='content-main'>
                         <Suspense fallback={<LoadingPage />}>
                             <Routes>
-                                <Route path='/load' element={<LoadingPage />} />
                                 <Route path='/' element={<Auth title='Добро пожаловать!' />} />
                                 <Route path='/home' element={
                                     <AuthController>

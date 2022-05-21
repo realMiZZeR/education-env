@@ -6,6 +6,7 @@ import updateTitle from '../assets/js/updateTitle';
 import getTypeTask from '../assets/js/getTypeTask';
 import isEmptyUserImage from '../assets/js/isEmptyUserImage';
 import getDisciplineImage from '../assets/js/getDisciplineImage';
+import correctDateFormat from '../assets/js/correctDateFormat';
 
 import publishedIcon from '../assets/images/icons/tasks/published.png';
 import deadlineIcon from '../assets/images/icons/tasks/deadline.png';
@@ -49,10 +50,6 @@ const AnswersPage = (props) => {
 
         getAnswers();
     }, [params.id]);
-
-    const correctDateFormat = (date) => {
-        return new Date(date).toLocaleDateString();
-    }
 
     return (
         <div className='tasks-wrapper'>

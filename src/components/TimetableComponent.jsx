@@ -51,7 +51,7 @@ const TimetableComponent = () => {
 
 
         if(user?.token && user?.role === 0) getUserTimetable();
-        // if(user?.token && user?.role === 1) getTeacherTimetable();
+        if(user?.token && user?.role === 1) getTeacherTimetable();
     }, [])
 
     // for timetable page

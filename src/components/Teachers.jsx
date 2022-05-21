@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useAxios } from '../hooks/useAxios';
 import LoadingPage from './LoadingPage';
 import ErrorPage from './ErrorPage';
+import switchItemActive from '../assets/js/switchItemActive';
 
 const defaultIcon = 'http://server.selestia.ru/userAvatar/standartUser.png';
 
@@ -20,33 +21,15 @@ const Teachers = ({formValues, setFormValues}) => {
         if(teachers && teachers.data) setData(teachers.data);
     }, [teachers]);
 
-    function getTeacherValues(id) {
-        let result = [];
-
-        if(formValues.teacher.includes(id)) {
-            result = formValues.teacher.filter(value => value !== id);
-        } else {
-            result = [
-                ...formValues.teacher,
-                id
-            ];
-        }
-
-        return result;
-    }
-
     function teacherClickHandler(id) {
-        if(Array.isArray(formValues.teacher)) {
-            setFormValues({
-                ...formValues,
-                teacher: getTeacherValues(id)
-            });
-        } else {
-            setFormValues({
-                ...formValues,
-                teacher: id
-            });
-        }
+        switchItemActive(
+            {
+                initialObject: formValues, 
+                setHandler: setFormValues,
+                modifyProperty: 'teacher', 
+                initialValue: id,
+            }
+        );
     }
 
     const doItemActive = (id) => {

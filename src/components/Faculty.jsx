@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import switchItemActive from '../assets/js/switchItemActive';
 import { useAxios } from '../hooks/useAxios';
+
 import ErrorPage from './ErrorPage';
 import LoadingPage from './LoadingPage';
 
@@ -17,10 +19,14 @@ const Faculty = ({formValues, setFormValues}) => {
     }, [faculties]);
 
     function groupClickHandler(id) {
-        setFormValues({
-            ...formValues,
-            ['faculty']: id
-        });
+        switchItemActive(
+            {
+                initialObject: formValues, 
+                setHandler: setFormValues,
+                modifyProperty: 'faculty', 
+                initialValue: id,
+            }
+        );
     }
 
     return (

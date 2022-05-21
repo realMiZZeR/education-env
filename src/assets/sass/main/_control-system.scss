@@ -1,0 +1,65 @@
+.control-system {
+
+    &__heading {
+        font-family: $montserrat-font;
+        font-weight: 800;
+        font-size: 36px;
+        line-height: 44px;
+        color: $font-color;
+        margin-bottom: 50px;
+    }
+}
+
+.control-system-list {
+    
+    &__item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $block-color;
+        border-radius: $block-brd-radius;
+        box-shadow: $block-shadow;
+        padding: 20px;
+        width: 100%;
+        height: 100px;
+        margin-bottom: 20px;
+    }
+    &__content {
+        position: relative;
+    }
+    &__title,
+    &__description {
+        font-family: $roboto-font;
+        color: $font-color;
+    }
+    &__title {
+        font-size: 20px;
+        margin-bottom: 10px;
+        font-weight: 500;
+    }
+    &__description {
+        font-size: 16px;
+        font-weight: 400;
+
+        strong {
+            font-weight: 500;
+        }
+    }
+    &__button {
+        $size: 50px;
+        position: relative;
+        background-color: $main-color;
+        border-radius: 5px;
+        width: $size;
+        height: $size;
+        padding: 10px;
+        overflow: hidden;
+        cursor: pointer;
+
+        img {
+            width: calc($size - 20px);
+            height: calc($size - 20px);
+            object-fit: contain;
+        }
+    }
+}

@@ -16,16 +16,15 @@ export const CreateGroupProvider = ({ children }) => {
 
     const [ formValues, setFormValues ] = useState(formFields);
 
-    function saveGroupData(e) {
+    const saveGroupData = (e) => {
         e.preventDefault();
 
         const fetchData = async () => {
-            const result = await axios.post(
+            await axios.post(
                 'http://server.selestia.ru/api/admin/createGroup', 
                 formValues
-            );
-            
-            console.log(result);
+            ).then(response => console.log(response)
+            ).catch(error => console.dir(error));
         }
 
         fetchData();

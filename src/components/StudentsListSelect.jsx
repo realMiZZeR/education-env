@@ -5,6 +5,8 @@ import ErrorPage from './ErrorPage';
 
 import { useAxios } from '../hooks/useAxios';
 
+import switchItemActive from '../assets/js/switchItemActive';
+
 const defaultIcon = 'http://server.selestia.ru/userAvatar/standartUser.png';
 
 const StudentsListSelect = ({ context }) => {
@@ -20,29 +22,21 @@ const StudentsListSelect = ({ context }) => {
 
     useEffect(() => {
         if(studentsAxios && studentsAxios.data) setStudents(studentsAxios.data);
-        console.log(studentsAxios);
     }, [studentsAxios]);
 
-    const getStudents = (id) => {
-        let result = [];
-
-        if(formValues.students.includes(id)) {
-            result = formValues.students.filter(item => item !== id);
-        } else {
-            result = [
-                ...formValues,
-                id
-            ];
-        }
-
-        return result;
+    const itemClickHandler = (id) => {
+        switchItemActive(
+            {
+                initialObject: formValues, 
+                setHandler: setFormValues,
+                modifyProperty: 'students', 
+                initialValue: id,
+            }
+        );
     }
 
-    const itemClickHandler = (id) => {
-        setFormValues({
-            ...formValues,
-            ['students']: getStudents(id)
-        });
+    const doItemActive = (id) => {
+        return (formValues.students.includes(id)) ? 'students-list__item_current' : '';
     }
 
     return (
@@ -56,13 +50,12 @@ const StudentsListSelect = ({ context }) => {
                         return (
                             <li 
                             key={item.id} 
-                            className='students-list__item'
+                            className={`students-list__item ${doItemActive(item.id)}`}
                             onClick={() => {itemClickHandler(item.id)} }>
                                 <div className={`students-list__image ${!item.image ? 'students-list__image_empty' : ''}`}>
                                     <img src={!item.image ? defaultIcon : item.image} alt='Аватарка' />
                                 </div>
-                                <p className='students-list__fullname'>{ item.fio }</p>
-                                <span className='students-list__checkbox checkbox' />
+                                <p className='students-list__fullname'>{ item.fullname }</p>
                             </li>
                         );
                     })

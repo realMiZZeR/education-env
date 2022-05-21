@@ -1,9 +1,15 @@
 import { Link } from 'react-router-dom';
 
-function CardsItem({ id, title, image, link }) {
+function CardsItem({ id, title, image, link, handler }) {
+
+    const cardEventHandler = (e) => {
+        e.preventDefault();
+
+        handler();
+    }
 
     return (
-        <Link to={link} className='cards__item'>
+        <Link to={link} onClick={handler ? cardEventHandler : ''} className='cards__item'>
             <h3 className='cards__title'>{ title }</h3>
             <div className='cards__image'>
                 <img src={image} alt='Создать' />

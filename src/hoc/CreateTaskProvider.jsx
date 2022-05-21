@@ -28,30 +28,26 @@ export const CreateTaskProvider = ({ children }) => {
 
         const fetchData = async () => {
 
-            // let formData = new FormData();
-            // for(let key in formValues) {
-            //     if(key === 'files') {
-            //         for(let i = 0; i < formValues.files.length; i++) {
-            //             formData.append('files', formValues.files[i]);
-            //         }
-            //     } else {
-            //         formData.append(key, formValues[key]);
-            //     }
-            // }
-            // formData.append('token', user.token);
+            let formData = new FormData();
+            for(let key in formValues) {
+                if(key === 'files') {
+                    for(let i = 0; i < formValues.files.length; i++) {
+                        formData.append('files', formValues.files[i]);
+                    }
+                } else {
+                    formData.append(key, formValues[key]);
+                }
+            }
+            formData.append('token', user.token);
 
-            // const result = await axios.request({ 
-            //     url:     'http://server.selestia.ru/api/teacher/createTask',
-            //     method:  'post',
-            //     data:     formData,
-            //     headers:  {'Content-Type': 'multipart/form-data'}
-            // });
-            
-            setModal(
-                {title: 'Создание задания', 
-                message: 'Задание успешно создано!', 
-                type: 'success'}
-            );
+            await axios.request({ 
+                url:     'http://server.selestia.ru/api/teacher/createTask',
+                method:  'post',
+                data:     formData,
+                headers:  {'Content-Type': 'multipart/form-data'}
+            }
+            ).then(response => setModal({status: response.status, type: 'CREATE'})
+            ).catch(error => setModal({status: error.response.staus, type: 'CREATE'}));
         }
 
         fetchData();

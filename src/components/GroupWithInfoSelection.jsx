@@ -8,6 +8,7 @@ import ErrorPage from './ErrorPage';
 import defaultGroupIcon from '../assets/images/icons/default_group.png';
 import { useSavedUsers } from '../hooks/useSavedUsers';
 import { useAxios } from '../hooks/useAxios';
+import switchItemActive from '../assets/js/switchItemActive';
 
 const GroupsList = () => {
 
@@ -21,14 +22,18 @@ const GroupsList = () => {
     });
 
     useEffect(() => {
-        if(groups && groups.data) setData(groups.data);
+        if(groups && groups.data) setData(groups.data.sort((a, b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1: 0)));
     }, [groups]);
 
     function groupClickHandler(id) {
-        setFormValues({
-            ...formValues,
-            ['group']: id
-        });
+        switchItemActive(
+            {
+                initialObject: formValues, 
+                setHandler: setFormValues,
+                modifyProperty: 'group', 
+                initialValue: id,
+            }
+        );
     }
 
     return (

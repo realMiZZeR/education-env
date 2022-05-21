@@ -137,14 +137,6 @@ const NavList = () => {
                 alt: 'Сообщения'
             },
             {
-                key: 6,
-                img: profileIcon,
-                imgActive: profileIconActive,
-                name: 'Личный кабинет',
-                link: '/profile',
-                alt: 'Профиль'
-            },
-            {
                 key: 7,
                 img: usersIcon,
                 imgActive: usersIconActive,

@@ -9,11 +9,11 @@ const StudentsList = ({ formValues }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await axios(
-                `http://server.selestia.ru/api/admin/studentInGroup?idGroup=${JSON.stringify(formValues.group)}`
-            );
-            
-            setStudents(result.data);
+            await axios(
+                `http://server.selestia.ru/api/admin/studentInGroup`,
+                {params: { idGroup: JSON.stringify(formValues.group) } }
+            ).then(response => setStudents(response.data)
+            ).catch(error => console.dir(error));
         }
 
         if(formValues.group && formValues.group.length > 0) {

@@ -1,11 +1,11 @@
 .modal-wrapper {
-    position: absolute;
+    position: fixed;
     right: 20px;
     bottom: 20px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    z-index: 99;
+    z-index: 999;
 }
 
 .modal {

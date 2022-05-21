@@ -12,7 +12,7 @@ import repliesIcon from '../assets/images/icons/teacher/replies.svg';
 import journalIcon from '../assets/images/icons/teacher/journal.svg';
 import disciplinesIcon from '../assets/images/icons/teacher/disciplines.svg';
 
-function HomePageAdmin() {
+const HomePageAdmin = () => {
     return (
         <>
             <Cards>

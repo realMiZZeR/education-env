@@ -7,8 +7,6 @@ const TaskTeacher = () => {
 
     const { data } = useContext(AnswerContext);
 
-    console.log(data)
-
     return (
         <div className='task-content'>
             <article className='task'>

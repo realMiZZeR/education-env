@@ -1,4 +1,5 @@
 import React, { useState, useEffect, createContext } from 'react';
+import InteractiveModal from '../components/InteractiveModal';
 import ModalNotification from '../components/ModalNotification';
 
 export const ModalMessages = createContext(null);
@@ -25,10 +26,24 @@ export const ModalProvider = ({ children }) => {
         }
     }, [notifications]);
 
+    const [ interactiveModal, setInteractiveModal ] = useState({
+        title: '',
+        buttonImage: null,
+        component: null,
+        callback: null,
+        visible: false
+    });
+
+    const [ interactiveModalValues, setInteractiveModalValues ] = useState(null);
+
     const value = {
         modal,
         setModal,
         notifications,
+        interactiveModal,
+        setInteractiveModal,
+        interactiveModalValues,
+        setInteractiveModalValues
     }
 
     return (
@@ -47,6 +62,16 @@ export const ModalProvider = ({ children }) => {
                 );
             })}
             </div>
+            {interactiveModal.visible && 
+            <InteractiveModal 
+                title={interactiveModal.title} 
+                buttonImage={interactiveModal.buttonImage}
+                callback={interactiveModal.callback}
+                visible={interactiveModal.visible}
+            >
+                { interactiveModal.component }
+            </InteractiveModal>
+            }
         </ModalMessages.Provider>
     )
 }
