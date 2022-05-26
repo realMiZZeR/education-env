@@ -11,6 +11,8 @@ export const ModalProvider = ({ children }) => {
 
     useEffect(() => {
         if(modal) setNotifications([...notifications, modal]);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [modal]);
 
     // clear every 5 seconds modals if they are exist

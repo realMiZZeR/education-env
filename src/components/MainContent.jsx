@@ -67,7 +67,7 @@ export const MainContent = () => {
                                         <Messanger title="Сообщения" />
                                     </AuthController>
                                 }/>
-                                <Route path='/profile/:login' element={
+                                <Route path='/profile/:id' element={
                                     <AuthController>
                                         <Profile title="Личный кабинет" />
                                     </AuthController>

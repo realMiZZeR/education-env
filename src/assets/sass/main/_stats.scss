@@ -75,5 +75,9 @@
             line-height: 21px;
             color: $half-font-color;
         }
+        &__progress {
+            width: 100px;
+            height: 100px;
+        }
     }
 }

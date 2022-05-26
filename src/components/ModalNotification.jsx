@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const defaultIcon = 'http://server.selestia.ru/userAvatar/standartUser.png'
+// const defaultIcon = 'http://server.selestia.ru/userAvatar/standartUser.png'
 
 function getModalType({type, handler}) {
     switch(type) {
@@ -22,6 +22,8 @@ function getModalType({type, handler}) {
                 {id: 2, status: 200, title: 'Обновление', message: 'Успешно обновлено.'}
             ]);
             break;
+        default:
+            return;
     }
 }
 
@@ -57,6 +59,7 @@ const ModalNotification = ({ status, type }) => {
                     </div>
                 );
             }
+            return '';
         })}
         </>
     );

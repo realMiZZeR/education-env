@@ -52,6 +52,8 @@ const TimetableComponent = () => {
 
         if(user?.token && user?.role === 0) getUserTimetable();
         if(user?.token && user?.role === 1) getTeacherTimetable();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     // for timetable page
