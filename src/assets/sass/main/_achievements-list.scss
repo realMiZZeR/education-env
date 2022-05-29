@@ -39,14 +39,17 @@
             width: 35px;
             height: 35px;
         }
-        &_epic {
-            background: $epic-color!important;
+        &_myth {
+            background: $mythical-color!important;
         }
         &_leg {
             background: $legendary-color!important;
         }
-        &_myth {
-            background: $mythical-color!important;
+        &_epic {
+            background: $epic-color!important;
+        }
+        &_common {
+            background: $common-color!important;
         }
     }
     &-info {

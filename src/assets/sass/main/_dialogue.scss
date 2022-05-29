@@ -1,0 +1,157 @@
+.dialogue {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: $block-color;
+    border-radius: $block-brd-radius;
+    box-shadow: $block-shadow;
+    overflow: hidden;
+
+    &-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: $hover-color;
+        min-height: 60px;
+        padding: 0 20px;
+
+        &__grouping {
+            display: flex;
+            align-items: center;
+        }
+        &__image {
+            position: relative;
+            min-width: 35px;
+            min-height: 35px;
+            max-height: 35px;
+            max-width: 35px;
+            margin-right: 15px;
+            border-radius: 100%;
+            overflow: hidden;
+        }
+        &__image img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+        }
+        &__image_empty {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: $hover-color;
+        }
+        &__image_empty img {
+            position: static;
+            width: calc(100% / 1.5);
+            height: calc(100% / 1.5);
+        }
+        &__fullname {
+            font-family: $roboto-font;
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 21px;
+            color: transparentize($font-color, 0.25);
+            width: 500px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        &__button {
+            position: relative;
+            min-width: 25px;
+            min-height: 25px;
+            max-width: 25px;
+            max-height: 25px;
+            cursor: pointer;
+        }
+        &__button img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 0.75;
+        }
+        &__button + &__button {
+            margin-left: 20px;
+        }
+    }
+    &-main {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        padding: 0 25px;
+        margin: 40px 0;
+    }
+    &-form {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 50px;
+        padding: 0 20px;
+        margin-top: auto;
+        margin-bottom: 20px;
+
+        &__attach {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 25px;
+            height: 25px;
+        }
+        &__attach img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 0.5;
+        }
+        &__attach input[type='file'] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            z-index: 1;
+        }
+        &__label {
+            width: 100%;
+        }
+        &__input {
+            background-color: $input-color;
+            border-radius: $block-brd-radius;
+            font-family: $roboto-font;
+            font-weight: 500;
+            font-size: 18px;
+            white-space: initial;
+            width: 100%;
+            height: 50px;
+            margin: 0 20px;
+            padding: 0 20px;
+        }
+        &__input::-webkit-input-placeholder {
+            color: transparentize($half-font-color, 0.15);
+        }
+        &__submit {
+            position: relative;
+            min-width: 25px;
+            min-height: 25px;
+            max-height: 25px;
+            max-width: 25px;
+            background-color: transparent;
+        }
+        &__submit img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+}

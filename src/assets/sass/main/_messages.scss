@@ -2,6 +2,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    min-width: 550px;
 
     &__heading {
         position: relative;
@@ -42,8 +43,10 @@
         }
         &__image {
             position: relative;
-            width: 65px;
-            height: 65px;
+            min-width: 65px;
+            min-height: 65px;
+            max-width: 65px;
+            max-height: 65px;
             border-radius: 100%;
             margin-right: 15px;
             overflow: hidden;

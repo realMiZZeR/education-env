@@ -9,9 +9,9 @@
         width: calc(100% - 20%);
         height: calc(100% - 20%);
         // margin: calc(-1 * (100% - 60%)) 0 0 calc(-1 * (100% - 60%));
-        background-color: red;
+        background-color: $block-color;
         border-radius: 100%;
-        z-index: 1;
+        z-index: 2;
     }
     &__value {
         position: absolute;
@@ -22,17 +22,33 @@
         font-family: $montserrat-font;
         font-weight: 800;
         font-size: 24px;
-        color: $half-font-color;
+        color: $font-color;
     }
 }
 
 .progress-circle {
+    
     &__bar {
         position: absolute;
         height: 100%;
         width: 100%;
-        background-color: $main-color;
         border-radius: 100%;
+        background-color: $circle-progress;
         clip: rect(0, 100px, 100px, 50px);
+    }
+    &__completed {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+        background-color: $main-color;
+        clip: rect(0, 50px, 100px, 0px);
+    }
+    &__bar.left &__completed {
+        z-index: 1;
+    }
+    &__bar.right {
+        transform: rotate(180deg);
+        z-index: 1;
     }
 }

@@ -9,10 +9,11 @@ import LoadingPage from '../components/LoadingPage';
 import CircleProgressBar from '../components/CircleProgressBar';
 
 // stats icons
-import AvgIcon from '../assets/images/icons/profile/avg_mark.svg';
-import PlaceIcon from '../assets/images/icons/profile/place.svg';
-import AchievementIcon from '../assets/images/icons/profile/achievement.svg';
-import TasksIcon from '../assets/images/icons/profile/tasks.svg';
+import avgIcon from '../assets/images/icons/profile/avg_mark.svg';
+import placeIcon from '../assets/images/icons/profile/place.svg';
+import achievementIcon from '../assets/images/icons/profile/achievement.svg';
+import tasksIcon from '../assets/images/icons/profile/tasks.svg';
+import groupIcon from '../assets/images/icons/group.png';
 
 // functions
 import updateTitle from '../assets/js/updateTitle';
@@ -21,13 +22,15 @@ import { useAuth } from '../hooks/useAuth';
 function getStatImage (name) {
     switch(name) {
         case 'avg_mark':
-            return AvgIcon;
+            return avgIcon;
+        case 'group':
+            return groupIcon;
         case 'group_place':
-            return PlaceIcon;
+            return placeIcon;
         case 'achievements':
-            return AchievementIcon;
+            return achievementIcon;
         case 'completed_tasks':
-            return TasksIcon;
+            return tasksIcon;
         default:
             return;
     }
@@ -46,7 +49,7 @@ const StatsItem = ({ stats }) => {
                     />
                 ) : (
                     <h2 className='stats-counter__number'>
-                        <span>{ stats.value }</span>
+                        <span>{ stats.value ? stats.value : 0 }</span>
                     </h2>
                 )}
                 
@@ -98,7 +101,6 @@ const Profile = (props) => {
             ) : (
                 <article className='profile'>
                     <div className='stats'>
-                    {console.log(userProfile)}
                         {userProfile.stats.map(item => {
                             return (
                                 <StatsItem key={item.id} stats={item} />
@@ -108,7 +110,16 @@ const Profile = (props) => {
                     <div className='user'>
                         <UserInfo info={ userProfile.info } />
                         <UserAchievements achievements={ userProfile.achievements } />
-                        {userProfile.isYou && <UserSettings settings={ userProfile.settings } />}
+                        {userProfile.isYou ? (
+                            <UserSettings settings={ userProfile.settings } />
+                        ) : (
+                            <div className='user-controls'>
+                                <h2 className='user-controls__heading'>&nbsp;</h2>
+                                <button type='button' className='user-controls__button button'>
+                                    <span>Отправить сообщение</span>
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </article>
             )}

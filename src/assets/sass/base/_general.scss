@@ -25,6 +25,8 @@ $purple-color: #8E3BE3;
 $green-color: #21E929;
 $orange-color: #F9AA4D;
 
+$circle-progress: rgba(0, 0, 0, 0.1);
+
 $role-block: rgba(0, 0, 0, 0.05);
 $user-card-color: rgba(0, 0, 0, 0.15);
 $user-card-shadow: 0 4px 10px $user-card-color;
@@ -45,10 +47,10 @@ $bad-mark: #F9764D;
 $terrible-mark: #F01F1F;
 
 // achievements
-$standard-color: linear-gradient(135deg, #4D69F9 0%, #9D6CDC 100%);
-$epic-color: linear-gradient(135deg, #CC4DF9 0%, #F94DD3 100%);
 $legendary-color: linear-gradient(135deg, #F6F94D 0%, #F9D34D 100%);
 $mythical-color: linear-gradient(135deg, #F94D4D 0%, #DC6C87 100%);
+$epic-color: linear-gradient(135deg, #CC4DF9 0%, #F94DD3 100%);
+$common-color: linear-gradient(135deg, #4D69F9 0%, #9D6CDC 100%);
 $locked-color: #25262E;
 
 // fonts
@@ -290,6 +292,13 @@ input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
     min-height: 720px;
     height: 100%;
     margin-top: 50px;
+}
+
+.messages-wrapper {
+    display: flex;
+    gap: 50px;
+    width: 100%;
+    height: 100%;
 }
 
 @media screen and (max-width: 1366px) {

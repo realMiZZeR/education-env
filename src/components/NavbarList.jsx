@@ -83,7 +83,7 @@ const NavList = () => {
                 img: messsagesIcon,
                 imgActive: messsagesIconActive,
                 name: 'Сообщения',
-                link: '/messager',
+                link: '/messages',
                 alt: 'Сообщения'
             },
             {
@@ -91,7 +91,7 @@ const NavList = () => {
                 img: profileIcon,
                 imgActive: profileIconActive,
                 name: 'Личный кабинет',
-                link: `/profile/${user?.login}`,
+                link: `/profile/${user?.urlId}`,
                 alt: 'Профиль'
             },
             {
@@ -133,7 +133,7 @@ const NavList = () => {
                 img: messsagesIcon,
                 imgActive: messsagesIconActive,
                 name: 'Сообщения',
-                link: '/messager',
+                link: '/messages',
                 alt: 'Сообщения'
             },
             {
@@ -179,21 +179,20 @@ const NavList = () => {
     const listItems = currentNavbar.map(item => {
         let isCurrent = (location.pathname === item.link)
         return (
-        <li 
-        className={`nav-list__item ${isCurrent ? 'nav-list__item_active' : ''} ${item.name === 'Выход' ? 'nav-list__item_exit' : ''}`} 
-        key={item.key}
-        onClick={item.name === 'Выход' ? () => signOut(() => navigate(item.link, {replace: true})) : null}
-        onMouseEnter={ e => { hoverItem(e, item.imgActive, isCurrent) } }
-        onMouseLeave={ e => { hoverItem(e, item.img, isCurrent)} }>
-
-            <Link to={item.link} className='nav-list__link link'>
-                <div className='nav-list__image'>
-                    <img src={`${isCurrent ? item.imgActive : item.img}`} alt={item?.alt} />
-                </div>
-                <p className='nav-list__title'>{item.name}</p>
-            </Link>
-
-        </li>
+            <li 
+                className={`nav-list__item ${isCurrent ? 'nav-list__item_active' : ''} ${item.name === 'Выход' ? 'nav-list__item_exit' : ''}`} 
+                key={item.key}
+                onClick={item.name === 'Выход' ? () => signOut(() => navigate(item.link, {replace: true})) : null}
+                onMouseEnter={ e => { hoverItem(e, item.imgActive, isCurrent) } }
+                onMouseLeave={ e => { hoverItem(e, item.img, isCurrent)} }
+            >
+                <Link to={item.link} className='nav-list__link link'>
+                    <div className='nav-list__image'>
+                        <img src={`${isCurrent ? item.imgActive : item.img}`} alt={item?.alt} />
+                    </div>
+                    <p className='nav-list__title'>{item.name}</p>
+                </Link>
+            </li>
         );
     });
 

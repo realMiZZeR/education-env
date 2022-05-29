@@ -20,7 +20,7 @@ import hamburgerIcon from '../assets/images/icons/hamburger.svg';
 // pages
 const Auth = React.lazy(() => import('../pages/Auth'));
 const Home = React.lazy(() => import('../pages/Home'));
-const Messanger = React.lazy(() => import('../pages/Messanger'));
+const MessagesPage = React.lazy(() => import('../pages/MessagesPage'));
 const Timetable = React.lazy(() => import('../pages/Timetable'));
 const Users = React.lazy(() => import('../pages/Users'));
 const Tasks = React.lazy(() => import('../pages/Tasks'));
@@ -62,9 +62,9 @@ export const MainContent = () => {
                                         <Timetable title="Расписание" />
                                     </TimetableProvider>
                                 } />
-                                <Route path='/messanger' element={
+                                <Route path='/messages' element={
                                     <AuthController>
-                                        <Messanger title="Сообщения" />
+                                        <MessagesPage title="Сообщения" />
                                     </AuthController>
                                 }/>
                                 <Route path='/profile/:id' element={

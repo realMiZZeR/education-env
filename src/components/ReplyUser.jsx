@@ -32,7 +32,7 @@ const ReplyUser = () => {
     const replyFormFilesHandler = (e) => {
         setReplyValues({
             ...replyValues,
-            ['files']: [
+            files: [
                 ...e.target.files
             ]
         })

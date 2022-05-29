@@ -29,12 +29,13 @@ export const AuthProvider = ({ children }) => {
             ).then(response => {
                 status = response.status;
                 if(response.status === 200) {
-                    const { token, role } = response.data;
+                    const { token, role, urlId } = response.data;
 
                     if(role === 2) setIsAdmin(true);
                     
                     setUser({
                         token: token,
+                        urlId: urlId,
                         role: role
                     });
 
