@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 
 import { useAuth } from '../hooks/useAuth';
 import { useTimetable } from '../hooks/useTimetable';
@@ -8,7 +8,9 @@ import TimetableTeachers from './TimetableTeachers';
 import SwitchButton from './SwitchButton';
 import Search from './Search';
 
-const TimetableSort = () => {
+const TimetableSort = forwardRef((props, ref) => {
+
+    console.log(props)
 
     const { user } = useAuth();
 
@@ -23,17 +25,17 @@ const TimetableSort = () => {
     }
 
     return (
-        <article className='timetable-sort'>
+        <article ref={ref} className={`timetable-sort ${props?.classes}`}>
             <SwitchButton handler={teacherChangeHandler} value={isTeacher} >
                 <p className='switch__title'>
                     Расписание для { isTeacher ? 'преподавателя' : 'студента' }
                 </p>
             </SwitchButton>
-            <Search className='search' />
+            <Search className='timetable-sort__search search' />
             {!isTeacher && <TimetableGroups />}
             {isTeacher && <TimetableTeachers />}
         </article>
     );
-}
+})
 
 export default TimetableSort;

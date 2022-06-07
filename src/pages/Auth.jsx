@@ -55,13 +55,11 @@ function Auth(props) {
         }
 
         new Promise((resolve, reject) => {
-            signIn(
-                {   
-                    user: formValues, 
-                    callback: () => navigate('/home', {replace: true}),
-                    promise: {resolve: resolve, reject: reject}
-                }
-            );
+            signIn({   
+                user: formValues, 
+                callback: () => navigate('/home', {replace: true}),
+                promise: {resolve: resolve, reject: reject}
+            });
         }).then(status => {
             setModal({status: status, type: 'AUTH'});
         });

@@ -36,10 +36,6 @@ export const CreateGroupProvider = ({ children }) => {
         setFormValues,
         saveGroupData
     }
-    
-    useEffect(() => {
-        console.log(formValues);
-    }, [formValues]);
 
     return (
         <GroupContext.Provider value={value}>

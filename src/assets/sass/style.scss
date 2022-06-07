@@ -1,3 +1,7 @@
+// variables
+@import './base/variables';
+// mixins
+@import './base/mixins';
 // fonts
 @import './base/fonts.scss';
 
@@ -45,3 +49,4 @@
 @import './main/interactive-modal';
 @import './main/replies-list';
 @import './main/progress';
+@import './main/footerbar';

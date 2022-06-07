@@ -4,13 +4,13 @@ import { useAuth } from '../hooks/useAuth';
 
 function AdminController({ children }) {
     const location = useLocation();
-    const { user, isAdmin } = useAuth();
+    const { user } = useAuth();
 
     if(!user) {
         return <Navigate to='/' state={{from: location}} />
     }
 
-    if(!isAdmin) {
+    if(user.role !== 2) {
         return <Navigate to='' />
     }
 

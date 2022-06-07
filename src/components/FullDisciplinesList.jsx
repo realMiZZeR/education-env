@@ -68,8 +68,6 @@ const FullDisciplinesList = () => {
         setIsActive(id);
         setSelectedDiscipline(id);
     }
-
-    console.log(disciplines);
     
     return (
         <aside className='tasks-aside'>

@@ -22,7 +22,6 @@ const CreateTaskAside = () => {
                 `http://server.selestia.ru/api/teacher/getGroupDiscipline?id=${formValues.discipline}`
             );
 
-            console.log(result)
             setGroups(result.data);
         }
 

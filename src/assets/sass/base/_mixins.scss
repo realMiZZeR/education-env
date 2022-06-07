@@ -1,0 +1,14 @@
+@mixin landscape($size) {
+    @if $size == laptopL {
+        @media (max-width: 1400px) { @content; }
+    }
+    @if $size == laptop {
+        @media (max-width: 1024px) { @content; }
+    }
+    @if $size == table {
+        @media (max-width: 768px) { @content; }
+    }
+    @if $size == phone {
+        @media (max-width: 375px) { @content; }
+    }
+}

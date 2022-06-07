@@ -186,6 +186,8 @@
             }
         }
         &__image_type {
+            min-width: 150px;
+            min-height: 100px;
             opacity: 0.5;
         }
         &_blank {

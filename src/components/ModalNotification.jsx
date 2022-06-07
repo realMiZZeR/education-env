@@ -14,6 +14,9 @@ function getModalType({type, handler}) {
             handler([
                 {id: 1, status: 422, title: 'Не удалось создать', message: 'Один или несколько полей введены неверно.'},
                 {id: 2, status: 200, title: 'Создано', message: 'Процесс создания прошёл успешно.'},
+                {id: 3, status: 403, title: 'Не удалось создать', message: 'Одно или более полей не введено.'},
+                {id: 4, status: 502, title: 'Не удалось создать', message: 'Произошла какая-то ошибка...'},
+                {id: 4, status: 504, title: 'Не удалось создать', message: 'Время отправления запроса истекло.'},
             ]);
             break;
         case 'REFRESH':
@@ -29,14 +32,20 @@ function getModalType({type, handler}) {
 
 function modalStyle(type) {
     switch(type) {
+        case 403:
+            return 'modal_error';
         case 422:
             return 'modal_error';
         case 500:
             return 'modal_error';
+        case 502:
+            return 'modal_error';
+        case 504:
+            return 'modal_error';
         case 200:
             return 'modal_success';
         default:
-            return 'modal_success';
+            return 'modal_error';
     }
 }
 

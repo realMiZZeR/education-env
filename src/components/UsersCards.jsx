@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 import getInitials from '../assets/js/getInitials';
 import isEmptyUserImage from '../assets/js/isEmptyUserImage';
 
-export const UsersCards = ({ users }) => {
+const defaultIcon = 'http://server.selestia.ru/userAvatar/standartUser.png';
 
-    const defaultIcon = 'http://server.selestia.ru/userAvatar/standartUser.png';
+export const UsersCards = ({ users }) => {
     
     return (
         <ul className='users-cards'>

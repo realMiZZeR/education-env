@@ -1,16 +1,18 @@
 import axios from 'axios';
 import { useEffect, createContext, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useWebSocket } from '../hooks/useWebSocket';
 
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
 
+    const { setToken } = useWebSocket('ws://websocket.selestia.ru');
+
     const navigate = useNavigate();
 
     const [ user, setUser ] = useState(null);
     const [ isAdmin, setIsAdmin ] = useState(null);
-    // const [ status, setStatus ] = useState(null);
 
     const signIn = ({user, callback, promise}) => {
 
@@ -39,6 +41,9 @@ export const AuthProvider = ({ children }) => {
                         role: role
                     });
 
+                    // websocket
+                    setToken(token);
+
                     // remember me
                     if(user.rememberPassword) {
                         localStorage.setItem('token', token);
@@ -50,7 +55,10 @@ export const AuthProvider = ({ children }) => {
                     throw new Error();
                 }
             }).catch(error => {
-                status = error.response.status;
+                status = error.response?.status;
+                if(error.message === 'Network Error') {
+                    status = 500;
+                }
             }).finally(() => (promise) ? promise.resolve(status) : '');
         }
 
@@ -67,10 +75,14 @@ export const AuthProvider = ({ children }) => {
                     }
                 ).then(response => {
                     const { token, role } = response.data;
+
                     setUser({
                         token: token,
                         role: role
                     });
+
+                    // websocket
+                    setToken(token);
     
                     navigate('/home', {replace: true});
                 }).catch(error => console.dir(error));
@@ -87,6 +99,9 @@ export const AuthProvider = ({ children }) => {
         if(localStorage.getItem('token')) {
             localStorage.removeItem('token');
         }
+        // websocket
+        setToken(null);
+
         callback();
     }
 

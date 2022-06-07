@@ -1,10 +1,15 @@
 import React, { useState, useEffect, createContext } from 'react';
+
+import { useWebSocket } from '../hooks/useWebSocket';
+
 import InteractiveModal from '../components/InteractiveModal';
 import ModalNotification from '../components/ModalNotification';
 
 export const ModalMessages = createContext(null);
 
 export const ModalProvider = ({ children }) => {
+
+    const { messages } = useWebSocket();
 
     const [ notifications, setNotifications ] = useState([]);
     const [ modal, setModal ] = useState(null);

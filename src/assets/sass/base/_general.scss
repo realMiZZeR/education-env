@@ -1,63 +1,3 @@
-// colors
-$main-color: #4D5BF9;
-$background-color: #FCFCFC;
-$block-color: #FFFFFF;
-$block-brd-radius: 10px;
-$block-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-$block-shadow-hover: 0 4px 10px rgba(0, 0, 0, 0.15);
-$block-shadow_highlight: 0 4px 10px transparentize($main-color, 0.5);
-$lesson-color: #F4F4F4;
-$group-color: #F4F4F4;
-$hover-color: #F2F3F4;
-$input-color: #F2F2F2;
-$switch-color: #8A8A8A;
-$w-font-color: #FFFFFF;
-$font-color: #000000;
-$half-font-color: rgba(0, 0, 0, 0.5);
-$error-block: #f94d4d88;
-$error-color: #E22A2A;
-$loading-cell: rgba(0, 0, 0, 0.2);
-
-$dropdown-color: rgb(240, 240, 240);
-$blackover: rgba(26, 19, 54, 0.5);
-
-$purple-color: #8E3BE3;
-$green-color: #21E929;
-$orange-color: #F9AA4D;
-
-$circle-progress: rgba(0, 0, 0, 0.1);
-
-$role-block: rgba(0, 0, 0, 0.05);
-$user-card-color: rgba(0, 0, 0, 0.15);
-$user-card-shadow: 0 4px 10px $user-card-color;
-$user-card-border: 1px solid $user-card-color;
-$user-card-shadow_teacher: 0 4px 10px transparentize($main-color, 0.85);
-$user-card-border_teacher: 2px solid transparentize($main-color, 0.85);
-
-// modal color
-$modal-success: rgba(30, 179, 50, 0.9);
-$modal-message: rgba(255, 255, 255, 1);
-$modal-error: rgba(177, 25, 25, 0.7);
-
-// marks
-$excellent-mark: #21E929;
-$good-mark: #EBEF18;
-$satisfactorily-mark: #F9B44D;
-$bad-mark: #F9764D;
-$terrible-mark: #F01F1F;
-
-// achievements
-$legendary-color: linear-gradient(135deg, #F6F94D 0%, #F9D34D 100%);
-$mythical-color: linear-gradient(135deg, #F94D4D 0%, #DC6C87 100%);
-$epic-color: linear-gradient(135deg, #CC4DF9 0%, #F94DD3 100%);
-$common-color: linear-gradient(135deg, #4D69F9 0%, #9D6CDC 100%);
-$locked-color: #25262E;
-
-// fonts
-$roboto-font: 'Roboto', sans-serif;
-$raleway-font: 'Raleway';
-$montserrat-font: 'Montserrat';
-
 // general styles
 *,
 *::before,
@@ -74,6 +14,12 @@ $montserrat-font: 'Montserrat';
 
 ::-webkit-scrollbar {
     width: 5px;
+    height: 5px;
+
+    @include landscape(phone) {
+        width: 3px;
+        height: 3px;
+    }
 }
 ::-webkit-scrollbar-thumb {
     background-color: $main-color;
@@ -81,6 +27,10 @@ $montserrat-font: 'Montserrat';
 }
 ::-webkit-scrollbar-track {
     background-color: $group-color;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+    background-color: #EDEDED;
 }
 
 
@@ -105,6 +55,11 @@ body {
     background-color: $background-color;
 }
 
+img {
+    width: 100%;
+    height: 100%;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -114,6 +69,10 @@ body {
     padding: 20px;
     padding-bottom: 30px;
     overflow: hidden;
+
+    @include landscape(mobile) {
+        padding: 10px;
+    }
 }
 
 .nav {
@@ -237,6 +196,14 @@ input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
 
 .hamburger {
     cursor: pointer;
+
+    @include landscape(phone) {
+        width: 35px;
+        height: 35px;
+        padding: 8px;
+        border-radius: 100%;
+        background-color: $hover-color;
+    }
 }
 
 .checkbox {
@@ -299,10 +266,4 @@ input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
     gap: 50px;
     width: 100%;
     height: 100%;
-}
-
-@media screen and (max-width: 1366px) {
-    .container {
-        max-width: 1000px;
-    }
 }

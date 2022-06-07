@@ -29,10 +29,6 @@ const CreateDisciplineContent = () => {
         if(typesAxios && typesAxios.data) setTypes(typesAxios.data);
     }, [typesAxios]);
 
-    useEffect(() => {
-        console.log(typesAxios)
-    }, [types]);
-
     const [ typeImage, setTypeImage ] = useState(null);
 
     const formInputChangeHandler = (e) => {

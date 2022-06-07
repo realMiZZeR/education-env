@@ -37,12 +37,12 @@ const CreateUserPage = React.lazy(() => import('../pages/CreateUserPage'));
 const CreateDisciplinePage = React.lazy(() => import('../pages/CreateDisciplinePage'));
 const CreateGroupPage = React.lazy(() => import('../pages/CreateGroupPage'));
 
-export const MainContent = () => {
+export const MainContent = ({refHandler}) => {
     return (
         <div className='content'>
             <div className='container'>
                 <header className='content-top'>
-                    <div className='hamburger'>
+                    <div className='hamburger' onClick={refHandler}>
                         <img src={hamburgerIcon} alt='Hamburger'/>
                     </div>
                     <Search className='search search_sm' />

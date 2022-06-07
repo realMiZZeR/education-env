@@ -1,4 +1,12 @@
 import React, { useEffect } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 
 import calendarIcon from '../assets/images/icons/calendar.svg';
 import calendarActiveIcon from '../assets/images/icons/calendar_active.svg';
@@ -8,9 +16,25 @@ import getDayOfWeek from '../assets/js/getDayOfWeek';
 
 // hooks
 import { useTimetable } from '../hooks/useTimetable';
+import { useWindowResolution } from '../hooks/useWindowResolution';
 
-const TimetableDatesList = ({ datesList }) => {
+const DateItem = ({date}) => {
+    const { selectedDate } = useTimetable();
 
+    return (
+        <div className={`timetable-dates-list__item ${(date === selectedDate) ? 'timetable-dates-list__item_current' : ''}`}>
+            <div className='timetable-dates-list__image'>
+                <img src={(date === selectedDate) ? calendarActiveIcon : calendarIcon} alt='Дата' />
+            </div>
+            <p className='timetable-dates-list__date'>{ date }</p>
+            <small className='timetable-dates-list__dayofweek'>{ getDayOfWeek(date) }</small>
+        </div>
+    );
+}
+
+const TimetableDatesList = React.forwardRef(({ datesList }, ref) => {
+
+    const { width, height } = useWindowResolution();
     const { selectedDate, setSelectedDate } = useTimetable(); 
 
     const itemClickHandler = (date) => {
@@ -18,24 +42,50 @@ const TimetableDatesList = ({ datesList }) => {
     }
 
     // item = date (01.01.1970)
-    const datesItems = datesList.map((item, index) => {
-        return (
-            <li 
-            key={index}
-            className={`timetable-dates-list__item ${(item === selectedDate) ? 'timetable-dates-list__item_current' : ''}`}
-            onClick={() => { itemClickHandler(item) } }>
-                <div className='timetable-dates-list__image'>
-                    <img src={(item === selectedDate) ? calendarActiveIcon : calendarIcon} alt='Дата' />
-                </div>
-                <p className='timetable-dates-list__date'>{ item }</p>
-                <small className='timetable-dates-list__dayofweek'>{ getDayOfWeek(item) }</small>
-            </li>
-        );
-    });
 
     return (
-        <ul className='timetable-dates-list'>{ datesItems }</ul>
+        <>
+            {width <= 376 ? (
+                <Swiper
+                    // install Swiper modules
+                    modules={[Navigation, A11y]}
+                    spaceBetween={50}
+                    slidesPerView={3}
+                    navigation
+                >
+                    {datesList.map((date, index) => {
+                        return (
+                            <SwiperSlide key={index} className={`timetable-dates-list__item ${(date === selectedDate) ? 'timetable-dates-list__item_current' : ''}`}>
+                                <div className='timetable-dates-list__image'>
+                                    <img src={(date === selectedDate) ? calendarActiveIcon : calendarIcon} alt='Дата' />
+                                </div>
+                                <p className='timetable-dates-list__date'>{ date }</p>
+                                <small className='timetable-dates-list__dayofweek'>{ getDayOfWeek(date) }</small>
+                            </SwiperSlide>
+                        );
+                    })}
+                </Swiper>
+            ) : (
+                <ul ref={ref} className='timetable-dates-list'>
+                { datesList.map((date, index) => {
+                    return (
+                        <li 
+                            key={index}
+                            className={`timetable-dates-list__item ${(date === selectedDate) ? 'timetable-dates-list__item_current' : ''}`}
+                            onClick={() => { itemClickHandler(date) } }
+                        >
+                            <div className='timetable-dates-list__image'>
+                                <img src={(date === selectedDate) ? calendarActiveIcon : calendarIcon} alt='Дата' />
+                            </div>
+                            <p className='timetable-dates-list__date'>{ date }</p>
+                            <small className='timetable-dates-list__dayofweek'>{ getDayOfWeek(date) }</small>
+                        </li>
+                    )
+                }) }
+                </ul>
+            )}
+        </>
     );
-}
+})
 
 export default TimetableDatesList;

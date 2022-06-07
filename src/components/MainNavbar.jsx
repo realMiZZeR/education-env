@@ -1,14 +1,18 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
 
-import NavbarList from './NavbarList';
 import getInitials from '../assets/js/getInitials';
+import isEmptyUserImage from '../assets/js/isEmptyUserImage';
+
+import NavbarList from './NavbarList';
 
 import defaultUserIcon from '../assets/images/icons/profile/user.svg';
 
-const MainNavbar = () => {
+const defaultIcon = 'http://server.selestia.ru/userAvatar/standartUser.png';
+
+const MainNavbar = forwardRef((props, ref) => {
 
     const { user } = useAuth();
 
@@ -28,10 +32,11 @@ const MainNavbar = () => {
     }, [user?.token]);
 
     return (
-        <div className='navbar'>
+        <div ref={ref} className='navbar'>
+            <div className='navbar__blackover' onClick={() => {ref.current.className = 'navbar'}} />
             <div className='navbar-user'>
-                <div className={`navbar-user__image ${(!navbarInfo?.image) ? 'navbar-user__image_default' : ''}`}>
-                    <img src={(navbarInfo?.image) ? navbarInfo.image : defaultUserIcon} alt='Аватарка' />
+                <div className={isEmptyUserImage(navbarInfo?.image, 'navbar-user__image')}>
+                    <img src={(navbarInfo?.image) ? `http://server.selestia.ru/${navbarInfo.image}` : defaultUserIcon} alt='Аватарка' />
                 </div>
                 <div className='navbar-user__info'>
                     <p className='navbar-user__name'>{ (user?.token) ? getInitials(navbarInfo?.fullname) : 'Гость' }</p>
@@ -52,6 +57,6 @@ const MainNavbar = () => {
             <NavbarList />
         </div>
     );
-}
+})
 
 export default MainNavbar;

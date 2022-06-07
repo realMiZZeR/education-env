@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useAuth } from '../hooks/useAuth';
+import { useWebSocket } from '../hooks/useWebSocket';
 
 import attachIcon from '../assets/images/icons/attach_file.svg';
 import sendIcon from '../assets/images/icons/send.svg';
@@ -12,7 +13,11 @@ const defaultIcon = 'http://server.selestia.ru/userAvatar/standartUser.png';
 
 const MessagesDialogue = () => {
 
-    const { user } = useAuth();
+    const { messages, sendMessage } = useWebSocket();
+
+    useEffect(() => {
+        console.log(messages);
+    }, [messages]);
 
     const messageFields = {
         text: '',
@@ -41,60 +46,8 @@ const MessagesDialogue = () => {
 
     const dialogueSubmitHandler = (e) => {
         e.preventDefault();
-    }
 
-    const socket = useRef();
-    const [ connected, setConnected ] = useState(false);
-    
-    function connect() {
-        socket.current = new WebSocket('ws://websocket.selestia.ru');
-
-        socket.current.onopen = () => {
-            setConnected(true);
-            console.log('Server opened');
-
-            const message = {
-                method: 'setToken',
-                body: {
-                    token: user.token
-                }
-            }
-
-            if(socket.current.readyState === 1) {
-                socket.current.send(JSON.stringify(message));
-            }
-        }
-
-        socket.current.onmessage = (event) => {
-            const message = JSON.parse(event.data);
-            console.log(message);
-        }
-
-        socket.current.onclose = () => {
-            console.log('Websocket closed!');
-            setConnected(false);
-            // setTimeout(() => {
-            //     connect();
-            // }, 1000);
-        }
-
-        socket.current.onerror = () => {
-            console.log('Websocket gets error!');
-            // setTimeout(() => {
-            //     connect();
-            // }, 5000);
-        }
-    }
-
-    useEffect(() => {
-        connect();
-    }, []);
-
-    async function sendMessage() {
-        const message = {
-
-        }
-        socket.current.send(JSON.stringify(message));
+        sendMessage('отправил сообщение');
     }
 
     return (

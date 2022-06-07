@@ -18,7 +18,7 @@
     border-radius: $block-brd-radius;
     opacity: 0;
     transform: translateX(20px);
-    animation: 4s appear ease-in-out forwards;
+    animation: 4s modalAppear ease-in-out forwards;
     
     &_success {
         background-color: $modal-success;
@@ -34,11 +34,7 @@
     }
 }
 
-@keyframes appear {
-    0% {
-        opacity: 0;
-        transform: translateX(20px);
-    }
+@keyframes modalAppear {
     25% {
         opacity: 1;
         transform: translateX(0);

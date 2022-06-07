@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
+import timetableSettings from '../assets/images/icons/timetable_settings.png';
+
 import TimetableLessons from './TimetableLessons';
 
 // functions
@@ -12,8 +14,9 @@ import getDayOfWeek from '../assets/js/getDayOfWeek';
 import { useTimetable } from '../hooks/useTimetable';
 import LoadingPage from './LoadingPage';
 import { useAuth } from '../hooks/useAuth';
+import { useWindowResolution } from '../hooks/useWindowResolution';
 
-const TimetableComponent = () => {
+const TimetableComponent = ({refHandler, footbarRefHandler}) => {
 
     const location = useLocation();
     let isHome = (location.pathname === '/home');
@@ -101,6 +104,8 @@ const TimetableComponent = () => {
         if(selectedDate && selectedGroup && !isTeacher) getGroupSchedule();
         if(selectedDate && selectedTeacher && isTeacher) getTeacherSchedule();
     }, [selectedDate, selectedGroup, selectedTeacher, isTeacher]);
+
+    const { width } = useWindowResolution();
     
     return (
         <article className='timetable'>
@@ -121,13 +126,32 @@ const TimetableComponent = () => {
                 {isScheduleLoading ? (
                     <LoadingPage />
                 ) : (
-                    <TimetableLessons lessons={timetable.schedule}  />
+                    <>
+                    {timetable.schedule.length > 0 ? (
+                        <TimetableLessons lessons={timetable.schedule}  />
+                    ) : (
+                        <div className='lessons-list lessons-list_empty'>
+                            <div className='lessons-list__image'>
+                                <img src={timetableSettings} alt='' />
+                            </div>
+                            <p className='lessons-list__text'>
+                                Выберите необходимую <br/> 
+                                <span onClick={() => {refHandler('date')}}>дату</span> и <span onClick={() => {refHandler('user')}}>{(isTeacher) ? 'преподавателя' : 'группу'}</span>
+                            </p>
+                        </div>
+                    )}
+                    </>
                 )}
             </div>
             {isHome &&
             <footer className='timetable__footer'>
                 <p className='timetable__update'>Обновлено: в </p>
             </footer>
+            }
+            {width <= 376 && 
+            <button type='button' onClick={footbarRefHandler} className='timetable__button button'>
+                <span>Выбрать расписание</span>
+            </button>
             }
         </article>
     );

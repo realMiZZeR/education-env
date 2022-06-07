@@ -7,8 +7,17 @@
     height: 50px;
     padding: 13px 20px 12px 20px;
 
+    @include landscape(phone) {
+        height: 30px;
+        padding: 7px 10px;
+    }
+
     &_sm {
         width: 300px;
+
+        @include landscape(phone) {
+            width: 150px;
+        }
     }
 
     &__image {
@@ -16,6 +25,11 @@
         width: 25px;
         height: 25px;
         opacity: 0.5;
+
+        @include landscape(phone) {
+            width: 15px;
+            height: 15px;
+        }
 
         img {
             position: absolute;
@@ -33,6 +47,12 @@
         color: #787878;
         margin-left: 20px;
         width: 100%;
+
+        @include landscape(phone) {
+            font-size: 10px;
+            line-height: 12px;
+            margin-left: 10px;
+        }
     }
 
     &__input:focus {

@@ -9,6 +9,39 @@ $navbar-item-color: #FFFFFF;
     height: 100%;
     background-color: $main-color;
     z-index: 999;
+    transition: .3s left ease;
+
+    @include landscape(phone) {
+        $size: 320px;
+        position: absolute;
+        width: $size;
+        left: -$size;
+    }
+
+    &_show {
+        transition: .3s left ease;
+
+        @include landscape(phone) {
+            left: 0;
+        }
+    }
+    &__blackover {
+        position: absolute;
+        top: 0; left: 0;
+        opacity: 0;
+        background-color: transparentize($main-color, 0.7);
+        transition: .5s opacity ease;
+    }
+
+    &_show &__blackover {
+
+        @include landscape(phone) {
+            width: 100vw;
+            height: 100vh;
+            opacity: 1;
+            transition: .5s opacity ease;
+        }
+    }
 
     &-user {
         position: relative;
@@ -16,14 +49,24 @@ $navbar-item-color: #FFFFFF;
         align-items: center;
         margin-bottom: 50px;
 
+        @include landscape(phone) {
+            margin-bottom: 30px;
+        }
+
         &__image {
             position: relative;
-            min-width: 75px;
-            min-height: 75px;
+            width: 75px;
+            height: 75px;
             background-color: #EDEDED;
             border-radius: 100%;
             border: 3px solid #FFFFFF;
             overflow: hidden;
+
+            @include landscape(phone) {
+                width: 50px;
+                height: 50px;
+                border: 2px solid #FFF;
+            }
 
             img {
                 position: absolute;
@@ -33,15 +76,20 @@ $navbar-item-color: #FFFFFF;
                 height: 100%;
                 object-fit: cover;
             }
+        }
+        &__image_empty {
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-            &_default {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                img {
-                    position: static;
-                    width: 60px;
-                    height: 60px;
+            img {
+                position: static;
+                width: 60px;
+                height: 60px;
+
+                @include landscape(phone) {
+                    width: 30px;
+                    height: 30px;
                 }
             }
         }
@@ -59,11 +107,20 @@ $navbar-item-color: #FFFFFF;
         &__name {
             font-size: 18px;
             margin-bottom: 5px;
+
+            @include landscape(phone) {
+                font-size: 14px;
+            }
         }
 
         &__attr {
+            display: block;
             font-size: 14px;
             color: #CCD0FF;
+
+            @include landscape(phone) {
+                font-size: 10px;
+            }
         }
 
         &__link {
@@ -88,8 +145,11 @@ $navbar-item-color: #FFFFFF;
     &__item {
         min-height: 60px;
         border-radius: 25px 0 0 25px;
-        // padding: 15px 25px;
         margin-bottom: 5px;
+
+        @include landscape(phone) {
+            min-height: 50px;
+        }
     }
 
     &__item:hover {
@@ -126,6 +186,11 @@ $navbar-item-color: #FFFFFF;
         margin-left: 25px;
         overflow: hidden;
 
+        @include landscape(phone) {
+            width: 25px;
+            height: 25px;
+        }
+
         img {
             position: absolute;
             top: 0;
@@ -142,5 +207,9 @@ $navbar-item-color: #FFFFFF;
         font-weight: 500;
         color: $w-font-color;
         margin-left: 30px;
+
+        @include landscape(phone) {
+            font-size: 16px;
+        }
     }
 }
