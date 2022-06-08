@@ -1,23 +1,25 @@
 import { useEffect, useState } from "react"
 
 
-export const useFootbar = (ref) => {
+export const useFootbar = () => {
     const [ currentElem, setCurrentElem ] = useState(null);
+    const [ initialRef, setInitialRef ] = useState(null);
 
     useEffect(() => {
-        if(ref) setCurrentElem(ref.current);
-
-        return () => setCurrentElem(null);
-    }, [ref.current]);
+        console.log(initialRef)
+        if(initialRef) setCurrentElem(initialRef.current);
+    }, [initialRef]);
     
     const footbarHandler = () => {
-        currentElem.className = `${currentElem.className} ${currentElem.className}_show`;
+        console.log(currentElem)
+        let classNames = currentElem.className;
+        currentElem.className = `${classNames} ${classNames}_show`;
     }
 
     const footbarClose = () => {
 
     }
 
-    return { footbarHandler, footbarClose }
+    return { footbarHandler, footbarClose, setInitialRef }
 
 }

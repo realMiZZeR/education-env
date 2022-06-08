@@ -21,7 +21,6 @@ const TaskTeacher = () => {
                         <h3 className='task-files__heading'>Прикреплённые файлы:</h3>
                         <ul className='task-files__list'>
                             { data.reply.files.map(file => {
-                                {console.log(file)}
                                 return (
                                     <li key={file.id} className='task-files__item'>
                                         <a href={`${baseUrl}/${file.src}`} className='task-files__link link' download>

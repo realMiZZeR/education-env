@@ -1,6 +1,10 @@
 .footerbar {
+    display: none;
     left: 0; bottom: 0;
 
+    &_show {
+        display: block;
+    }
     &__blackover {
         position: absolute;
         top: 0; left: 0;

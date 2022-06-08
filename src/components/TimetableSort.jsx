@@ -10,8 +10,6 @@ import Search from './Search';
 
 const TimetableSort = forwardRef((props, ref) => {
 
-    console.log(props)
-
     const { user } = useAuth();
 
     const { isTeacher, setIsTeacher } = useTimetable();

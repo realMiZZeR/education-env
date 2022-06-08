@@ -1,9 +1,16 @@
-import React, { useEffect, forwardRef, cloneElement, Children } from 'react';
+import React, { useEffect, cloneElement, Children, useRef } from 'react';
 import { useFootbar } from '../hooks/useFootbar';
 
-const Footbar = forwardRef(({children}, ref) => {
+const Footbar = ({children}) => {
 
-    const { footbarClose } = useFootbar();
+    const footbarRef = useRef();
+    const { footbarClose, setInitialRef } = useFootbar();
+
+    useEffect(() => {
+        setInitialRef(footbarRef);
+
+        return () => setInitialRef(null);
+    }, []);
 
     const StyledChildren = () => {
         return (
@@ -14,11 +21,11 @@ const Footbar = forwardRef(({children}, ref) => {
     }
     
     return (
-        <div ref={ref} className='footerbar'>
+        <div ref={footbarRef} className='footerbar'>
             <div className='footerbar__blackover' />
             <StyledChildren />
         </div>
     );
-});
+}
 
 export default Footbar;

@@ -85,9 +85,7 @@ const Timetable = (props) => {
             elem.className = classNames;
         }, 3000);
     }
-
-    const footbarRef = useRef();
-    const { footbarHandler } = useFootbar(footbarRef);
+    const { footbarHandler } = useFootbar();
     const { width } = useWindowResolution();
 
     return (
@@ -98,7 +96,7 @@ const Timetable = (props) => {
             <div className='timetable-wrapper'>
                 <TimetableComponent refHandler={timetableRefHandler} footbarRefHandler={footbarHandler} />
                 {width <= 376 ? (
-                    <Footbar ref={footbarRef}>
+                    <Footbar>
                         <TimetableSort ref={sortRef} />
                     </Footbar>
                 ) : (
