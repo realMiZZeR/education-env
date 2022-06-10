@@ -16,6 +16,7 @@ import { ModalProvider } from '../hoc/ModalProvider';
 
 // images
 import hamburgerIcon from '../assets/images/icons/hamburger.svg';
+import LeaderboardPage from '../pages/LeaderboardPage';
 
 // pages
 const Auth = React.lazy(() => import('../pages/Auth'));
@@ -85,6 +86,11 @@ export const MainContent = ({refHandler}) => {
                                 <Route path='/tasks/:id' element={
                                     <AuthController>
                                         <TaskInfoPage title="Задание" />
+                                    </AuthController>
+                                } />
+                                <Route path='/tasks/leaderboard/:id' element={
+                                    <AuthController>
+                                        <LeaderboardPage title="Список лидеров" />
                                     </AuthController>
                                 } />
                                 <Route path='/journal' element={

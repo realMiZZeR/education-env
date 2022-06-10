@@ -6,7 +6,7 @@ const TaskAttribute = ({ title, image, value }) => {
             <h4 className='task-attributes__heading'>{ title }:</h4>
             <div className='task-attributes__value'>
                 <div className='task-attributes__image'>
-                    <img src={image} />
+                    <img src={image} alt={title} />
                 </div>
                 <p className='task-attributes__text' title={value}>{ value }</p>
             </div>

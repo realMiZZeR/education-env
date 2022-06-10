@@ -12,6 +12,7 @@ import studyActiveIcon from '../images/icons/disciplines/study_active.svg';
 // isAlternative means blue icons
 const getDisciplineImage = ({type, isActive = false, isAlternative = false}) => {
 
+    // for black or white icon (ex., tasks page)
     if(isActive) {
         switch(type) {
             case 1:
@@ -31,6 +32,7 @@ const getDisciplineImage = ({type, isActive = false, isAlternative = false}) => 
                 return technologyAlternativeIcon;
         } 
     }
+    // --------------------------------------------
     
     switch(type) {
         case 1:

@@ -10,11 +10,12 @@ import LoadingPage from './LoadingPage';
 import createTaskIcon from '../assets/images/icons/create_task.png';
 import getDisciplineImage from '../assets/js/getDisciplineImage';
 
-const FullDisciplinesList = () => {
+// hook must contains setSelectedDiscipline function
+const FullDisciplinesList = ({ hook }) => {
 
     const { user } = useAuth();
 
-    const { setSelectedDiscipline } = useTasks();
+    const { setSelectedDiscipline } = hook();
 
     const [ disciplines, setDisciplines ] = useState([]);
     const [ isActive, setIsActive ] = useState(null);
@@ -31,10 +32,7 @@ const FullDisciplinesList = () => {
                         token: user.token
                     }
                 }
-            ).then(response => {
-                setDisciplines(response.data);
-                console.log(response)
-            }
+            ).then(response => setDisciplines(response.data)
             ).catch(error => console.dir(error)
             ).finally(() => setFetchIsLoading(false));
         }

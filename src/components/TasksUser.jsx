@@ -49,14 +49,12 @@ const TasksUser = ({user}) => {
     return (
         <>
             <header className='tasks-header'>
-                <>
-                    <SwitchButton handler={switchHandler} value={showUncompleted}>
-                        <span className='switch__title'>Показать невыполненные</span>
-                    </SwitchButton>
-                    <Link to='' className='tasks-header__link link'>
-                        Список лидеров
-                    </Link>
-                </>
+                <SwitchButton handler={switchHandler} value={showUncompleted}>
+                    <span className='switch__title'>Показать невыполненные</span>
+                </SwitchButton>
+                <Link to={`/tasks/leaderboard/${selectedDiscipline}`} className='tasks-header__link link'>
+                    Список лидеров
+                </Link>
             </header>
 
             <InfiniteScroll

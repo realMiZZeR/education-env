@@ -17,10 +17,10 @@ const Journal = (props) => {
     }, [props.title]);
 
     return (
-        <>
+        <article className='journal'>
             {user.role === 0 && <StudentJournal />}
             {user.role === 1 && <TeacherJournal />}
-        </>
+        </article>
     )
 }
 

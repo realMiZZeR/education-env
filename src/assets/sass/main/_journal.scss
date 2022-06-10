@@ -1,0 +1,25 @@
+.journal {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    &-main {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        gap: 30px;
+    }
+
+    &-tasks {
+        width: 100%;
+        height: 100%;
+        background-color: $block-color;
+        border-radius: $block-brd-radius;
+        box-shadow: $block-shadow;
+        padding: 30px;
+    }
+
+    &-footer {
+        
+    }
+}

@@ -21,34 +21,12 @@
         text-decoration: none;
     }
     &-list {
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
 
-        &__previous,
-        &__next {
-            position: relative;
-            min-width: 30px;
-            min-height: 40px;
-            background-image: url('/assets/images/icons/arrow.svg');
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0.5;
-            cursor: pointer;
-        }
-        // &__previuos {
-        // }
-        // &__next {
-        //     transform: rotate(180deg);
-        // }
         &__item {
-            display: flex!important;
+            display: flex;
             align-items: center;
-            width: 380px!important;
-            height: 175px;
+            width: 380px;
+            height: 175px!important;
             background-color: $block-color;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);

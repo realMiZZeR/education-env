@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, A11y } from 'swiper';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
 
 import calendarIcon from '../assets/images/icons/calendar.svg';
 import calendarActiveIcon from '../assets/images/icons/calendar_active.svg';
