@@ -5,6 +5,10 @@ import { useJournal } from '../hooks/useJournal';
 import placeIcon from '../assets/images/icons/profile/place.svg';
 import sumIcon from '../assets/images/icons/sum.png';
 import avgIcon from '../assets/images/icons/profile/avg_mark.svg';
+import taskIcon from '../assets/images/icons/completed_tasks.png';
+import publishedIcon from '../assets/images/icons/tasks/published.png';
+import deadlineIcon from '../assets/images/icons/tasks/deadline.png';
+import starIcon from '../assets/images/icons/tasks/score.png';
 
 import FullDisciplinesList from './FullDisciplinesList';
 import getTypeTask from '../assets/js/getTypeTask';
@@ -15,6 +19,12 @@ const StudentJournal = () => {
         {id: 1, title: 'задание', published: '23.02.2022', deadline: '24.02.2022', avg: '5', type: 1},
         {id: 2, title: 'задание', published: '23.02.2022', deadline: '24.02.2022', avg: '5', type: 1},
         {id: 3, title: 'задание', published: '23.02.2022', deadline: '24.02.2022', avg: '5', type: 1},
+        {id: 4, title: 'задание', published: '23.02.2022', deadline: '24.02.2022', avg: '5', type: 1},
+        {id: 5, title: 'задание', published: '23.02.2022', deadline: '24.02.2022', avg: '5', type: 1},
+        {id: 6, title: 'задание', published: '23.02.2022', deadline: '24.02.2022', avg: '5', type: 1},
+        {id: 7, title: 'задание', published: '23.02.2022', deadline: '24.02.2022', avg: '5', type: 1},
+        {id: 8, title: 'задание', published: '23.02.2022', deadline: '24.02.2022', avg: '5', type: 1},
+        {id: 9, title: 'задание', published: '23.02.2022', deadline: '24.02.2022', avg: '5', type: 1},
     ]
 
     const JournalStats = ({ image, title, value }) => {
@@ -24,7 +34,9 @@ const StudentJournal = () => {
                     <img src={image} alt={title} />
                 </div>
                 <p className='journal-stats__title'>{title}</p>
-                <h2 className='journal-stats__value'>{value}</h2>
+                <h2 className='journal-stats__value'>
+                    <span>{value}</span>
+                </h2>
             </div>
         );
     }
@@ -33,21 +45,23 @@ const StudentJournal = () => {
         <JournalProvider>
             <main className='journal-main'>
                 <table className='journal-tasks-wrapper'>
-                    <tbody className='journal-tasks'>
-                        <tr className='journal-tasks__heading'>
+                    <thead className='journal-tasks-head'>
+                        <tr className='journal-tasks-head__item'>
                             <th className='journal-tasks__task'>
-                                <img src='' alt='Задание' />
+                                <img src={taskIcon} alt='Задание' />
                             </th>
                             <th className='journal-tasks__published'>
-                                <img src='' alt='Опубликовано' />
+                                <img src={publishedIcon} alt='Опубликовано' />
                             </th>
                             <th className='journal-tasks__deadline'>
-                                <img src='' alt='Срок сдачи' />
+                                <img src={deadlineIcon} alt='Срок сдачи' />
                             </th>
                             <th className='journal-tasks__avg'>
-                                <img src='' alt='Средняя оценка' />
+                                <img src={starIcon} alt='Средняя оценка' />
                             </th>
                         </tr>
+                    </thead>
+                    <tbody className='journal-tasks'>
                         {tasks.map(task => {
                             return (
                                 <tr className='journal-tasks__item'>

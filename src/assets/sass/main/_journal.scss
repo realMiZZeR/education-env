@@ -1,5 +1,8 @@
 .journal {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     width: 100%;
     height: 100%;
 
@@ -10,16 +13,153 @@
         gap: 30px;
     }
 
+    &-tasks-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
     &-tasks {
+        position: relative;
         width: 100%;
         height: 100%;
         background-color: $block-color;
         border-radius: $block-brd-radius;
         box-shadow: $block-shadow;
         padding: 30px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+
+        &-head {
+            width: 100%;
+            padding: 0 30px;
+            margin-bottom: 15px;
+
+            &__item {
+                display: flex;
+                width: 100%;
+                align-items: center;
+            }
+        }
+        &__task {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            width: 100%;
+            height: 35px;
+
+            img {
+                width: 35px;
+                height: 35px;
+                opacity: 0.35;
+                margin: 0 auto;
+                object-fit: contain;
+            }
+        }
+        &__published,
+        &__deadline,
+        &__avg {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-basis: 200px;
+            min-height: 35px;
+
+            img {
+                margin: 0 auto;
+                max-width: 35px;
+                max-height: 35px;
+                object-fit: contain;
+                opacity: 0.35;
+            }
+        }
+        &__item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 60px;
+            flex-basis: 200px;
+        }
+        &__task {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            width: 100%;
+        }
+        &__image {
+            position: relative;
+            width: 40px;
+            height: 40px;
+
+            img {
+                position: absolute;
+                top: 0; left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+        &__title {
+            font-family: $roboto-font;
+            font-weight: 600;
+            font-size: 24px;
+            color: $font-color;
+            width: 300px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
     }
 
     &-footer {
-        
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &-stats {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        background-color: $block-color;
+        border-radius: $block-brd-radius;
+        box-shadow: $block-shadow;
+        padding: 35px 30px;
+
+        &__image {
+            position: relative;
+            width: 50px;
+            height: 50px;
+
+            img {
+                position: absolute;
+                top: 0; left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                opacity: 0.35;
+            }
+        }
+        &__title {
+            font-family: $roboto-font;
+            font-family: 500;
+            font-size: 18px;
+            line-height: 22px;
+            color: $half-font-color;
+        }
+        &__value {
+            position: relative;
+            font-family: $montserrat-font;
+            font-weight: 800;
+            font-size: 36px;
+            color: $font-color;
+
+            span::after {
+                content: '';
+                position: absolute;
+                left: 9px; bottom: 0;
+                width: 100%;
+                height: 9px;
+                
+            }
+        }
     }
 }
