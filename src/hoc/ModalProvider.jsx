@@ -1,15 +1,16 @@
 import React, { useState, useEffect, createContext } from 'react';
 
-import { useWebSocket } from '../hooks/useWebSocket';
+import { useAuth } from '../hooks/useAuth';
 
 import InteractiveModal from '../components/InteractiveModal';
 import ModalNotification from '../components/ModalNotification';
+import MessageNotification from '../components/MessageNotification';
 
 export const ModalMessages = createContext(null);
 
 export const ModalProvider = ({ children }) => {
 
-    const { messages } = useWebSocket();
+    const websocket = useAuth();
 
     const [ notifications, setNotifications ] = useState([]);
     const [ modal, setModal ] = useState(null);
@@ -33,6 +34,20 @@ export const ModalProvider = ({ children }) => {
         }
     }, [notifications]);
 
+    // show message modal from websocket
+    useEffect(() => {
+        if(websocket.messages.isYou) return;
+
+        setNotifications([...notifications, {
+            type: 'MESSAGE',
+            userImage: websocket.messages.image,
+            title: websocket.messages.title,
+            messasge: websocket.messages.message
+        }]);
+    }, [websocket.messages]);
+    // ------------------------
+
+    // interactive modal
     const [ interactiveModal, setInteractiveModal ] = useState({
         title: '',
         buttonImage: null,
@@ -42,6 +57,7 @@ export const ModalProvider = ({ children }) => {
     });
 
     const [ interactiveModalValues, setInteractiveModalValues ] = useState(null);
+    // ------------------------
 
     const value = {
         modal,
@@ -60,6 +76,16 @@ export const ModalProvider = ({ children }) => {
             {/* modal window in a right bottom side  */}
             <div className='modal-wrapper'>
             {notifications.length > 0 && notifications.map((modal, index) => {
+                if(modal.type === 'MESSAGE') {
+                    return (
+                        <MessageNotification
+                            key={index}
+                            userImage={modal.userImage}
+                            title={modal.title}
+                            message={modal.message}
+                        />
+                    )
+                }
                 return (
                     <ModalNotification
                         key={index}

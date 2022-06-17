@@ -21,6 +21,8 @@ const getDisciplineImage = ({type, isActive = false, isAlternative = false}) => 
                 return studyActiveIcon;
             case 3:
                 return technologyActiveIcon;
+            default:
+                return 'getDisciplineImage hasnt type of image';
         } 
     } else if(isAlternative) {
         switch(type) {
@@ -30,6 +32,8 @@ const getDisciplineImage = ({type, isActive = false, isAlternative = false}) => 
                 return studyAlternativeIcon;
             case 3:
                 return technologyAlternativeIcon;
+            default:
+                return 'getDisciplineImage hasnt type of image';
         } 
     }
     // --------------------------------------------
@@ -41,6 +45,8 @@ const getDisciplineImage = ({type, isActive = false, isAlternative = false}) => 
             return studyIcon;
         case 3:
             return technologyIcon;
+        default:
+            return 'getDisciplineImage hasnt type of image';
     }
 }
 

@@ -1,33 +1,61 @@
-import React from 'react';
+import axios from 'axios';
+import React, {useEffect, useState} from 'react';
 import { useLocation } from 'react-router-dom';
 
-import isEmptyUserImage from '../assets/js/isEmptyUserImage';
-import Search from './Search';
+import { useAuth } from '../hooks/useAuth';
+import { useMessages } from '../hooks/useMessages';
 
-let messagesList = [
-    {
-        id: 1,
-        img: require('../assets/images/users/egor.jpg'),
-        name: 'Егор Мамонов',
-        lastMessage: 'надо делать сайт :|',
-        notification: 1,
-        isOnline: true
-    },
-    {
-        id: 2,
-        img: require('../assets/images/users/karina.jpg'),
-        name: 'Щербакова Карина Алексеевна',
-        lastMessage: 'преподаватель я',
-        notification: 0,
-        isOnline: false
-    },
-];
+import isEmptyUserImage from '../assets/js/isEmptyUserImage';
+import LoadingPage from '../components/LoadingPage';
+import Search from './Search';
 
 const defaultIcon = 'http://server.selestia.ru/userAvatar/standartUser.png';
 
 const Messages = () => {
     const location = useLocation();
     let isHome = (location.pathname === '/home');
+
+    const [ dialogueMessages, setDialogueMessages ] = useState([]);
+    const [ dialogueIsLoading, setDialogueIsLoading ] = useState(null);
+
+    const { user } = useAuth();
+    const { websocket } = useAuth();
+    const { currentDialogue, setCurrentDialogue } = useMessages() || {};
+
+    useEffect(() => {
+        const fetchDialogueList = async () => {
+            setDialogueIsLoading(true);
+            await axios.get(
+                `http://server.selestia.ru/api/user/getAllDialog`,
+                {
+                    headers: {token: user.token}
+                }
+            ).then(response => setDialogueMessages(response.data)
+            ).catch(error => console.dir(error)
+            ).finally(() => setDialogueIsLoading(false));
+        }
+        
+        if(true) fetchDialogueList();
+    }, [websocket.messages, websocket.hasConnect, user.token]);
+
+    const selectDialogue = (id) => {
+        if(isHome) {
+            return;
+        }
+
+        setCurrentDialogue(id); 
+    }
+
+    // dialogueMessages is array which contains object like
+    // idDialog             : int
+    // image                : string | null
+    // isPersonal           : int
+    // isYou                : int
+    // messageAuthorImage   : string | null
+    // messageAuthorName     : string | null
+    // nameDialog           : string | null
+    // textMessage          : string | null
+    // dateMessage          : date
 
     return (
         <article className='messages'>
@@ -36,35 +64,40 @@ const Messages = () => {
                 <h2 className='messages__title'>Сообщения</h2>
             </div>  
             }
-            <div className='messages-info'>
-                <Search className='search' />
-                <ul className="messages-list">
-                    {messagesList.map(item => {
-                        return (
-                            <li 
-                                className={`messages-list__item ${(item?.notification > 0) ? 'messages-list__item_active' : ''}`} 
-                                key={item.id}
-                            >
-                                <div className={`messages-list__image ${isEmptyUserImage(item.img, 'messages-list__image')}`}>
-                                    <img src={item.img ? item.img : defaultIcon} alt='Аватарка' />
-                                    {item?.isOnline &&
-                                    <span className='online' />
-                                    }
-                                </div>
-                                <div className='messages-list__user'>
-                                    <h3 className='messages-list__name'>{ item?.name }</h3>
-                                    <p className='messages-list__lastmsg'>{ item?.lastMessage }</p>
-                                </div>
-                                {item?.notification > 0 &&
-                                    <div className='messages-list__notification'>
-                                        <span>{ item?.notification }</span>
+            {dialogueIsLoading ? (
+                <LoadingPage />
+            ) : (
+                <div className='messages-info'>
+                    <Search className='search' />
+                    <ul className="messages-list">
+                        {dialogueMessages.map(dialogue => {
+                            return (
+                                <li 
+                                    className={`messages-list__item ${(dialogue?.notification > 0 || currentDialogue === dialogue.idDialog) ? 'messages-list__item_active' : ''}`} 
+                                    key={dialogue.idDialog}
+                                    onClick={() => selectDialogue(dialogue.idDialog)}
+                                >
+                                    <div className={`messages-list__image ${isEmptyUserImage(dialogue.image, 'messages-list__image')}`}>
+                                        <img src={dialogue.image ? dialogue.image : defaultIcon} alt='Аватарка' />
+                                        {dialogue?.isOnline &&
+                                        <span className='online' />
+                                        }
                                     </div>
-                                }
-                            </li>
-                        );
-                    })}
-                </ul>
-            </div>
+                                    <div className='messages-list__user'>
+                                        <h3 className='messages-list__name'>{ dialogue.nameDialog }</h3>
+                                        <p className='messages-list__lastmsg'>{ dialogue.textMessage }</p>
+                                    </div>
+                                    {dialogue?.notification > 0 &&
+                                        <div className='messages-list__notification'>
+                                            <span>{ dialogue?.notification }</span>
+                                        </div>
+                                    }
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </div>
+            )}
         </article>
     );
 }

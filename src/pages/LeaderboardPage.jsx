@@ -55,6 +55,7 @@ const LeaderboardPage = (props) => {
         }
 
         if(idDiscipline) fetchLeaderboard();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [idDiscipline]);
 
     return (

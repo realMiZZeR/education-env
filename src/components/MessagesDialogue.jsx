@@ -1,120 +1,213 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 import { useAuth } from '../hooks/useAuth';
-import { useWebSocket } from '../hooks/useWebSocket';
+import { useMessages } from '../hooks/useMessages';
+
+import isEmptyUserImage from '../assets/js/isEmptyUserImage';
 
 import attachIcon from '../assets/images/icons/attach_file.svg';
 import sendIcon from '../assets/images/icons/send.svg';
 import bellIcon from '../assets/images/icons/bell.png';
 import filesIcon from '../assets/images/icons/files.png';
-import isEmptyUserImage from '../assets/js/isEmptyUserImage';
+import emptyMessages from '../assets/images/icons/no_messages.png';
+import chatSelect from '../assets/images/icons/chat_select.png';
 
 const defaultIcon = 'http://server.selestia.ru/userAvatar/standartUser.png';
 
 const MessagesDialogue = () => {
 
-    const { messages, sendMessage } = useWebSocket();
+    const { websocket } = useAuth();
+    const { user } = useAuth();
+    const { currentDialogue } = useMessages();
+
+    const [ dialogue, setDialogue ] = useState([]);
 
     useEffect(() => {
-        console.log(messages);
-    }, [messages]);
+        const fetchDialogue = async () => {
+            await axios.get(
+                `http://server.selestia.ru/api/users/dialogInfo`,
+                {
+                    headers: {token: user.token},
+                    params: {idDialog: currentDialogue}
+                }
+            ).then(response => setDialogue(response.data)
+            ).catch(error => console.dir(error)
+            ).finally(() => {});
+        }
 
-    const messageFields = {
+        if(currentDialogue) fetchDialogue();
+    }, [websocket.messages, currentDialogue, user.token]);
+
+    const userMessageFields = {
         text: '',
         files: []
     }
 
-    const [ message, setMessage ] = useState(messageFields);
+    const [ userMessage, setUserMessage ] = useState(userMessageFields);
 
     const dialogueChangeHandler = (e) => {
         const { name, value } = e.target;
 
-        setMessage({
-            ...message,
+        setUserMessage({
+            ...userMessage,
             [name]: value
         });
     }
 
     const dialogueFilesHandler = (e) => {
-        setMessage({
-            ...message,
+        setUserMessage({
+            ...userMessage,
             files: [
                 ...e.target.files
             ]
         });
     }
 
-    const dialogueSubmitHandler = (e) => {
+    // send message
+    const dialogueSubmitHandler = async (e) => {
         e.preventDefault();
+        if(!userMessage) return;
 
-        sendMessage('отправил сообщение');
+        await axios.post(
+            'http://server.selestia.ru/api/sendMessage',
+            {
+                idDialog: currentDialogue,
+                message: userMessage.text
+            },
+            {
+                headers: {token: user.token}
+            }
+        ).then(response => console.log(response)
+        ).catch(error => console.dir(error));
+    }
+
+    // show control buttons under a message
+    const showMessageControls = (e) => {
+        let elem = e.currentTarget;
+        let classNames = elem.className;
+        if(elem.classList.contains('message_controls')) {
+            return elem.classList.remove('message_controls');
+        }
+        elem.className = `${classNames} message_controls`
+    }
+
+    // edit message
+    const editMessageHandler = (mes) => {
+        setUserMessage({
+            ...userMessage,
+            text: mes
+        });
+    }
+
+    // delete message
+    const deleteMessageHandler = async (id) => {
+
     }
 
     return (
         <article className='dialogue'>
-            <header className="dialogue-header">
-                <div className="dialogue-header__grouping">
-                    <div className={`dialogue-header__image ${isEmptyUserImage(null, 'dialogue-header__image_empty')}`}>
-                        <img src={null ? '' : defaultIcon} alt='Аватарка' />
-                    </div>
-                    <h3 className="dialogue-header__fullname" title=''>Егор Мамонов</h3>
-                </div>
-                <div className="dialogue-header__grouping">
-                    <button title='Прикреплённые файлы' type='button' className='dialogue-header__button button'>
-                        <img src={filesIcon} alt='Файлы' />
-                    </button>
-                    <button title='Отключить оповещения' type='button' className='dialogue-header__button button'>
-                        <img src={bellIcon} alt='Оповещения' />
-                    </button>
-                </div>
-            </header>
-            <main className="dialogue-main">
-                <div className="message">
-                    <div className="message-info">
-                        <div className={`message-info__image ${isEmptyUserImage(null, 'message-info__image_empty')}`}>
-                            <img src={null ? '' : defaultIcon} alt='' />
+        {currentDialogue ? (
+            <>
+                <header className="dialogue-header">
+                    <div className="dialogue-header__grouping">
+                        <div className={`dialogue-header__image ${isEmptyUserImage(null, 'dialogue-header__image_empty')}`}>
+                            <img src={dialogue.imageDialog ? dialogue.imageDialog : defaultIcon} alt='Аватарка' />
                         </div>
-                        <small className="message-info__time">15:49</small>
+                        <h3 className="dialogue-header__fullname" title={dialogue.nameDialog}>{dialogue.nameDialog}</h3>
                     </div>
-                    <div className="message-content">
-                        <h3 className="message-content__user">Егор Мамонов</h3>
-                        <p className="message-content__text">ывафывыфвыф</p>
+                    <div className="dialogue-header__grouping">
+                        <button title='Прикреплённые файлы' type='button' className='dialogue-header__button button'>
+                            <img src={filesIcon} alt='Файлы' />
+                        </button>
+                        <button title='Отключить оповещения' type='button' className='dialogue-header__button button'>
+                            <img src={bellIcon} alt='Оповещения' />
+                        </button>
                     </div>
-                </div>
-                <div className="message message_you">
-                    <div className="message-info">
-                        <div className={`message-info__image ${isEmptyUserImage(null, 'message-info__image_empty')}`}>
-                            <img src={null ? '' : defaultIcon} alt='' />
+                </header>
+                <main className='dialogue-main'>
+                {(dialogue.messages && dialogue.messages.length > 0) ? (
+                    <>
+                    {dialogue.messages.map(mes => {
+                        return (
+                            <div 
+                                key={mes.id}
+                                className={`message ${mes.isYou ? 'message_you' : ''}`}
+                                onClick={showMessageControls}
+                            >
+                                <div className='message-info'>
+                                    <div className={`message-info__image ${isEmptyUserImage(mes.author.image, 'message-info__image_empty')}`}>
+                                        <img src={mes.author.image ? mes.author.image : defaultIcon} alt='Аватарка' />
+                                    </div>
+                                    <small className='message-info__time'>{mes.time}</small>
+                                </div>
+                                <div className='message-content'>
+                                    <h3 className="message-content__user">{mes.author.fio}</h3>
+                                    <p className='message-content__text'>{mes.textMessage}</p>
+                                </div>
+                                <div className='message-controls'>
+                                    <button 
+                                        className='message-controls__button button'
+                                        onClick={() => editMessageHandler(mes.textMessage)}
+                                    >
+                                        <span>Редактировать</span>
+                                    </button>
+                                    <button 
+                                        className='message-controls__button button'
+                                        onClick={() => deleteMessageHandler(mes.id)}
+                                    >
+                                        <span>Удалить</span>
+                                    </button>
+                                </div>
+                            </div>
+                        )
+                    })} 
+                    </>
+                ) : (
+                    <div className='dialogue-main-empty'>
+                        <div className='dialogue-main-empty__image'>
+                            <img src={emptyMessages} alt=''/>
                         </div>
-                        <small className="message-info__time">15:49</small>
+                        <p className='dialogue-main-empty__description'>
+                            Здесь пока что пусто...<br />
+                            Но вы можете <span>начать</span> диалог первым!
+                        </p>
                     </div>
-                    <div className="message-content">
-                        <h3 className="message-content__user">Егор Мамонов</h3>
-                        <p className="message-content__text">ывафывыфвыф</p>
-                    </div>
+                )}
+                </main>
+                <form onSubmit={dialogueSubmitHandler} encType='multipart/form-data' className="dialogue-form">
+                    <label htmlFor='files' className='dialogue-form__attach' style={{cursor: 'pointer'}}>
+                        <img src={attachIcon} alt='Прикрепить файл' />
+                        <input 
+                            type='file' 
+                            name='files' 
+                            onChange={dialogueFilesHandler} 
+                            multiple
+                        />
+                    </label>
+                        <textarea 
+                            type='text' 
+                            name='text'
+                            onChange={dialogueChangeHandler}
+                            className='dialogue-form__input input' 
+                        />
+                    <button type='submit' className='dialogue-form__submit button'>
+                        <img src={sendIcon} alt='Отправить '/>
+                    </button>
+                </form>
+            </>
+        ) : (
+            <div className='dialogue-empty'>
+                <div className='dialogue-empty__image'>
+                    <img src={chatSelect} alt=''/>
                 </div>
-            </main>
-            <form onSubmit={dialogueSubmitHandler} encType='multipart/form-data' className="dialogue-form">
-                <label htmlFor='files' className='dialogue-form__attach' style={{cursor: 'pointer'}}>
-                    <img src={attachIcon} alt='Прикрепить файл' />
-                    <input 
-                        type='file' 
-                        name='files' 
-                        onChange={dialogueFilesHandler} 
-                        multiple
-                    />
-                </label>
-                    <input 
-                        type='text' 
-                        name='message'
-                        onChange={dialogueChangeHandler}
-                        className='dialogue-form__input input' 
-                        placeholder='Напишите что-нибудь...'
-                    />
-                <button type='submit' className='dialogue-form__submit button'>
-                    <img src={sendIcon} alt='Отправить '/>
-                </button>
-            </form>
+                <p className='dialogue-empty__description'>
+                    Выберите собеседника из списка<br/>
+                    или найдите <span>нового</span>
+                </p>
+            </div>
+        )}
+            
         </article>
     );
 }

@@ -7,7 +7,7 @@ export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
 
-    const { setToken } = useWebSocket('ws://websocket.selestia.ru');
+    const websocket = useWebSocket('ws://websocket.selestia.ru');
 
     const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
                     });
 
                     // websocket
-                    setToken(token);
+                    websocket.setToken(token);
 
                     // remember me
                     if(user.rememberPassword) {
@@ -82,7 +82,7 @@ export const AuthProvider = ({ children }) => {
                     });
 
                     // websocket
-                    setToken(token);
+                    websocket.setToken(token);
     
                     navigate('/home', {replace: true});
                 }).catch(error => console.dir(error));
@@ -100,12 +100,12 @@ export const AuthProvider = ({ children }) => {
             localStorage.removeItem('token');
         }
         // websocket
-        setToken(null);
+        websocket.setToken(null);
 
         callback();
     }
 
-    const value = {user, signIn, signOut, isAdmin}
+    const value = {user, signIn, signOut, isAdmin, websocket}
 
     return <AuthContext.Provider value={value}>
         { children }

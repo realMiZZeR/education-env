@@ -1,8 +1,6 @@
 import { useContext } from "react";
 import { MessagesContext } from "../hoc/MessagesProvider";
 
-function useMessages() {
+export const useMessages = () => {
     return useContext(MessagesContext);
 }
-
-export default useMessages;

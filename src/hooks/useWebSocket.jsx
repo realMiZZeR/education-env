@@ -14,14 +14,15 @@ export const useWebSocket = (url = 'ws://websocket.selestia.ru') => {
     const [ error, setError ] = useState(null);
 
     useEffect(() => {
-        if(token) socket.current = new WebSocket(url);
-    }, [url, token])
+        if(token && !hasConnect) socket.current = new WebSocket(url);
+    }, [url, token, hasConnect]) 
 
     // websocket
     // connect, onmessage, onclose, onerror
     function connect() {
+        // onopen
         socket.current.onopen = () => {
-            setHasConnect(true);
+            setHasConnect(true); 
     
             const message = {
                 method: method.setToken,
@@ -35,45 +36,28 @@ export const useWebSocket = (url = 'ws://websocket.selestia.ru') => {
             }
         }
     
+        // onmessage
         socket.current.onmessage = (response) => {
             const data = JSON.parse(response.data);
-            setMessages(data)
+            setMessages(data);
         }
     
+        // onclose
         socket.current.onclose = () => {
             setError('Server has been closed!');
             setHasConnect(false);
-    
-            // reconnect
-            setTimeout(() => {
-                console.log('Reconnected');
-                connect();
-            }, 1000);
         }
     
+        // onerror
         socket.current.onerror = () => {
             setError('Server gets an error');
-            // setTimeout(() => {
-            //     connect();
-            // }, 5000);
+            setHasConnect(false);
         }
     }
 
-    // validate socket and it closing
     useEffect(() => {
-        if(socket.current === null) {
-            return;
-        }
-
-        connect();
-
-        return () => {
-            if(socket.current === null) {
-                return;
-            }
-            socket.current.close();
-        }
-    }, [socket.current]);
+        if(socket.current) connect();
+    }, [token, socket.current]);
 
     const sendMessage = (message) => {
         socket.current.send(JSON.stringify(message));
@@ -87,13 +71,13 @@ export const useWebSocket = (url = 'ws://websocket.selestia.ru') => {
     // avaiable methods and variables
     // of the hook
     const context = {
+        token: token,
         setToken: setToken,
         socket: socket,
         error: error,
         hasConnect: hasConnect,
         messages: messages,
         sendMessage: sendMessage,
-        messages: messages,
         closeWebsocket: closeWebsocket,
     }
 

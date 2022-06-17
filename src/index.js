@@ -5,7 +5,6 @@ import reportWebVitals from './reportWebVitals';
 import './assets/sass/style.scss';
 import { BrowserRouter } from 'react-router-dom';
 
-// privet! :)
 const container = document.getElementById('root');
 
 const root = ReactDOM.createRoot(container);

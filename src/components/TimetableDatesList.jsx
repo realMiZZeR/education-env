@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, A11y } from 'swiper';
@@ -16,23 +16,9 @@ import getDayOfWeek from '../assets/js/getDayOfWeek';
 import { useTimetable } from '../hooks/useTimetable';
 import { useWindowResolution } from '../hooks/useWindowResolution';
 
-const DateItem = ({date}) => {
-    const { selectedDate } = useTimetable();
-
-    return (
-        <div className={`timetable-dates-list__item ${(date === selectedDate) ? 'timetable-dates-list__item_current' : ''}`}>
-            <div className='timetable-dates-list__image'>
-                <img src={(date === selectedDate) ? calendarActiveIcon : calendarIcon} alt='Дата' />
-            </div>
-            <p className='timetable-dates-list__date'>{ date }</p>
-            <small className='timetable-dates-list__dayofweek'>{ getDayOfWeek(date) }</small>
-        </div>
-    );
-}
-
 const TimetableDatesList = React.forwardRef(({ datesList }, ref) => {
 
-    const { width, height } = useWindowResolution();
+    const { width } = useWindowResolution();
     const { selectedDate, setSelectedDate } = useTimetable(); 
 
     const itemClickHandler = (date) => {

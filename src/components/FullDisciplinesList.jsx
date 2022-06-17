@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { useTasks } from '../hooks/useTasks';
 
 import Search from './Search';
 import LoadingPage from './LoadingPage';
@@ -39,7 +38,7 @@ const FullDisciplinesList = ({ hook }) => {
         // get disciplines for teacher
         const fetchTeacher = async () => {
             setFetchIsLoading(true)
-            const result = await axios.get(
+            await axios.get(
                 `http://server.selestia.ru/api/teacher/getDisciplineTask`,
                 {
                     params: {
@@ -53,6 +52,7 @@ const FullDisciplinesList = ({ hook }) => {
 
         if(user.role === 0) fetchUser();
         if(user.role === 1) fetchTeacher();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
