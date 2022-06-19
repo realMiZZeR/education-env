@@ -62,6 +62,13 @@ const CreateTaskAside = () => {
         });
     }
 
+    const selectDisciplineHandler = (id) => {
+        setFormValues({
+            ...formValues,
+            discipline: id
+        })
+    }
+
     return (
         <aside className='create-form__aside'>
             <h2 className='create-form__heading'>&nbsp;</h2>
@@ -100,7 +107,7 @@ const CreateTaskAside = () => {
                         <span>До</span>
                     </label>
                 </div>
-                <DisciplinesList />
+                <DisciplinesList handler={selectDisciplineHandler} value={formValues.discipline} />
             </div>
             <button type='submit' className='create-form-button button'>
                 <div className='create-form-button__image'>

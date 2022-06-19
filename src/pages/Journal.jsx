@@ -6,6 +6,7 @@ import TeacherJournal from '../components/TeacherJournal';
 // functions
 import updateTitle from '../assets/js/updateTitle';
 import { useAuth } from '../hooks/useAuth';
+import { JournalProvider } from '../hoc/JournalProvider';
 
 const Journal = (props) => {
 
@@ -18,8 +19,10 @@ const Journal = (props) => {
 
     return (
         <article className='journal'>
+            <JournalProvider>
             {user.role === 0 && <StudentJournal />}
             {user.role === 1 && <TeacherJournal />}
+            </JournalProvider>
         </article>
     )
 }

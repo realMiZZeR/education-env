@@ -23,7 +23,7 @@ const TimetableSort = forwardRef((props, ref) => {
     }
 
     return (
-        <article ref={ref} className={`timetable-sort ${props?.classes}`}>
+        <article ref={ref} className={`timetable-sort ${props?.classes ? props?.classes : ''}`}>
             <SwitchButton handler={teacherChangeHandler} value={isTeacher} >
                 <p className='switch__title'>
                     Расписание для { isTeacher ? 'преподавателя' : 'студента' }

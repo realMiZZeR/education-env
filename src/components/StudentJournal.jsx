@@ -1,5 +1,4 @@
 import React from 'react';
-import { JournalProvider } from '../hoc/JournalProvider';
 import { useJournal } from '../hooks/useJournal';
 
 import placeIcon from '../assets/images/icons/profile/place.svg';
@@ -11,6 +10,7 @@ import deadlineIcon from '../assets/images/icons/tasks/deadline.png';
 import starIcon from '../assets/images/icons/tasks/score.png';
 
 import FullDisciplinesList from './FullDisciplinesList';
+import JournalStats from './JournalStats';
 import getTypeTask from '../assets/js/getTypeTask';
 
 const StudentJournal = () => {
@@ -27,22 +27,8 @@ const StudentJournal = () => {
         {id: 9, title: 'задание', published: '23.02.2022', deadline: '24.02.2022', avg: '5', type: 1},
     ]
 
-    const JournalStats = ({ image, title, value }) => {
-        return (
-            <div className='journal-stats'>
-                <div className="journal-stats__image">
-                    <img src={image} alt={title} />
-                </div>
-                <p className='journal-stats__title'>{title}</p>
-                <h2 className='journal-stats__value'>
-                    <span>{value}</span>
-                </h2>
-            </div>
-        );
-    }
-
     return (
-        <JournalProvider>
+        <>
             <main className='journal-main'>
                 <table className='journal-tasks-wrapper'>
                     <thead className='journal-tasks-head'>
@@ -65,6 +51,7 @@ const StudentJournal = () => {
                         {tasks.map(task => {
                             return (
                                 <tr className='journal-tasks__item'>
+                                    {/* add link */}
                                     <td className='journal-tasks__task'>
                                         <div className='journal-tasks__image'>
                                             <img src={getTypeTask({type: task.type})} alt='Аватарка' />
@@ -104,7 +91,7 @@ const StudentJournal = () => {
                     value={'4,63'}
                 />
             </footer>
-        </JournalProvider>
+        </>
     );
 }
 

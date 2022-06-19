@@ -9,8 +9,8 @@ import LoadingPage from './LoadingPage';
 import createTaskIcon from '../assets/images/icons/create_task.png';
 import getDisciplineImage from '../assets/js/getDisciplineImage';
 
-// hook must contains setSelectedDiscipline function
-const FullDisciplinesList = ({ hook }) => {
+// hook must contains setSelectedDiscipline state function
+const FullDisciplinesList = ({ hook }, props) => {
 
     const { user } = useAuth();
 
@@ -68,10 +68,11 @@ const FullDisciplinesList = ({ hook }) => {
     }
     
     return (
-        <aside className='tasks-aside'>
+        <aside className={`tasks-aside ${props?.classNames ? props?.classNames : ''}`}>
+            {/* create task link for teacher */}
             {user.role === 1 && <Link to='/create-task' className='tasks-aside__link link'>
                 <div className='tasks-aside__image'>
-                    <img src={createTaskIcon} alt='Логотоип создания' />
+                    <img src={createTaskIcon} alt='Логотип создания' />
                 </div>
                 <h2 className='tasks-aside__heading'>Создать новое задание</h2>
             </Link>

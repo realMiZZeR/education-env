@@ -37,9 +37,9 @@ const FormSelect = ({title, name, handler, options}) => {
                     {options.map(option => {
                         return (
                             <li key={option.id} 
-                            onClick={() => { optionHandler([option?.id, option?.title]) } } 
+                            onClick={() => { optionHandler([option.id, option.title]) } } 
                             className='dropdown-list__item'>
-                                { option?.title }
+                                { option.title }
                             </li>
                         );
                     })}
