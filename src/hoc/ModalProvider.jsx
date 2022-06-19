@@ -36,14 +36,15 @@ export const ModalProvider = ({ children }) => {
 
     // show message modal from websocket
     useEffect(() => {
-        if(websocket.messages.isYou) return;
+        console.log(websocket);
+        // if(websocket.messages?.isYou) return;
 
-        setNotifications([...notifications, {
-            type: 'MESSAGE',
-            userImage: websocket.messages.image,
-            title: websocket.messages.title,
-            messasge: websocket.messages.message
-        }]);
+        // setNotifications([...notifications, {
+        //     type: 'MESSAGE',
+        //     userImage: websocket.messages.image,
+        //     title: websocket.messages.title,
+        //     messasge: websocket.messages.message
+        // }]);
     }, [websocket.messages]);
     // ------------------------
 
