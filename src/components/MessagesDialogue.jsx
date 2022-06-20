@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import { useAuth } from '../hooks/useAuth';
 import { useMessages } from '../hooks/useMessages';
@@ -21,7 +21,16 @@ const MessagesDialogue = () => {
     const { user } = useAuth();
     const { currentDialogue } = useMessages();
 
+    const formTextareaRef = useRef(null);
+
     const [ dialogue, setDialogue ] = useState([]);
+
+    const messageActFields = {
+        id: null,
+        type: null,
+        value: null
+    }
+    const [ messageAct, setMessageAct ] = useState(messageActFields);
 
     useEffect(() => {
         const fetchDialogue = async () => {
@@ -36,6 +45,8 @@ const MessagesDialogue = () => {
             ).finally(() => {});
         }
 
+        console.log(websocket.messages);
+
         if(currentDialogue) fetchDialogue();
     }, [websocket.messages, currentDialogue, user.token]);
 
@@ -47,6 +58,10 @@ const MessagesDialogue = () => {
     const [ userMessage, setUserMessage ] = useState(userMessageFields);
 
     const dialogueChangeHandler = (e) => {
+        if(e.currentTarget.classList.contains('input_error')) {
+            e.currentTarget.classList.remove('input_error');
+        }
+
         const { name, value } = e.target;
 
         setUserMessage({
@@ -67,7 +82,34 @@ const MessagesDialogue = () => {
     // send message
     const dialogueSubmitHandler = async (e) => {
         e.preventDefault();
-        if(!userMessage) return;
+        if(!userMessage.text) {
+            formTextareaRef.current.className = `${formTextareaRef.current.className} input_error`;
+            return;
+        }
+
+        if(messageAct.value) {
+            console.log(currentDialogue);
+            console.log(messageAct.id);
+            console.log(messageAct.value);
+            await axios.post(
+                `http://server.selestia.ru/api/user/updateMessage`,
+                {
+                    idDialog: currentDialogue,
+                    idMessage: messageAct.id,
+                    textMessage: userMessage.text
+                },
+                {
+                    headers: {token: user.token}
+                }
+            ).then(response => console.log(response)
+            ).catch(error => console.dir(error)
+            ).finally(() => {
+                setMessageAct(messageActFields);
+                setUserMessage(userMessageFields);
+            });
+
+            return;
+        }
 
         await axios.post(
             'http://server.selestia.ru/api/sendMessage',
@@ -93,16 +135,54 @@ const MessagesDialogue = () => {
     }
 
     // edit message
-    const editMessageHandler = (mes) => {
+    const editMessageHandler = (id, mes) => {
         setUserMessage({
             ...userMessage,
             text: mes
         });
+        setMessageAct({
+            id: id,
+            type: 'edit',
+            value: mes
+        });
+    }
+
+    // cancel edit
+    const cancelActHandler = () => {
+        setUserMessage({
+            text: '',
+        })
+        setMessageAct(messageActFields);
     }
 
     // delete message
     const deleteMessageHandler = async (id) => {
+        // setMessageAct({
+        //     type: 'delete',
+        //     value: id
+        // });
+        await axios.post(
+            'http://server.selestia.ru/api/users/deleteMessage',
+            {
+                idDialog: currentDialogue,
+                idMessage: id
+            },
+            {
+                headers: {token: user.token}
+            }
+        ).catch(error => console.dir(error)
+        ).finally(() => setMessageAct(messageActFields));
+    }
 
+    const getActText = (type) => {
+        switch(type) {
+            case 'edit':
+                return 'Редактирование';
+            case 'delete':
+                return 'Удалить?';
+            default:
+                return;
+        }
     }
 
     return (
@@ -133,7 +213,7 @@ const MessagesDialogue = () => {
                             <div 
                                 key={mes.id}
                                 className={`message ${mes.isYou ? 'message_you' : ''}`}
-                                onClick={showMessageControls}
+                                onClick={mes.isYou ? showMessageControls : null}
                             >
                                 <div className='message-info'>
                                     <div className={`message-info__image ${isEmptyUserImage(mes.author.image, 'message-info__image_empty')}`}>
@@ -148,7 +228,7 @@ const MessagesDialogue = () => {
                                 <div className='message-controls'>
                                     <button 
                                         className='message-controls__button button'
-                                        onClick={() => editMessageHandler(mes.textMessage)}
+                                        onClick={() => editMessageHandler(mes.id, mes.textMessage)}
                                     >
                                         <span>Редактировать</span>
                                     </button>
@@ -185,12 +265,25 @@ const MessagesDialogue = () => {
                             multiple
                         />
                     </label>
-                        <textarea 
-                            type='text' 
-                            name='text'
-                            onChange={dialogueChangeHandler}
-                            className='dialogue-form__input input' 
-                        />
+                    {messageAct.value && (
+                        <div className='dialogue-form-act'>
+                            <p className='dialogue-form-act__text'>{getActText(messageAct.type)}</p>
+                            <button 
+                                className='dialogue-form-act__button button'
+                                onClick={cancelActHandler}
+                            >
+                                X
+                            </button>
+                        </div>
+                    )}
+                    <textarea 
+                        ref={formTextareaRef}
+                        type='text' 
+                        name='text'
+                        value={userMessage.text}
+                        onChange={dialogueChangeHandler}
+                        className='dialogue-form__input input' 
+                    />
                     <button type='submit' className='dialogue-form__submit button'>
                         <img src={sendIcon} alt='Отправить '/>
                     </button>

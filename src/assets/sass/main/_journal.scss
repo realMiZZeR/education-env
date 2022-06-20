@@ -30,7 +30,7 @@
         box-shadow: $block-shadow;
         padding: 30px;
         overflow-x: hidden;
-        overflow-y: scroll;
+        overflow-y: overlay;
 
         &-head {
             width: 100%;

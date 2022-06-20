@@ -39,6 +39,7 @@ export const useWebSocket = (url = 'ws://websocket.selestia.ru') => {
         // onmessage
         socket.current.onmessage = (response) => {
             const data = JSON.parse(response.data);
+            console.log(response) 
             setMessages(data);
         }
     

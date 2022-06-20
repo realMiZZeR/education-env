@@ -1,5 +1,12 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, A11y } from 'swiper';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+
 import { JournalProvider } from '../hoc/JournalProvider';
 import { useJournal } from '../hooks/useJournal';
 
@@ -66,6 +73,17 @@ const TeacherJournal = () => {
                 {id: 6, title: 'задание', mark: 5, marked: new Date()},
             ],
             avg: 5 
+        },
+        {
+            id: 18290412012, 
+            image: null,
+            fullname: 'я блять заебался',
+            tasks: [
+                {id: 1, title: 'задание', mark: 5, marked: new Date()},
+                {id: 2, title: 'задание', mark: 5, marked: new Date()},
+                {id: 3, title: 'задание', mark: 5, marked: new Date()},
+            ],
+            avg: 5 
         }
     ]
 
@@ -78,6 +96,25 @@ const TeacherJournal = () => {
                             <th className='journal-tasks__user'>
                                 <img src={userIcon} alt='Студент' />
                             </th>
+                            {/* <th className='journal-tasks__grouping journal-tasks__grouping_tasks'>
+                                
+                                <Swiper
+                                    // install Swiper modules
+                                    modules={[Navigation, A11y]}
+                                    spaceBetween={50}
+                                    slidesPerView={5}
+                                    navigation
+                                >
+                                    {users.tasks.map((task) => {
+                                        return (
+                                            <SwiperSlide key={task.id} style={{width: '35px'}}>
+                                                <img src={taskIcon} alt='Задание' title={task.title} />
+                                            </SwiperSlide>
+                                        );
+                                    })}
+                                </Swiper>
+                            </th> */}
+
                             <th className='journal-tasks__grouping journal-tasks__grouping_tasks'>
                                 <span>
                                     <img src={taskIcon} alt='Задание' />
@@ -114,6 +151,7 @@ const TeacherJournal = () => {
                                     {user.tasks.map(task => {
                                         return (
                                             <span 
+                                                key={task.id}
                                                 onMouseOver={showDetails}
                                                 onMouseLeave={() => {}}
                                             >

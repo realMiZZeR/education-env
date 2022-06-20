@@ -85,7 +85,9 @@ const Messages = () => {
                                     </div>
                                     <div className='messages-list__user'>
                                         <h3 className='messages-list__name'>{ dialogue.nameDialog }</h3>
-                                        <p className='messages-list__lastmsg'>{ dialogue.textMessage }</p>
+                                        <p className='messages-list__lastmsg'>
+                                            {dialogue.isYou ? 'Вы: ' : ''}{ dialogue.textMessage }
+                                        </p>
                                     </div>
                                     {dialogue?.notification > 0 &&
                                         <div className='messages-list__notification'>
