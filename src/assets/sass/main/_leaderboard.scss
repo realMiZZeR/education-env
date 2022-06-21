@@ -144,6 +144,9 @@
     }
 
     &-aside {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
         min-width: 550px;
         height: min-content;
         background-color: $block-color;
@@ -151,5 +154,9 @@
         box-shadow: $block-shadow;
         padding: 30px;
         margin-top: 50px;
+
+        .task-attributes__item {
+            margin-left: 0;
+        }
     }
 }

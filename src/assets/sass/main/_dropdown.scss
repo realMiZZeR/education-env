@@ -12,6 +12,9 @@
 
     &-list {
         padding-top: 10px;
+        max-height: 300px;
+        overflow-y: overlay;
+        overflow-x: hidden;
     }
     &-list__item {
         font-family: $roboto-font;

@@ -1,23 +1,25 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
+
+// hooks
+import { useAuth } from '../hooks/useAuth';
+import { useWindowResolution } from '../hooks/useWindowResolution';
+import { useTimetable } from '../hooks/useTimetable';
 
 import timetableSettings from '../assets/images/icons/timetable_settings.png';
-
-import TimetableLessons from './TimetableLessons';
 
 // functions
 import getDateYearMonthDay from '../assets/js/getDateYearMonthDay';
 import getDayOfWeek from '../assets/js/getDayOfWeek';
 
-// hooks
-import { useTimetable } from '../hooks/useTimetable';
+import TimetableLessons from './TimetableLessons';
 import LoadingPage from './LoadingPage';
-import { useAuth } from '../hooks/useAuth';
-import { useWindowResolution } from '../hooks/useWindowResolution';
 
 const TimetableComponent = ({refHandler, footbarRefHandler}) => {
 
+    const { user } = useAuth();
+    const { width } = useWindowResolution();
     const location = useLocation();
     let isHome = (location.pathname === '/home');
 
@@ -31,8 +33,7 @@ const TimetableComponent = ({refHandler, footbarRefHandler}) => {
 
     const { selectedDate, selectedGroup, setSelectedGroup, selectedTeacher, isTeacher } = useTimetable();
 
-    const { user } = useAuth();
-
+    // set group or teacher id by token
     useEffect(() => {
         const getUserTimetable = async () => {
             await axios.post(
@@ -40,7 +41,7 @@ const TimetableComponent = ({refHandler, footbarRefHandler}) => {
                 {token: user.token}
             ).then(response => {
                 setSelectedGroup(response.data.groupId);
-            }).catch(error => console.log(error.toJSON()));
+            }).catch(error => console.dir(error));
         }
 
         const getTeacherTimetable = async () => {
@@ -49,7 +50,7 @@ const TimetableComponent = ({refHandler, footbarRefHandler}) => {
                 {token: user.token}
             ).then(response => {
                 setSelectedGroup(response.data.groupId);
-            }).catch(error => console.log(error.toJSON()));
+            }).catch(error => console.dir(error));
         }
 
 
@@ -61,6 +62,7 @@ const TimetableComponent = ({refHandler, footbarRefHandler}) => {
 
     // for timetable page
     const [ isScheduleLoading, setIsScheduleLoading ] = useState(null);
+
     // fetch timetable by group id and selected date
     useEffect(() => {
         const getGroupSchedule = async () => {
@@ -90,6 +92,9 @@ const TimetableComponent = ({refHandler, footbarRefHandler}) => {
                 params: {
                     idTeacher: selectedTeacher,
                     date: getDateYearMonthDay(selectedDate)
+                },
+                headers: {
+                    token: user.token
                 }
             }).then(response => {
                 const { schedule, lastUpdate } = response.data;
@@ -104,8 +109,6 @@ const TimetableComponent = ({refHandler, footbarRefHandler}) => {
         if(selectedDate && selectedGroup && !isTeacher) getGroupSchedule();
         if(selectedDate && selectedTeacher && isTeacher) getTeacherSchedule();
     }, [selectedDate, selectedGroup, selectedTeacher, isTeacher]);
-
-    const { width } = useWindowResolution();
     
     return (
         <article className='timetable'>

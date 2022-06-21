@@ -20,6 +20,7 @@ export const TimetableProvider = ({ children }) => {
         ).then(response => {
             const { idTeacher } = response.data;
             setSelectedTeacher(idTeacher);
+            setIsTeacher(true);
         }).catch(error => console.warn(error))
     }
 

@@ -123,6 +123,7 @@
             font-family: $roboto-font;
             font-weight: 400;
             font-size: 18px;
+            max-width: 500px;
             color: $font-color;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -440,7 +441,7 @@ $aside-width: 550px;
         margin-bottom: 20px;
 
         &__item {
-            margin-bottom: 20px;
+            // margin-bottom: 20px;
         }
         &__item:nth-child(even) {
             min-width: 150px;

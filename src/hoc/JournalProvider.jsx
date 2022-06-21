@@ -1,23 +1,23 @@
 import React, { createContext, useState } from 'react';
-import { useEffect } from 'react';
 
 export const JournalContext = createContext(null);
 
 export const JournalProvider = ({children}) => {
 
-    const [ selectedDiscipline, setSelectedDiscipline ] = useState(null);
-    const [ selectedGroup, setSelectedGroup ] = useState(null);
-    const [ selectedMonth, setSelectedMonth ] = useState(null);
-
-    useEffect(() => {
-
-    });
+    const [ selectedDiscipline, setSelectedDiscipline ]     = useState(null);
+    const [ selectedGroup,  setSelectedGroup ]              = useState(null);
+    const [ selectedMonth, setSelectedMonth ]               = useState(null);
+    const [ selectedYear, setSelectedYear ]                 = useState(null);
 
     const value = {
         selectedDiscipline,
+        selectedGroup,
+        selectedMonth,
+        selectedYear,
         setSelectedDiscipline,
         setSelectedGroup,
         setSelectedMonth,
+        setSelectedYear,
     }
 
     return (

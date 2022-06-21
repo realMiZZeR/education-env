@@ -84,8 +84,8 @@ const AnswersPage = (props) => {
                                             <td className='replies-list__dating'>
                                                 {answer.dateAnswer && 
                                                     <>
-                                                        <p className='replies-list__date'>{ answer.dateAnswer }</p>
-                                                        <small className='replies-list__time'>{ answer.dateAnswer }</small>
+                                                        <p className='replies-list__date'>{ correctDateFormat(answer.dateAnswer) }</p>
+                                                        <small className='replies-list__time'>{ (new Date(answer.dateAnswer).toLocaleTimeString()) }</small>
                                                     </>           
                                                 }
                                                 {!answer.dateAnswer &&
